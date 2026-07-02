@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { Button } from "@/components/ui/Button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+
 import { 
   Flame, HardHat, UserMinus, Stethoscope, Bird, Users, Home, 
   Wheat, Building, Activity, Anchor, Heart, ShieldAlert 

@@ -56,6 +56,7 @@ export function Header() {
             src={siteConfig.logo} 
             alt={siteConfig.name} 
             fill
+            sizes="(max-width: 768px) 180px, 260px"
             className="object-contain object-left scale-[2] md:scale-[2.8] origin-left drop-shadow-sm pointer-events-none" 
             priority 
           />
@@ -66,7 +67,7 @@ export function Header() {
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-10 pb-4 border-b border-slate-100">
             <div className="relative h-10 w-[180px] -ml-2">
-              <Image src={siteConfig.logo} alt={siteConfig.name} fill className="object-contain object-left scale-[2] origin-left" />
+              <Image src={siteConfig.logo} alt={siteConfig.name} fill priority sizes="150px" className="object-contain object-left scale-[2] origin-left" />
             </div>
             <button className="text-slate-400 hover:text-slate-700 p-2.5 bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors" onClick={() => setMobileOpen(false)}>
               <X size={20} />
