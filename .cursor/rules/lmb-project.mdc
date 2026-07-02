@@ -1,0 +1,79 @@
+# LMB Insurance Brokers — Cursor Project Rules
+
+## Project
+Premium corporate website for LMB Insurance Brokers (composite insurance broking).
+
+## Tech Stack
+- Next.js 15 App Router, TypeScript
+- Tailwind CSS v4 (CSS-based `@theme` in globals.css)
+- Framer Motion (page transitions, UI motion)
+- GSAP + ScrollTrigger (scroll-driven animations)
+- Lenis (smooth scroll)
+- React Hook Form + Zod (forms)
+- Embla Carousel (carousels)
+- Lucide React (icons)
+
+## Design System
+- **Theme:** Black + Cyan premium dark mode
+- **Primary:** `#000000`, `#050505` (deep-black)
+- **Surface:** `#111111` (graphite), `#0d0d0d`, `#141414` (card)
+- **Accent:** `#00d4ff` (cyan), `#00e5ff` (cyan-bright)
+- **Fonts:** Inter (body), Syne (display headings)
+- **Logo:** `/public/assets/logo/lmb-logo-temporary.png` — invert on dark backgrounds
+
+## Content Rules
+- NEVER invent business facts, statistics, or achievements
+- Use brochure as primary source when available
+- Mark missing client content as `(Content Required from Client)`
+- No filler, buzzwords, or generic AI marketing copy
+- Every sentence must add value
+
+## Code Conventions
+- Use `@/` import alias
+- Server Components by default; `"use client"` only when needed
+- Content lives in `src/lib/content/`
+- Reusable UI in `src/components/ui/`
+- Section components in `src/components/sections/`
+- Page metadata via `createPageMetadata()` helper
+- Use `cn()` from `@/lib/utils` for class merging
+- Prefer `FadeIn` for scroll reveals; GSAP for complex scroll animations
+
+## Animation Guidelines
+- Respect `prefers-reduced-motion`
+- Page transitions via `PageTransition` wrapper in layout
+- Lenis smooth scroll in `LenisProvider`
+- Hover: subtle cyan illumination, `-translate-y-1` on cards
+- Duration: 300–500ms for micro-interactions, 700ms+ for reveals
+- Never excessive or childish animation
+
+## File Structure
+```
+src/
+  app/           # Routes (multi-page)
+  components/
+    layout/      # Header, Footer, PageHero, PageTransition
+    motion/      # FadeIn, TextReveal
+    providers/   # Lenis, ScrollTrigger
+    sections/    # Page sections
+    ui/          # Button, Card, Input, etc.
+  lib/
+    content/     # Navigation, services, company data
+    utils.ts
+public/
+  assets/logo/   # Temporary logo
+```
+
+## Pages
+Home, About, Services, Business Lines, Reinsurance, Industries, Why LMB, Process, Leadership, Careers, Resources, FAQ, Contact, Privacy, Terms, 404
+
+## Performance
+- Use `next/image` for all images
+- Lazy-load GSAP and Lenis (dynamic import)
+- Target Lighthouse 95+
+- Server Components where possible
+
+## Accessibility
+- WCAG AA contrast
+- Keyboard navigation for nav and FAQ accordion
+- Focus-visible cyan outline
+- Semantic HTML and ARIA labels on interactive elements
