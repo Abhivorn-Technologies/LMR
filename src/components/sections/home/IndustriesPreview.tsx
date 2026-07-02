@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { industries } from "@/lib/content/industries";
 
@@ -102,14 +102,9 @@ export function IndustriesPreview() {
                             {industry.title}
                           </h3>
                           
-                          <p className="text-slate-600 font-light text-sm leading-relaxed mb-6 flex-1">
+                          <p className="text-slate-600 font-light text-sm leading-relaxed flex-1">
                             {industry.description}
                           </p>
-
-                          <div className="mt-auto flex items-center text-[#115E59] font-medium text-sm tracking-wide">
-                            Learn More 
-                            <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-                          </div>
                         </div>
                       </div>
                     </FadeIn>
