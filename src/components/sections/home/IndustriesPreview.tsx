@@ -35,7 +35,7 @@ export function IndustriesPreview() {
   }, [emblaApi]);
 
   return (
-    <section className="relative overflow-hidden bg-white py-24 md:py-32 border-t border-slate-100">
+    <section className="relative overflow-hidden bg-white pt-24 md:pt-32 pb-16 border-t border-slate-100">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] mix-blend-multiply pointer-events-none" />
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#115E59]/5 to-transparent rounded-full blur-3xl pointer-events-none" />

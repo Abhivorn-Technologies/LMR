@@ -6,7 +6,7 @@ import { whyLmbPoints } from "@/lib/content/pages";
 
 export function WhyPreview() {
   return (
-    <section className="py-24 md:py-32 bg-slate-50 border-t border-slate-100 relative overflow-hidden">
+    <section className="pt-16 md:pt-20 pb-24 md:pb-32 bg-slate-50 border-t border-slate-100 relative overflow-hidden">
       {/* Decorative accent */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-[#115E59]/5 to-transparent rounded-full blur-3xl pointer-events-none translate-x-1/3 -translate-y-1/3" />
       
