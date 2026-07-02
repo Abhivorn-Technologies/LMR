@@ -116,8 +116,7 @@ export function Footer() {
                 src={siteConfig.logo} 
                 alt={siteConfig.name} 
                 fill
-                className="object-contain object-left scale-[2.8] origin-left ml-4 pointer-events-none opacity-90" 
-                style={{ filter: 'grayscale(100%) invert(100%) contrast(1000%) brightness(200%)', mixBlendMode: 'screen' }}
+                className="object-contain object-left scale-[2.8] origin-left ml-4 pointer-events-none brightness-0 invert" 
               />
             </motion.div>
           </Link>
