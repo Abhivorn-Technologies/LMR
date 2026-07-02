@@ -20,7 +20,7 @@ export default function IndustriesPage() {
         description="Each industry carries distinct exposures. LMB structures programs aligned to sector risk profiles and regulatory requirements."
       />
 
-      <section className="pb-24">
+      <section className="pb-16 bg-background">
         <div className="mx-auto max-w-7xl px-6 space-y-12">
           {industries.map((industry, i) => {
             const Icon = industry.icon;
@@ -35,7 +35,7 @@ export default function IndustriesPage() {
                       <h2 className="font-display text-2xl font-bold text-white md:text-3xl group-hover/card:text-[#00E5FF] transition-colors">
                         {industry.title}
                       </h2>
-                      <p className="mt-4 max-w-3xl leading-relaxed text-slate-300">
+                      <p className="mt-4 max-w-3xl leading-relaxed text-[#c4e0e6]">
                         {industry.description}
                       </p>
                       <div className="mt-6 flex flex-wrap gap-3">

@@ -120,15 +120,27 @@ export function Footer() {
               />
             </motion.div>
           </Link>
-          <div className="text-slate-300 mb-8 max-w-[360px] leading-relaxed text-[0.9rem] space-y-3 font-medium">
+          <div className="text-[#c4e0e6] mb-8 max-w-[380px] leading-relaxed text-[0.8rem] space-y-4">
             <p>
               LMB Insurance Brokers Pvt. Ltd is a company incorporated under the Companies Act, 1956. Licensed by Insurance Regulatory and Development Authority (IRDA), as per IRDA Act, 1999 and IRDA (Insurance Brokers) Regulations 2002.
             </p>
-            <div className="pt-2 text-[#00B4D8] space-y-1.5">
-              <p>IRDAI License No. 116</p>
-              <p>CIN : U66010KL2002PTC015686</p>
-              <p>Category : Composite Insurance Brokers</p>
-              <p>Period of license : 18.02.2021 to 17.02.2024</p>
+            <div className="pt-4 border-t border-white/10 space-y-2 text-[0.78rem]">
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-slate-400 font-medium">IRDAI License No:</span>
+                <span className="text-[#00E5FF] font-semibold">116</span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-slate-400 font-medium">CIN:</span>
+                <span className="text-white font-mono">U66010KL2002PTC015686</span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-slate-400 font-medium">Category:</span>
+                <span className="text-white font-medium">Composite Insurance Brokers</span>
+              </div>
+              <div className="flex justify-between py-1">
+                <span className="text-slate-400 font-medium">Period of License:</span>
+                <span className="text-white">18.02.2021 to 17.02.2024</span>
+              </div>
             </div>
           </div>
           <div className="flex gap-4">
@@ -159,7 +171,7 @@ export function Footer() {
           <ul className="space-y-3.5">
             {footerNavigation.company.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="group flex items-center text-slate-400 text-[0.95rem] hover:text-[#00E5FF] transition-colors duration-300">
+                <Link href={link.href} className="group flex items-center text-[#c4e0e6] text-[0.95rem] hover:text-white transition-colors duration-300">
                   <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
                   {link.label}
                 </Link>
@@ -176,7 +188,7 @@ export function Footer() {
           <ul className="space-y-3.5">
             {footerNavigation.services.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="group flex items-center text-slate-400 text-[0.95rem] hover:text-[#00E5FF] transition-colors duration-300">
+                <Link href={link.href} className="group flex items-center text-[#c4e0e6] text-[0.95rem] hover:text-white transition-colors duration-300">
                   <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
                   {link.label}
                 </Link>
@@ -193,7 +205,7 @@ export function Footer() {
           <ul className="space-y-3.5">
             {[...footerNavigation.resources, ...footerNavigation.legal].map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="group flex items-center text-slate-400 text-[0.95rem] hover:text-[#00E5FF] transition-colors duration-300">
+                <Link href={link.href} className="group flex items-center text-[#c4e0e6] text-[0.95rem] hover:text-white transition-colors duration-300">
                   <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
                   {link.label}
                 </Link>
@@ -215,7 +227,7 @@ export function Footer() {
             ].map((item, i) => (
               <li 
                 key={i} 
-                className="flex items-center gap-4 text-slate-400 p-2 -ml-2 rounded-lg cursor-default transition-colors duration-300 group hover:bg-white/5 hover:translate-x-1"
+                className="flex items-center gap-4 text-[#c4e0e6] p-2 -ml-2 rounded-lg cursor-default transition-colors duration-300 group hover:bg-white/5 hover:translate-x-1"
               >
                 <div className="w-8 h-8 rounded-full bg-cyan/10 flex items-center justify-center text-cyan group-hover:bg-cyan group-hover:text-white transition-colors duration-300 shrink-0">
                   <item.icon size={14} className="group-hover:rotate-12 transition-transform duration-300" />

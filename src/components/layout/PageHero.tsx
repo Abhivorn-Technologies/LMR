@@ -33,7 +33,7 @@ export function PageHero({
   };
 
   return (
-    <section className={`relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24 ${theme === "dark" ? "bg-[#04151a]" : "bg-transparent"}`}>
+    <section className={`relative overflow-hidden pt-24 pb-8 md:pt-28 md:pb-12 ${theme === "dark" ? "bg-[#04151a]" : "bg-transparent"}`}>
       {/* Animated Premium Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {theme === "dark" && (

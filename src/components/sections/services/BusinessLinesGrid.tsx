@@ -42,11 +42,16 @@ export function BusinessLinesGrid() {
         </div>
       </ScrollReveal>
 
-      {/* Elegant Grid Layout with highly visible cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      {/* Elegant Grid Layout with centering for leftover cards */}
+      <div className="flex flex-wrap justify-center gap-4 md:gap-6">
         {visibleItems.map((line, i) => (
-          <ScrollReveal key={line.name} delay={i * 0.05} direction="up">
-            <div className="group h-full flex flex-col items-center justify-center p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl transition-all duration-500 hover:bg-[#00E5FF]/10 hover:border-[#00E5FF]/40 hover:shadow-[0_10px_40px_-10px_rgba(0,229,255,0.25)] hover:-translate-y-2 cursor-pointer relative overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+          <ScrollReveal 
+            key={line.name} 
+            delay={i * 0.05} 
+            direction="up"
+            className="w-[calc(50%-8px)] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)] max-w-sm flex"
+          >
+            <div className="group h-full w-full flex flex-col items-center justify-center p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl transition-all duration-500 hover:bg-[#00E5FF]/10 hover:border-[#00E5FF]/40 hover:shadow-[0_10px_40px_-10px_rgba(0,229,255,0.25)] hover:-translate-y-2 cursor-pointer relative overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
               {/* Glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-b from-[#00E5FF]/0 to-[#00E5FF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               

@@ -25,16 +25,16 @@ export default function ReinsurancePage() {
         theme="light"
       />
 
-      <section className="relative pb-24 z-10 -mt-16">
+      <section className="relative pb-12 z-10 pt-6">
         <div className="mx-auto max-w-7xl px-6">
           
           {/* Ultra-Modern Asymmetrical Bento Grid */}
-          <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6 mb-32 relative z-10">
+          <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 relative z-10">
             
             {/* Huge Top Left Block */}
             <div className="md:col-span-2 h-full">
               <ScrollReveal direction="left" delay={0.1} className="h-full">
-                <div className="group relative h-full rounded-[2.5rem] bg-white/60 border border-white/60 p-10 md:p-12 overflow-hidden transition-all duration-500 hover:bg-white/80 hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
+                <div className="group relative h-full rounded-[2.5rem] bg-white/90 border border-white/80 shadow-[0_4px_24px_rgba(12,73,79,0.08)] p-10 md:p-12 overflow-hidden transition-all duration-500 hover:bg-white hover:shadow-[0_20px_50px_rgba(0,180,216,0.15)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
                   <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-700">
                     <TrendingUp className="w-48 h-48 text-cyan" />
                   </div>
@@ -46,7 +46,7 @@ export default function ReinsurancePage() {
                       Market Capacity & Expansion
                     </h3>
                   </div>
-                  <p className="relative z-10 text-lg leading-relaxed text-slate-700 font-medium max-w-md">
+                  <p className="relative z-10 text-lg leading-relaxed text-slate-600 font-medium max-w-md">
                     Expanding presence in treaty and facultative markets to secure unparalleled terms for new, emerging, and existing business lines.
                   </p>
                 </div>
@@ -56,7 +56,7 @@ export default function ReinsurancePage() {
             {/* Top Right Tall Block */}
             <div className="md:col-span-1 h-full">
               <ScrollReveal direction="right" delay={0.2} className="h-full">
-                <div className="group relative h-full rounded-[2.5rem] bg-gradient-to-br from-cyan/5 to-cyan/10 border border-cyan/20 p-10 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,180,216,0.15)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
+                <div className="group relative h-full rounded-[2.5rem] bg-white/90 border border-[#00B4D8]/20 shadow-[0_4px_24px_rgba(0,180,216,0.08)] p-10 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,180,216,0.15)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
                   <div className="relative z-10 mb-8">
                     <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/60 border border-white/80 group-hover:bg-white transition-colors duration-500 mb-6">
                       <Shield className="h-7 w-7 text-cyan-600" />
@@ -75,7 +75,7 @@ export default function ReinsurancePage() {
             {/* Bottom Left Square Block */}
             <div className="md:col-span-1 h-full">
               <ScrollReveal direction="up" delay={0.3} className="h-full">
-                <div className="group relative h-full rounded-[2.5rem] bg-white/60 border border-white/60 p-10 overflow-hidden transition-all duration-500 hover:bg-white/80 hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
+                <div className="group relative h-full rounded-[2.5rem] bg-white/90 border border-white/80 shadow-[0_4px_24px_rgba(12,73,79,0.08)] p-10 overflow-hidden transition-all duration-500 hover:bg-white hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
                   <div className="relative z-10 mb-8">
                     <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan/5 border border-cyan/10 group-hover:bg-cyan/10 transition-colors duration-500 mb-6">
                       <Target className="h-7 w-7 text-cyan-600" />
@@ -94,7 +94,7 @@ export default function ReinsurancePage() {
             {/* Huge Bottom Right Block */}
             <div className="md:col-span-2 h-full">
               <ScrollReveal direction="up" delay={0.4} className="h-full">
-                <div className="group relative h-full rounded-[2.5rem] bg-gradient-to-r from-white/60 to-white/40 border border-white/60 p-10 md:p-12 overflow-hidden transition-all duration-500 hover:bg-white/80 hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
+                <div className="group relative h-full rounded-[2.5rem] bg-white/90 border border-white/80 shadow-[0_4px_24px_rgba(12,73,79,0.08)] p-10 md:p-12 overflow-hidden transition-all duration-500 hover:bg-white hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
                   <div className="absolute bottom-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-700 pointer-events-none">
                     <Globe className="w-64 h-64 text-slate-900" />
                   </div>
@@ -129,7 +129,7 @@ export default function ReinsurancePage() {
               const Icon = capabilityIcons[i % capabilityIcons.length];
               return (
                 <ScrollReveal key={item.title} delay={i * 0.15} direction={i % 2 === 0 ? "left" : "right"}>
-                  <div className="group relative h-full overflow-hidden rounded-[2rem] bg-white/60 p-8 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,180,216,0.1)] border border-white/40 hover:border-cyan/30 backdrop-blur-md">
+                  <div className="group relative h-full overflow-hidden rounded-[2rem] bg-white/90 p-8 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,180,216,0.12)] border border-white/60 hover:border-cyan/30 backdrop-blur-md shadow-[0_4px_20px_rgba(12,73,79,0.08)]">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#00B4D8]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     
                     <div className="relative z-10">
@@ -149,7 +149,7 @@ export default function ReinsurancePage() {
             })}
           </div>
 
-          <div className="mt-32 grid gap-16 lg:grid-cols-2 lg:gap-24">
+          <div className="mt-12 grid gap-16 lg:grid-cols-2 lg:gap-24">
             
             {/* Process Timeline */}
             <div>
@@ -192,7 +192,7 @@ export default function ReinsurancePage() {
                 <div className="mt-12 space-y-4">
                   {reinsuranceContent.benefits.map((benefit, i) => (
                     <ScrollReveal key={benefit} delay={i * 0.1 + 0.3} direction="up">
-                      <div className="group flex items-center gap-5 rounded-[1.5rem] bg-white/60 border border-white/40 p-6 backdrop-blur-md transition-all duration-500 hover:bg-white hover:border-cyan/30 hover:shadow-[0_10px_30px_rgba(0,180,216,0.1)] hover:translate-x-2 cursor-default">
+                      <div className="group flex items-center gap-5 rounded-[1.5rem] bg-white/90 border border-white/60 shadow-[0_2px_12px_rgba(12,73,79,0.06)] p-6 backdrop-blur-md transition-all duration-500 hover:bg-white hover:border-cyan/30 hover:shadow-[0_10px_30px_rgba(0,180,216,0.12)] hover:translate-x-2 cursor-default">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cyan/5 border border-cyan/20 group-hover:bg-cyan/10 group-hover:border-cyan/40 transition-all duration-500">
                           <CheckCircle2 className="h-5 w-5 text-cyan group-hover:text-cyan-600" />
                         </div>

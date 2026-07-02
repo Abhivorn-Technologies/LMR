@@ -37,13 +37,14 @@ export function IndustriesPreview() {
   }, [emblaApi]);
 
   return (
-    <section className="relative overflow-hidden bg-surface py-24 md:py-32">
+    <section className="relative overflow-hidden bg-surface py-16 md:py-20">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col items-center text-center gap-6 mb-10">
           <FadeIn>
             <SectionHeading
+              align="center"
               eyebrow="Industries"
               title="Sector expertise"
               description="Insurance programs tailored to industry-specific exposures and regulatory environments."
@@ -57,6 +58,7 @@ export function IndustriesPreview() {
                 onClick={scrollPrev}
                 disabled={!canPrev}
                 aria-label="Previous"
+                className="rounded-full border-white/10 bg-white/5 text-white hover:bg-white/15"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
@@ -66,6 +68,7 @@ export function IndustriesPreview() {
                 onClick={scrollNext}
                 disabled={!canNext}
                 aria-label="Next"
+                className="rounded-full border-white/10 bg-white/5 text-white hover:bg-white/15"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
@@ -73,7 +76,7 @@ export function IndustriesPreview() {
           </FadeIn>
         </div>
 
-        <div className="mt-12 overflow-hidden" ref={emblaRef}>
+        <div className="mt-8 overflow-hidden" ref={emblaRef}>
           <div className="flex gap-6">
             {industries.map((industry, i) => {
               const Icon = industry.icon;
@@ -88,7 +91,7 @@ export function IndustriesPreview() {
                       <h3 className="font-display text-2xl font-semibold text-white">
                         {industry.title}
                       </h3>
-                      <p className="mt-4 text-sm leading-relaxed text-muted-light">
+                      <p className="mt-4 text-sm leading-relaxed text-[#c4e0e6]">
                         {industry.description}
                       </p>
                     </div>

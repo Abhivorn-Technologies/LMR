@@ -55,10 +55,10 @@ export default function AboutPage() {
       </section>
 
       {/* 2. Interactive Timeline & Story Section with Images */}
-      <section className="relative py-24 md:py-32 z-10 bg-[#021217]">
+      <section className="relative py-16 md:py-20 z-10 bg-[#021217]">
         <div className="mx-auto max-w-7xl px-6">
           
-          <div className="mb-24 text-center">
+          <div className="mb-12 text-center">
             <ScrollReveal>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
                 Our Journey of Excellence
@@ -182,7 +182,7 @@ export default function AboutPage() {
       </section>
 
       {/* 3. Ultra-Premium Mission & Vision Section with Background Images */}
-      <section className="relative py-24 md:py-32 bg-[#020b0e] overflow-hidden">
+      <section className="relative py-16 md:py-20 bg-[#020b0e] overflow-hidden">
         {/* Background Accents */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00E5FF]/20 to-transparent" />
         

@@ -56,7 +56,7 @@ export default function ServicesPage() {
           </ScrollReveal>
         </div>
 
-        <section className="relative pb-32">
+        <section className="relative pb-16">
           <div className="mx-auto max-w-7xl px-6">
             
             {/* Premium Section 1 */}

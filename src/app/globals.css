@@ -11,8 +11,8 @@
   --color-cyan-bright: #00E5FF;
   --color-cyan-muted: #138A99;
   --color-cyan-glow: rgba(0, 180, 216, 0.35);
-  --color-muted: #8baeb3;
-  --color-muted-light: #6c9196;
+  --color-muted: #daeef2;
+  --color-muted-light: #c4e0e6;
   --color-border: rgba(255, 255, 255, 0.1);
   --color-border-hover: rgba(0, 229, 255, 0.5);
 
@@ -62,9 +62,10 @@ html.lenis body {
 
 body {
   @apply bg-background text-foreground;
-  font-family: var(--font-sans);
+  font-family: var(--font-syne), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 }
 
 ::selection {
@@ -89,7 +90,7 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #00E5FF 50%, #00B4D8 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #00B4D8 60%, #138A99 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
