@@ -16,7 +16,12 @@ const capabilityIcons = [Shield, Target, BarChart3, Globe];
 
 export default function ReinsurancePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#ffffff] via-[#e2f1f4] to-[#4f737d] text-slate-900 relative z-0">
+    <div className="min-h-screen bg-[#f8fbfc] text-slate-900 relative z-0 overflow-hidden">
+      {/* Cinematic Background Glows */}
+      <div className="absolute top-0 left-0 w-full h-[800px] z-0 pointer-events-none">
+        <div className="absolute top-[20%] right-[10%] h-[600px] w-[600px] rounded-full bg-[#00B4D8]/10 blur-[120px] animate-[pulse_10s_ease-in-out_infinite]" />
+        <div className="absolute top-[40%] -left-[10%] h-[500px] w-[500px] rounded-full bg-[#0c494f]/10 blur-[100px] animate-[pulse_12s_ease-in-out_infinite_reverse]" />
+      </div>
       <PageHero
         eyebrow="Reinsurance"
         title={reinsuranceContent.headline}
@@ -29,24 +34,24 @@ export default function ReinsurancePage() {
         <div className="mx-auto max-w-7xl px-6">
           
           {/* Ultra-Modern Asymmetrical Bento Grid */}
-          <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 relative z-10">
+          <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 relative z-10">
             
             {/* Huge Top Left Block */}
             <div className="md:col-span-2 h-full">
-              <ScrollReveal direction="left" delay={0.1} className="h-full">
-                <div className="group relative h-full rounded-[2.5rem] bg-white/90 border border-white/80 shadow-[0_4px_24px_rgba(12,73,79,0.08)] p-10 md:p-12 overflow-hidden transition-all duration-500 hover:bg-white hover:shadow-[0_20px_50px_rgba(0,180,216,0.15)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
-                  <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-700">
-                    <TrendingUp className="w-48 h-48 text-cyan" />
+              <ScrollReveal direction="left" delay={0.1} scale={true} className="h-full">
+                <div className="group relative h-full rounded-[2.5rem] bg-white/60 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgba(12,73,79,0.06)] p-10 md:p-12 overflow-hidden transition-all duration-700 hover:bg-white/80 hover:shadow-[0_20px_50px_rgba(0,180,216,0.15)] hover:-translate-y-2 flex flex-col justify-start">
+                  <div className="absolute top-0 right-0 p-8 opacity-[0.04] group-hover:opacity-[0.08] group-hover:scale-110 transition-all duration-700">
+                    <TrendingUp className="w-64 h-64 text-[#0c494f]" />
                   </div>
-                  <div className="relative z-10 mb-8">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan/10 border border-cyan/20 group-hover:bg-cyan/20 transition-colors duration-500 mb-6">
-                      <TrendingUp className="h-7 w-7 text-cyan-600" />
+                  <div className="relative z-10 mb-6">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0c494f] to-[#00869e] text-white shadow-lg shadow-[#0c494f]/20 group-hover:scale-110 transition-transform duration-500 mb-6">
+                      <TrendingUp className="h-8 w-8" />
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-display font-bold text-[#04151a] mb-4">
-                      Market Capacity & Expansion
+                    <h3 className="text-3xl md:text-4xl font-display font-extrabold text-[#04151a] mb-4 tracking-tight">
+                      Market Capacity <br/><span className="text-[#0c494f] font-serif italic">& Expansion</span>
                     </h3>
                   </div>
-                  <p className="relative z-10 text-lg leading-relaxed text-slate-600 font-medium max-w-md">
+                  <p className="relative z-10 text-lg leading-relaxed text-slate-600 font-medium max-w-md group-hover:text-slate-800 transition-colors">
                     Expanding presence in treaty and facultative markets to secure unparalleled terms for new, emerging, and existing business lines.
                   </p>
                 </div>
@@ -55,18 +60,22 @@ export default function ReinsurancePage() {
 
             {/* Top Right Tall Block */}
             <div className="md:col-span-1 h-full">
-              <ScrollReveal direction="right" delay={0.2} className="h-full">
-                <div className="group relative h-full rounded-[2.5rem] bg-white/90 border border-[#00B4D8]/20 shadow-[0_4px_24px_rgba(0,180,216,0.08)] p-10 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,180,216,0.15)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
-                  <div className="relative z-10 mb-8">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/60 border border-white/80 group-hover:bg-white transition-colors duration-500 mb-6">
-                      <Shield className="h-7 w-7 text-cyan-600" />
+              <ScrollReveal direction="right" delay={0.2} scale={true} className="h-full">
+                <div className="group relative h-full rounded-[2.5rem] bg-gradient-to-b from-[#0c494f] to-[#083a40] shadow-[0_8px_30px_rgba(12,73,79,0.2)] p-10 overflow-hidden transition-all duration-700 hover:shadow-[0_20px_50px_rgba(12,73,79,0.3)] hover:-translate-y-2 flex flex-col justify-start">
+                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.05] pointer-events-none" />
+                  <div className="absolute top-0 right-0 p-6 opacity-[0.05] group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                    <Shield className="w-40 h-40 text-white" />
+                  </div>
+                  <div className="relative z-10 mb-6">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 border border-white/20 text-white backdrop-blur-md group-hover:bg-white group-hover:text-[#0c494f] group-hover:scale-110 transition-all duration-500 mb-6">
+                      <Shield className="h-8 w-8" />
                     </div>
-                    <h3 className="text-xl font-display font-bold text-[#04151a] mb-4">
+                    <h3 className="text-2xl font-display font-bold text-white mb-4">
                       Strategic Selection
                     </h3>
                   </div>
-                  <p className="relative z-10 text-base leading-relaxed text-slate-700">
-                    Rigorous due diligence of international reinsurers, leveraging technical expertise to design optimal, customized programs.
+                  <p className="relative z-10 text-base leading-relaxed text-[#a8d5df] group-hover:text-white transition-colors">
+                    Rigorous due diligence of international reinsurers, leveraging technical expertise to design optimal programs.
                   </p>
                 </div>
               </ScrollReveal>
@@ -74,17 +83,17 @@ export default function ReinsurancePage() {
 
             {/* Bottom Left Square Block */}
             <div className="md:col-span-1 h-full">
-              <ScrollReveal direction="up" delay={0.3} className="h-full">
-                <div className="group relative h-full rounded-[2.5rem] bg-white/90 border border-white/80 shadow-[0_4px_24px_rgba(12,73,79,0.08)] p-10 overflow-hidden transition-all duration-500 hover:bg-white hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
-                  <div className="relative z-10 mb-8">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan/5 border border-cyan/10 group-hover:bg-cyan/10 transition-colors duration-500 mb-6">
-                      <Target className="h-7 w-7 text-cyan-600" />
+              <ScrollReveal direction="up" delay={0.3} scale={true} className="h-full">
+                <div className="group relative h-full rounded-[2.5rem] bg-white/60 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgba(12,73,79,0.06)] p-10 overflow-hidden transition-all duration-700 hover:bg-white/80 hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-2 flex flex-col justify-start">
+                  <div className="relative z-10 mb-6">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#00B4D8]/10 border border-[#00B4D8]/20 text-[#00869e] group-hover:bg-[#00B4D8] group-hover:text-white group-hover:scale-110 transition-all duration-500 mb-6">
+                      <Target className="h-7 w-7" />
                     </div>
-                    <h3 className="text-xl font-display font-bold text-[#04151a] mb-4">
+                    <h3 className="text-2xl font-display font-bold text-[#04151a] mb-4">
                       Favorable Terms
                     </h3>
                   </div>
-                  <p className="relative z-10 text-base leading-relaxed text-slate-700">
+                  <p className="relative z-10 text-base leading-relaxed text-slate-600 group-hover:text-slate-800 transition-colors">
                     Comprehensive assessment of counterparty risk to aggressively negotiate and secure unparalleled client coverage.
                   </p>
                 </div>
@@ -93,20 +102,20 @@ export default function ReinsurancePage() {
 
             {/* Huge Bottom Right Block */}
             <div className="md:col-span-2 h-full">
-              <ScrollReveal direction="up" delay={0.4} className="h-full">
-                <div className="group relative h-full rounded-[2.5rem] bg-white/90 border border-white/80 shadow-[0_4px_24px_rgba(12,73,79,0.08)] p-10 md:p-12 overflow-hidden transition-all duration-500 hover:bg-white hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-1 flex flex-col justify-between min-h-[300px]">
-                  <div className="absolute bottom-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-700 pointer-events-none">
-                    <Globe className="w-64 h-64 text-slate-900" />
+              <ScrollReveal direction="up" delay={0.4} scale={true} className="h-full">
+                <div className="group relative h-full rounded-[2.5rem] bg-white/60 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgba(12,73,79,0.06)] p-10 md:p-12 overflow-hidden transition-all duration-700 hover:bg-white/80 hover:shadow-[0_20px_50px_rgba(0,180,216,0.1)] hover:-translate-y-2 flex flex-col justify-start">
+                  <div className="absolute bottom-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] group-hover:scale-110 group-hover:rotate-12 transition-all duration-1000 pointer-events-none">
+                    <Globe className="w-64 h-64 text-[#0c494f]" />
                   </div>
-                  <div className="relative z-10 mb-8">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan/5 border border-cyan/10 group-hover:bg-cyan/10 transition-colors duration-500 mb-6">
-                      <Globe className="h-7 w-7 text-cyan-600" />
+                  <div className="relative z-10 mb-6">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white border border-[#0c494f]/10 text-[#0c494f] shadow-sm group-hover:bg-[#0c494f] group-hover:text-white group-hover:scale-110 transition-all duration-500 mb-6">
+                      <Globe className="h-8 w-8" />
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-display font-bold text-[#04151a] mb-4">
-                      Global Market Insights
+                    <h3 className="text-3xl md:text-4xl font-display font-extrabold text-[#04151a] mb-4 tracking-tight">
+                      Global Market <span className="text-[#0c494f] font-serif italic">Insights</span>
                     </h3>
                   </div>
-                  <p className="relative z-10 text-lg leading-relaxed text-slate-700 font-medium max-w-lg">
+                  <p className="relative z-10 text-lg leading-relaxed text-slate-600 font-medium max-w-lg group-hover:text-slate-800 transition-colors">
                     Continuous monitoring of global economic trends and emerging market developments to ensure access to cutting-edge, comprehensive coverage options worldwide.
                   </p>
                 </div>
