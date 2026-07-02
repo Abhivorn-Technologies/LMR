@@ -2,7 +2,6 @@
 
 import React from "react";
 import { PageHero } from "@/components/layout/PageHero";
-import { createPageMetadata } from "@/lib/metadata";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { whyLmbPoints } from "@/lib/content/pages";
 import { Layers, ShieldCheck, HeartHandshake, Globe, Activity, Building2 } from "lucide-react";

@@ -6,7 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { siteConfig } from "@/lib/content/company";
-import { mainNavigation } from "@/lib/content/navigation";
 import { Button } from "@/components/ui/Button";
 import ShinyText from "@/components/ui/ShinyText";
 
