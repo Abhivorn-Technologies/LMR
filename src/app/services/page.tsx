@@ -44,7 +44,7 @@ export default function ServicesPage() {
             <ScrollReveal direction="left" delay={0.1}>
               <div className="rounded-[2.5rem] bg-white/5 border border-white/10 p-10 md:p-14 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
                 <p className="text-lg leading-relaxed text-slate-300 mb-6 font-medium">
-                  Our team of highly proficient risk management specialists conducts a meticulous evaluation of our clients' needs, and endeavors to acquire a detailed understanding of their operations, assets, and potential liabilities. Organizational facilities may be examined as deemed necessary. Any deficiencies in existing coverage are also identified and addressed.
+                  Our team of highly proficient risk management specialists conducts a meticulous evaluation of our clients&apos; needs, and endeavors to acquire a detailed understanding of their operations, assets, and potential liabilities. Organizational facilities may be examined as deemed necessary. Any deficiencies in existing coverage are also identified and addressed.
                 </p>
                 <p className="text-lg leading-relaxed text-slate-400">
                   Utilizing the information gathered, we determine the optimal choices for risk retention and transfer, and execute a thorough cost-benefit analysis. We prioritize the development of solutions that provide comprehensive coverage in a financially sound manner, tailored to the specific needs of our clients.
@@ -75,7 +75,7 @@ export default function ServicesPage() {
                   We subsequently solicit proposals from insurers and engage in negotiations on behalf of our clients to ensure their needs are met. This may involve the implementation of bespoke products that are otherwise unavailable in the market.
                 </p>
                 <p className="text-lg leading-relaxed text-slate-400">
-                  Our paramount concern is ensuring that the insurance plan established for the client is implemented, maintained, and fully satisfactory. We maintain our partnership with our client as we continually assess their needs and propose any necessary adjustments as the organization's operations and exposures evolve over time.
+                  Our paramount concern is ensuring that the insurance plan established for the client is implemented, maintained, and fully satisfactory. We maintain our partnership with our client as we continually assess their needs and propose any necessary adjustments as the organization&apos;s operations and exposures evolve over time.
                 </p>
               </div>
             </ScrollReveal>

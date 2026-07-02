@@ -1,10 +1,9 @@
 import { PageHero } from "@/components/layout/PageHero";
 import { createPageMetadata } from "@/lib/metadata";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CTA } from "@/components/sections/home/CTA";
 import { reinsuranceContent } from "@/lib/content/pages";
-import { CheckCircle2, Shield, Target, Globe, BarChart3, TrendingUp, Users } from "lucide-react";
+import { CheckCircle2, Shield, Target, Globe, BarChart3, TrendingUp } from "lucide-react";
 
 export const metadata = createPageMetadata({
   title: "Reinsurance",

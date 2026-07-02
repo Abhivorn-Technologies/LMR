@@ -3,7 +3,6 @@ import { ServicesPreview } from "@/components/sections/home/ServicesPreview";
 import { IndustriesPreview } from "@/components/sections/home/IndustriesPreview";
 import { WhyPreview } from "@/components/sections/home/WhyPreview";
 import { CTA } from "@/components/sections/home/CTA";
-import { PageHero } from "@/components/layout/PageHero";
 import { createPageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/content/company";
 

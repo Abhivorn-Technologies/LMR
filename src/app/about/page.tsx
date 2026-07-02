@@ -41,7 +41,7 @@ export default function AboutPage() {
 
                   <div className="space-y-6 text-lg md:text-xl leading-relaxed text-slate-300">
                     <p className="font-medium text-white">
-                      LMB Insurance Brokers Pvt. Ltd (incorporated under the Companies' Act, 1956) has been providing Direct and Reinsurance Brokerage services for over a decade.
+                      LMB Insurance Brokers Pvt. Ltd (incorporated under the Companies&apos; Act, 1956) has been providing Direct and Reinsurance Brokerage services for over a decade.
                     </p>
                     <p>
                       LMB became incorporated as a <span className="text-[#00E5FF] font-semibold">DIRECT BROKER in 2003</span> achieving the milestone of being the first Direct Insurance Broker in the state of Kerala, India. We have since upgraded to a Composite Broking License in 2018.
