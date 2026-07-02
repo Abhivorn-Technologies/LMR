@@ -57,7 +57,7 @@ const ScrollToTop = () => {
           whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(14,165,233,0.4)" }}
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-[100] w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-bright to-cyan text-white flex items-center justify-center shadow-[0_10px_20px_rgba(14,165,233,0.3)] border border-white/20 backdrop-blur-md overflow-hidden group"
+          className="fixed bottom-8 right-8 z-[100] w-12 h-12 rounded-full bg-[#0c494f] text-white flex items-center justify-center shadow-[0_10px_20px_rgba(12,73,79,0.4)] border border-white/10 backdrop-blur-md overflow-hidden group hover:bg-[#0a3a3f] transition-colors duration-300"
         >
           {/* Ripple Effect */}
           <div className="absolute inset-0 bg-white/20 scale-0 group-active:scale-[2] transition-transform duration-500 rounded-full" />
@@ -124,9 +124,11 @@ export function Footer() {
             <p>
               LMB Insurance Brokers Pvt. Ltd is a company incorporated under the Companies Act, 1956. Licensed by Insurance Regulatory and Development Authority (IRDA), as per IRDA Act, 1999 and IRDA (Insurance Brokers) Regulations 2002.
             </p>
-            <div className="pt-2 text-[#00E5FF]">
+            <div className="pt-2 text-[#00B4D8] space-y-1.5">
               <p>IRDAI License No. 116</p>
-              <p>CIN : U66010KL2002PTCO15686</p>
+              <p>CIN : U66010KL2002PTC015686</p>
+              <p>Category : Composite Insurance Brokers</p>
+              <p>Period of license : 18.02.2021 to 17.02.2024</p>
             </div>
           </div>
           <div className="flex gap-4">
@@ -245,7 +247,7 @@ export function Footer() {
               href="https://www.abhivorn.com/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan to-cyan-bright hover:from-white hover:to-cyan-muted transition-all duration-300"
+              className="inline-flex items-center font-bold text-[#138A99] hover:text-white transition-colors duration-300"
             >
               Abhivorn Technologies Pvt Ltd
             </a>
