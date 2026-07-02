@@ -1,6 +1,5 @@
 "use client";
 
-import { siteConfig } from "@/lib/content/company";
 import { motion, Variants } from "framer-motion";
 
 export function PageHero({

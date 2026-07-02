@@ -6,7 +6,6 @@ import { z } from "zod";
 import { useState } from "react";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { FadeIn } from "@/components/motion/FadeIn";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
