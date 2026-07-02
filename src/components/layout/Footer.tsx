@@ -106,25 +106,26 @@ export function Footer() {
       >
         {/* Company Section (2 Cols width) */}
         <motion.div variants={itemVariants} className="lg:col-span-2">
-          <Link href="/" className="inline-block group mb-6 bg-white rounded p-1">
+          <Link href="/" className="inline-block group mb-8">
             <motion.div 
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
+              className="relative h-14 w-[180px] shrink-0 overflow-hidden"
             >
               <Image 
                 src={siteConfig.logo} 
                 alt={siteConfig.name} 
-                width={160}
-                height={56}
-                className="h-12 w-auto object-contain brightness-0 invert opacity-90 drop-shadow-sm" 
+                fill
+                className="object-contain object-left scale-[2.8] origin-left ml-4 pointer-events-none opacity-90" 
+                style={{ filter: 'grayscale(100%) invert(100%) contrast(1000%) brightness(200%)', mixBlendMode: 'screen' }}
               />
             </motion.div>
           </Link>
-          <div className="text-slate-400 mb-8 max-w-[360px] leading-relaxed text-[0.85rem] space-y-2">
+          <div className="text-slate-300 mb-8 max-w-[360px] leading-relaxed text-[0.9rem] space-y-3 font-medium">
             <p>
               LMB Insurance Brokers Pvt. Ltd is a company incorporated under the Companies Act, 1956. Licensed by Insurance Regulatory and Development Authority (IRDA), as per IRDA Act, 1999 and IRDA (Insurance Brokers) Regulations 2002.
             </p>
-            <div>
+            <div className="pt-2 text-[#00E5FF]">
               <p>IRDAI License No. 116</p>
               <p>CIN : U66010KL2002PTCO15686</p>
             </div>
@@ -154,10 +155,11 @@ export function Footer() {
           <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
             Company
           </h4>
-          <ul className="space-y-4">
+          <ul className="space-y-3.5">
             {footerNavigation.company.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-slate-400 text-[0.95rem] hover:text-white transition-colors duration-300">
+                <Link href={link.href} className="group flex items-center text-slate-400 text-[0.95rem] hover:text-[#00E5FF] transition-colors duration-300">
+                  <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
                   {link.label}
                 </Link>
               </li>
@@ -170,10 +172,11 @@ export function Footer() {
           <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
             Services
           </h4>
-          <ul className="space-y-4">
+          <ul className="space-y-3.5">
             {footerNavigation.services.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-slate-400 text-[0.95rem] hover:text-white transition-colors duration-300">
+                <Link href={link.href} className="group flex items-center text-slate-400 text-[0.95rem] hover:text-[#00E5FF] transition-colors duration-300">
+                  <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
                   {link.label}
                 </Link>
               </li>
@@ -186,10 +189,11 @@ export function Footer() {
           <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
             Resources
           </h4>
-          <ul className="space-y-4">
+          <ul className="space-y-3.5">
             {[...footerNavigation.resources, ...footerNavigation.legal].map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-slate-400 text-[0.95rem] hover:text-white transition-colors duration-300">
+                <Link href={link.href} className="group flex items-center text-slate-400 text-[0.95rem] hover:text-[#00E5FF] transition-colors duration-300">
+                  <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
                   {link.label}
                 </Link>
               </li>

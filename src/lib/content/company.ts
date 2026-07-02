@@ -9,12 +9,12 @@ export const siteConfig = {
 } as const;
 
 export const contactInfo = {
-  phone: "(Content Required from Client)",
-  phoneSecondary: "(Content Required from Client)",
-  email: "(Content Required from Client)",
-  address: "(Content Required from Client)",
-  city: "(Content Required from Client)",
-  state: "(Content Required from Client)",
+  phone: "+91 9847424144",
+  phoneSecondary: "+91 9744341440",
+  email: "cmd@lmbinsurancebroker.com",
+  address: "Head Office",
+  city: "Kerala",
+  state: "KL",
   country: "India",
   hours: "Monday – Friday, 9:00 AM – 6:00 PM",
 } as const;
