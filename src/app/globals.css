@@ -62,7 +62,7 @@ html.lenis body {
 
 body {
   @apply bg-background text-foreground;
-  font-family: var(--font-syne), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.01em;

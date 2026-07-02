@@ -14,7 +14,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white text-slate-600 relative z-0 selection:bg-[#115E59] selection:text-white">
       
       {/* 1. Refined Corporate Hero Section */}
-      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-20 overflow-hidden bg-slate-50">
+      <section className="relative pt-12 pb-10 lg:pt-20 lg:pb-12 overflow-hidden bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
             
@@ -60,7 +60,7 @@ export default function AboutPage() {
       </section>
 
       {/* 2. Professional Timeline Section */}
-      <section className="py-20 md:py-32 bg-white relative">
+      <section className="pt-12 pb-20 md:pt-16 md:pb-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-6">
           
           <div className="text-center max-w-3xl mx-auto mb-20">
