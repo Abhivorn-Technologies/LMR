@@ -102,7 +102,7 @@ export function Footer() {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="mx-auto max-w-7xl px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-12 mb-16"
+        className="mx-auto max-w-7xl px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-16"
       >
         {/* Company Section (2 Cols width) */}
         <motion.div variants={itemVariants} className="lg:col-span-2">
@@ -116,6 +116,7 @@ export function Footer() {
                 src={siteConfig.logo} 
                 alt={siteConfig.name} 
                 fill
+                sizes="180px"
                 className="object-contain object-left scale-[2.8] origin-left ml-4 pointer-events-none brightness-0 invert" 
               />
             </motion.div>
@@ -124,52 +125,19 @@ export function Footer() {
             <p>
               LMB Insurance Brokers Pvt. Ltd is a company incorporated under the Companies Act, 1956. Licensed by Insurance Regulatory and Development Authority (IRDA), as per IRDA Act, 1999 and IRDA (Insurance Brokers) Regulations 2002.
             </p>
-            <div className="pt-4 border-t border-white/10 space-y-2 text-[0.78rem]">
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-slate-400 font-medium">IRDAI License No:</span>
-                <span className="text-[#00E5FF] font-semibold">116</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-slate-400 font-medium">CIN:</span>
-                <span className="text-white font-mono">U66010KL2002PTC015686</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-slate-400 font-medium">Category:</span>
-                <span className="text-white font-medium">Composite Insurance Brokers</span>
-              </div>
-              <div className="flex justify-between py-1">
-                <span className="text-slate-400 font-medium">Period of License:</span>
-                <span className="text-white">18.02.2021 to 17.02.2024</span>
-              </div>
-            </div>
-          </div>
-          <div className="flex gap-4">
-            {[ 
-              { icon: FacebookIcon, key: 'fb' }, 
-              { icon: InstagramIcon, key: 'ig' }, 
-              { icon: TwitterIcon, key: 'tw' },
-              { icon: YoutubeIcon, key: 'yt' }
-            ].map((social) => (
-              <a 
-                key={social.key} 
-                href="#" 
-                className="relative w-11 h-11 bg-white/5 backdrop-blur-md rounded-full flex items-center justify-center text-slate-400 border border-white/10 group overflow-hidden transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:rotate-3"
-              >
-                {/* Glow Background */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-cyan/40 to-cyan-bright/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <social.icon size={18} className="relative z-10 group-hover:text-white transition-colors duration-300" />
-              </a>
-            ))}
+            <p className="text-[#00E5FF] font-semibold pt-2">
+              IRDAI License No: 116
+            </p>
           </div>
         </motion.div>
 
-        {/* Company Links */}
+        {/* Quick Links */}
         <motion.div variants={itemVariants}>
           <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
-            Company
+            Quick Links
           </h4>
           <ul className="space-y-3.5">
-            {footerNavigation.company.map((link) => (
+            {footerNavigation.quickLinks.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="group flex items-center text-[#c4e0e6] text-[0.95rem] hover:text-white transition-colors duration-300">
                   <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
@@ -197,23 +165,6 @@ export function Footer() {
           </ul>
         </motion.div>
 
-        {/* Resources & Legal */}
-        <motion.div variants={itemVariants}>
-          <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
-            Resources
-          </h4>
-          <ul className="space-y-3.5">
-            {[...footerNavigation.resources, ...footerNavigation.legal].map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="group flex items-center text-[#c4e0e6] text-[0.95rem] hover:text-white transition-colors duration-300">
-                  <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
         {/* Contact Info */}
         <motion.div variants={itemVariants}>
           <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
@@ -229,7 +180,7 @@ export function Footer() {
                 key={i} 
                 className="flex items-center gap-4 text-[#c4e0e6] p-2 -ml-2 rounded-lg cursor-default transition-colors duration-300 group hover:bg-white/5 hover:translate-x-1"
               >
-                <div className="w-8 h-8 rounded-full bg-cyan/10 flex items-center justify-center text-cyan group-hover:bg-cyan group-hover:text-white transition-colors duration-300 shrink-0">
+                <div className="w-8 h-8 rounded-full bg-[#00E5FF]/10 flex items-center justify-center text-[#00E5FF] group-hover:bg-[#00E5FF] group-hover:text-white transition-colors duration-300 shrink-0">
                   <item.icon size={14} className="group-hover:rotate-12 transition-transform duration-300" />
                 </div>
                 <span className="text-[0.8rem] leading-tight">{item.text}</span>

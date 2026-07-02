@@ -12,26 +12,13 @@ export const mainNavigation: NavItem[] = [
 ];
 
 export const footerNavigation = {
-  company: [
-    { label: "About", href: "/about" },
-    { label: "Leadership", href: "/leadership" },
-    { label: "Careers", href: "/careers" },
-    { label: "Why LMB", href: "/why-lmb" },
+  quickLinks: [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Contact Us", href: "/contact" },
   ],
   services: [
-    { label: "General Insurance", href: "/services#general-insurance" },
+    { label: "Our Services", href: "/services" },
     { label: "Reinsurance", href: "/reinsurance" },
-    { label: "Life Insurance", href: "/services#life-insurance" },
-    { label: "Risk Management", href: "/services#risk-management" },
-    { label: "Consulting", href: "/services#consulting" },
-  ],
-  resources: [
-    { label: "Resources", href: "/resources" },
-    { label: "FAQ", href: "/faq" },
-    { label: "Contact", href: "/contact" },
-  ],
-  legal: [
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Use", href: "/terms" },
   ],
 } as const;

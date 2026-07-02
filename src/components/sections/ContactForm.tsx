@@ -7,13 +7,31 @@ import { useState } from "react";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
+// Custom validation to block common free email providers
+const freeEmailProviders = [
+  "gmail.com",
+  "yahoo.com",
+  "hotmail.com",
+  "outlook.com",
+  "aol.com",
+  "icloud.com"
+];
+
 const contactSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Valid email required"),
-  phone: z.string().min(10, "Valid phone number required"),
-  company: z.string().optional(),
-  inquiry: z.string().min(1, "Please select an inquiry type"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  name: z.string().min(2, "Full name is required").max(50, "Name is too long"),
+  email: z.string()
+    .email("A valid email address is required")
+    .max(100, "Email is too long")
+    .refine((val) => {
+      const domain = val.split('@')[1]?.toLowerCase();
+      return !freeEmailProviders.includes(domain);
+    }, {
+      message: "Please provide a valid corporate email (Gmail/Yahoo domains are not accepted)",
+    }),
+  phone: z.string().min(10, "A valid phone number is required").max(15, "Phone number is too long"),
+  company: z.string().max(100, "Company name is too long").optional(),
+  inquiry: z.string().min(1, "Please select an inquiry subject"),
+  message: z.string().min(10, "Your message must be at least 10 characters long").max(1000, "Message cannot exceed 1000 characters"),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -51,99 +69,103 @@ export function ContactForm() {
   };
 
   return (
-    <div className="relative">
-      <div className="relative overflow-hidden rounded-[2rem] border-0 bg-white p-8 md:p-10 shadow-2xl">
-        {/* Subtle cyan accent background */}
-        <div className="absolute top-0 right-0 h-full w-full bg-gradient-to-bl from-[#00E5FF]/5 to-transparent pointer-events-none" />
+    <div className="relative h-full">
+      <div className="relative overflow-hidden rounded-[2.5rem] border border-slate-100 bg-white p-8 md:p-12 shadow-xl flex flex-col h-full">
+        {/* Subtle accent background */}
+        <div className="absolute top-0 right-0 h-64 w-64 bg-gradient-to-bl from-[#115E59]/5 to-transparent rounded-bl-full pointer-events-none" />
         
-        <h3 className="mb-8 font-display text-2xl font-bold text-[#04151a]">
+        <h3 className="mb-8 text-3xl font-bold text-slate-900 tracking-tight">
           Send a Message
         </h3>
 
         {status === "success" && (
-          <div className="mb-6 flex items-center gap-3 rounded-xl border border-teal-500/30 bg-teal-50 p-4 text-sm text-teal-700 font-medium">
+          <div className="mb-6 flex items-center gap-3 rounded-xl border border-teal-500/30 bg-teal-50 p-4 text-sm text-teal-700 font-medium shadow-sm">
             <CheckCircle2 className="h-5 w-5 shrink-0" />
-            Your inquiry has been received. We will respond during business hours.
+            Your inquiry has been received. Our advisory team will respond shortly.
           </div>
         )}
 
         {status === "error" && (
-          <div className="mb-6 flex items-center gap-3 rounded-xl border border-red-500/30 bg-red-50 p-4 text-sm text-red-700 font-medium">
+          <div className="mb-6 flex items-center gap-3 rounded-xl border border-red-500/30 bg-red-50 p-4 text-sm text-red-700 font-medium shadow-sm">
             <AlertCircle className="h-5 w-5 shrink-0" />
             Something went wrong. Please try again or call us directly.
           </div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10" noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10 flex-1 flex flex-col" noValidate>
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <label htmlFor="name" className="mb-2 block text-xs font-bold uppercase tracking-widest text-[#0a2b33]">
-                Full Name <span className="text-[#00B4D8]">*</span>
+              <label htmlFor="name" className="mb-2 block text-xs font-bold uppercase tracking-widest text-slate-700">
+                Full Name <span className="text-[#115E59]">*</span>
               </label>
               <input 
                 id="name" 
                 placeholder="Your name" 
+                maxLength={50}
                 {...register("name")} 
-                className="flex h-12 w-full rounded-xl border border-[#0a2b33]/10 bg-[#f8fafc] px-4 text-sm text-[#04151a] placeholder:text-slate-400 focus:border-[#00B4D8] focus:outline-none focus:ring-1 focus:ring-[#00B4D8]/30 transition-colors"
+                className={`flex h-12 w-full rounded-xl border bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors ${errors.name ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
               />
               {errors.name && (
-                <p className="text-xs font-medium text-red-500">{errors.name.message}</p>
+                <p className="text-xs font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={12}/> {errors.name.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <label htmlFor="email" className="mb-2 block text-xs font-bold uppercase tracking-widest text-[#0a2b33]">
-                Email Address <span className="text-[#00B4D8]">*</span>
+              <label htmlFor="email" className="mb-2 block text-xs font-bold uppercase tracking-widest text-slate-700">
+                Corporate Email <span className="text-[#115E59]">*</span>
               </label>
               <input
                 id="email"
                 type="email"
                 placeholder="you@company.com"
+                maxLength={100}
                 {...register("email")}
-                className="flex h-12 w-full rounded-xl border border-[#0a2b33]/10 bg-[#f8fafc] px-4 text-sm text-[#04151a] placeholder:text-slate-400 focus:border-[#00B4D8] focus:outline-none focus:ring-1 focus:ring-[#00B4D8]/30 transition-colors"
+                className={`flex h-12 w-full rounded-xl border bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors ${errors.email ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
               />
               {errors.email && (
-                <p className="text-xs font-medium text-red-500">{errors.email.message}</p>
+                <p className="text-xs font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={12}/> {errors.email.message}</p>
               )}
             </div>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <label htmlFor="phone" className="mb-2 block text-xs font-bold uppercase tracking-widest text-[#0a2b33]">
-                Phone <span className="text-[#00B4D8]">*</span>
+              <label htmlFor="phone" className="mb-2 block text-xs font-bold uppercase tracking-widest text-slate-700">
+                Phone <span className="text-[#115E59]">*</span>
               </label>
               <input 
                 id="phone" 
                 placeholder="+91 ..." 
+                maxLength={15}
                 {...register("phone")} 
-                className="flex h-12 w-full rounded-xl border border-[#0a2b33]/10 bg-[#f8fafc] px-4 text-sm text-[#04151a] placeholder:text-slate-400 focus:border-[#00B4D8] focus:outline-none focus:ring-1 focus:ring-[#00B4D8]/30 transition-colors"
+                className={`flex h-12 w-full rounded-xl border bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors ${errors.phone ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
               />
               {errors.phone && (
-                <p className="text-xs font-medium text-red-500">{errors.phone.message}</p>
+                <p className="text-xs font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={12}/> {errors.phone.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <label htmlFor="company" className="mb-2 block text-xs font-bold uppercase tracking-widest text-[#0a2b33]">
+              <label htmlFor="company" className="mb-2 block text-xs font-bold uppercase tracking-widest text-slate-700">
                 Organization
               </label>
               <input 
                 id="company" 
                 placeholder="Company name" 
+                maxLength={100}
                 {...register("company")} 
-                className="flex h-12 w-full rounded-xl border border-[#0a2b33]/10 bg-[#f8fafc] px-4 text-sm text-[#04151a] placeholder:text-slate-400 focus:border-[#00B4D8] focus:outline-none focus:ring-1 focus:ring-[#00B4D8]/30 transition-colors"
+                className="flex h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#115E59] focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="inquiry" className="mb-2 block text-xs font-bold uppercase tracking-widest text-[#0a2b33]">
-              Subject <span className="text-[#00B4D8]">*</span>
+            <label htmlFor="inquiry" className="mb-2 block text-xs font-bold uppercase tracking-widest text-slate-700">
+              Subject <span className="text-[#115E59]">*</span>
             </label>
             <select 
               id="inquiry" 
               defaultValue="" 
               {...register("inquiry")}
-              className="flex h-12 w-full rounded-xl border border-[#0a2b33]/10 bg-[#f8fafc] px-4 text-sm text-[#04151a] focus:border-[#00B4D8] focus:outline-none focus:ring-1 focus:ring-[#00B4D8]/30 transition-colors"
+              className={`flex h-12 w-full rounded-xl border bg-slate-50 px-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors ${errors.inquiry ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
             >
               <option value="" disabled>
                 How can we help you today?
@@ -155,22 +177,23 @@ export function ContactForm() {
               ))}
             </select>
             {errors.inquiry && (
-              <p className="text-xs font-medium text-red-500">{errors.inquiry.message}</p>
+              <p className="text-xs font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={12}/> {errors.inquiry.message}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="message" className="mb-2 block text-xs font-bold uppercase tracking-widest text-[#0a2b33]">
-              Message (Optional)
+          <div className="space-y-2 flex-1 flex flex-col">
+            <label htmlFor="message" className="mb-2 block text-xs font-bold uppercase tracking-widest text-slate-700">
+              Message <span className="text-[#115E59]">*</span>
             </label>
             <textarea
               id="message"
               placeholder="Tell us about your requirements..."
+              maxLength={1000}
               {...register("message")}
-              className="flex min-h-[140px] w-full rounded-xl border border-[#0a2b33]/10 bg-[#f8fafc] px-4 py-3 text-sm text-[#04151a] placeholder:text-slate-400 focus:border-[#00B4D8] focus:outline-none focus:ring-1 focus:ring-[#00B4D8]/30 transition-colors resize-y"
+              className={`flex flex-1 min-h-[120px] w-full rounded-xl border bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors resize-y ${errors.message ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
             />
             {errors.message && (
-              <p className="text-xs font-medium text-red-500">{errors.message.message}</p>
+              <p className="text-xs font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={12}/> {errors.message.message}</p>
             )}
           </div>
 
@@ -178,15 +201,15 @@ export function ContactForm() {
             type="submit" 
             size="lg" 
             disabled={status === "loading"} 
-            className="w-full bg-[#00B4D8] text-white hover:bg-[#0096B4] shadow-[0_4px_14px_0_rgba(0,180,216,0.39)] transition-all hover:shadow-[0_6px_20px_rgba(0,180,216,0.23)] hover:-translate-y-0.5 rounded-xl text-base font-semibold py-6"
+            className="w-full bg-[#115E59] text-white hover:bg-[#0a3a3f] shadow-lg shadow-[#115E59]/20 transition-all hover:shadow-xl hover:shadow-[#115E59]/30 hover:-translate-y-0.5 rounded-xl text-base font-semibold py-6 mt-4"
           >
             {status === "loading" ? (
               <>
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                Sending...
+                Sending Inquiry...
               </>
             ) : (
-              "Send Message"
+              "Submit Inquiry"
             )}
           </Button>
         </form>

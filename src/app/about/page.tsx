@@ -1,95 +1,99 @@
 import { createPageMetadata } from "@/lib/metadata";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import Image from "next/image";
-import { CheckCircle2, ShieldCheck, Globe2, Target, Award, Building2 } from "lucide-react";
-import ShinyText from "@/components/ui/ShinyText";
+import { CheckCircle2, ShieldCheck, Globe2, Target, Award, Briefcase } from "lucide-react";
 
 export const metadata = createPageMetadata({
-  title: "About Us",
+  title: "About Us | LMB Insurance Brokers",
   description: "Learn about LMB Insurance Brokers — composite insurance broking, mission, values, and corporate philosophy.",
   path: "/about",
 });
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#021217] text-slate-300 relative z-0">
-      {/* 1. Custom Premium Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-28 pb-16">
-        {/* Background Layer: blocks.jpg with smooth transition to dark theme */}
-        <div className="absolute inset-0 z-0 bg-[#E0F7FA]">
-          <Image 
-            src="/assets/blocks.jpg" 
-            alt="LMB Corporate" 
-            fill 
-            className="object-cover opacity-90 scale-105"
-            priority
-          />
-          {/* Gradient that fades to dark ONLY at the very bottom edge to seamlessly blend into the dark page */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-[#021217]" />
-          
-          {/* Subtle animated light blooms */}
-          <div className="absolute top-1/4 -right-1/4 h-[600px] w-[600px] rounded-full bg-white/20 blur-[120px] animate-[pulse_10s_ease-in-out_infinite]" />
-        </div>
+    <div className="min-h-screen bg-white text-slate-600 relative z-0 selection:bg-[#115E59] selection:text-white">
+      
+      {/* 1. Refined Corporate Hero Section */}
+      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-20 overflow-hidden bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            
+            {/* Text Content */}
+            <div className="max-w-2xl">
+              <ScrollReveal direction="up" delay={0.1}>
+                <div className="mb-6 inline-flex items-center gap-3">
+                  <span className="h-px w-8 bg-[#115E59]" />
+                  <span className="text-sm font-semibold tracking-widest text-[#115E59] uppercase">Our Legacy</span>
+                </div>
+              </ScrollReveal>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-start text-left pt-12 md:pt-20">
-          <ScrollReveal direction="up" delay={0.1}>
-            <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-slate-700/10 bg-white/40 px-6 py-2 backdrop-blur-md shadow-sm">
-              <span className="flex h-2 w-2 rounded-full bg-[#0077B6] animate-pulse" />
-              <span className="text-sm font-bold tracking-[0.2em] text-slate-800 uppercase">Our Legacy</span>
+              <ScrollReveal direction="up" delay={0.2}>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-tight">
+                  A Tradition of <span className="text-[#115E59] font-serif italic">Trust</span> <br />
+                  & <span className="text-[#115E59]">Excellence.</span>
+                </h1>
+              </ScrollReveal>
+
+              <ScrollReveal direction="up" delay={0.3}>
+                <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+                  For over two decades, LMB Insurance Brokers has delivered unparalleled direct and reinsurance solutions, redefining risk management with unwavering integrity and a commitment to our clients' success.
+                </p>
+              </ScrollReveal>
             </div>
-          </ScrollReveal>
 
-          <ScrollReveal direction="up" delay={0.2}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.05] mb-6 text-slate-900 max-w-3xl drop-shadow-sm">
-              About <br />
-              <span className="text-[#0077B6]">LMB Brokers</span>
-            </h1>
-          </ScrollReveal>
+            {/* Hero Image */}
+            <ScrollReveal direction="left" delay={0.4}>
+              <div className="relative h-[400px] lg:h-[520px] w-full rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-2xl lg:mt-6">
+                <Image 
+                  src="/assets/blocks.jpeg" 
+                  alt="LMB Corporate Family" 
+                  fill 
+                  className="object-cover object-[50%_80%] hover:scale-105 transition-transform duration-1000"
+                  priority
+                />
+                <div className="absolute inset-0 bg-[#115E59]/10 mix-blend-multiply" />
+              </div>
+            </ScrollReveal>
 
-          <ScrollReveal direction="up" delay={0.3}>
-            <p className="max-w-xl text-xl md:text-2xl font-semibold text-slate-800 leading-relaxed mb-12 drop-shadow-sm">
-              Established direct and reinsurance brokerage services, redefining risk management and client trust for over two decades.
-            </p>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      {/* 2. Interactive Timeline & Story Section with Images */}
-      <section className="relative py-16 md:py-20 z-10 bg-[#021217]">
-        <div className="mx-auto max-w-7xl px-6">
+      {/* 2. Professional Timeline Section */}
+      <section className="py-20 md:py-32 bg-white relative">
+        <div className="max-w-7xl mx-auto px-6">
           
-          <div className="mb-12 text-center">
+          <div className="text-center max-w-3xl mx-auto mb-20">
             <ScrollReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-                Our Journey of Excellence
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                Our Journey
               </h2>
-              <div className="h-1 w-24 bg-gradient-to-r from-[#00E5FF] to-[#00B4D8] rounded-full mx-auto" />
+              <p className="text-lg text-slate-600">
+                Milestones that define our commitment to excellence and our continuous evolution in the global insurance landscape.
+              </p>
             </ScrollReveal>
           </div>
 
-          <div className="space-y-24 md:space-y-32 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#00E5FF]/30 before:to-transparent">
+          <div className="space-y-16 relative before:absolute before:inset-0 before:ml-[1.1rem] md:before:mx-auto md:before:translate-x-0 before:h-full before:w-px before:bg-slate-200">
             
             {/* Timeline Item 1 */}
             <ScrollReveal direction="up" delay={0.1}>
               <div className="relative flex flex-col md:flex-row items-center justify-between group">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-[#021217] bg-[#00E5FF] shadow-[0_0_20px_rgba(0,229,255,0.4)] z-10 shrink-0 absolute left-0 md:left-1/2 -translate-x-1/2">
-                  <ShieldCheck size={16} className="text-[#021217]" />
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-[#115E59] shadow-sm z-10 shrink-0 absolute left-0 md:left-1/2 -translate-x-1/2">
+                  <ShieldCheck size={16} className="text-white" />
                 </div>
                 
-                {/* Content Left */}
-                <div className="w-full md:w-[45%] pl-16 md:pl-0 md:pr-12 md:text-right mb-8 md:mb-0">
-                  <div className="text-[#00E5FF] font-bold tracking-widest text-sm mb-2">2003</div>
-                  <h3 className="text-3xl font-display font-bold text-white mb-4">Incorporation</h3>
-                  <p className="text-lg text-slate-300 leading-relaxed">
-                    LMB Insurance Brokers Pvt. Ltd was incorporated, achieving the milestone of being the first Direct Insurance Broker in the state of Kerala, India.
+                <div className="w-full md:w-[45%] pl-16 md:pl-0 md:pr-12 md:text-right">
+                  <span className="text-[#115E59] font-bold tracking-widest text-sm mb-2 block">2003</span>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3">Incorporation</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Founded with a vision to lead, LMB Insurance Brokers became the first Direct Insurance Broker in Kerala, India, setting a new benchmark for regional brokerage services.
                   </p>
                 </div>
 
-                {/* Image Right */}
-                <div className="w-full md:w-[45%] pl-16 md:pl-12">
-                  <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_40px_rgba(0,229,255,0.15)] transition-all duration-500 group-hover:-translate-y-2">
-                    <div className="absolute inset-0 bg-[#00E5FF]/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <Image src="/assets/image1.jpeg" alt="Incorporation in 2003" fill className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+                <div className="w-full md:w-[45%] pl-16 md:pl-12 mt-8 md:mt-0">
+                  <div className="relative h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
+                    <Image src="/assets/image1.jpeg" alt="Incorporation in 2003" fill className="object-cover" />
                   </div>
                 </div>
               </div>
@@ -98,24 +102,21 @@ export default function AboutPage() {
             {/* Timeline Item 2 */}
             <ScrollReveal direction="up" delay={0.2}>
               <div className="relative flex flex-col md:flex-row-reverse items-center justify-between group">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-[#021217] bg-[#00B4D8] shadow-[0_0_20px_rgba(0,180,216,0.4)] z-10 shrink-0 absolute left-0 md:left-1/2 -translate-x-1/2">
-                  <Award size={16} className="text-[#021217]" />
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-[#115E59] shadow-sm z-10 shrink-0 absolute left-0 md:left-1/2 -translate-x-1/2">
+                  <Award size={16} className="text-white" />
                 </div>
                 
-                {/* Content Right */}
-                <div className="w-full md:w-[45%] pl-16 md:pl-12 mb-8 md:mb-0">
-                  <div className="text-[#00B4D8] font-bold tracking-widest text-sm mb-2">2018</div>
-                  <h3 className="text-3xl font-display font-bold text-white mb-4">Composite License</h3>
-                  <p className="text-lg text-slate-300 leading-relaxed">
-                    We successfully upgraded to a Composite Broking License, expanding our capabilities to serve both direct and complex reinsurance markets globally.
+                <div className="w-full md:w-[45%] pl-16 md:pl-12">
+                  <span className="text-[#115E59] font-bold tracking-widest text-sm mb-2 block">2018</span>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3">Composite License</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Successfully upgraded to a Composite Broking License, expanding our strategic capabilities to navigate and serve complex direct and reinsurance markets globally.
                   </p>
                 </div>
 
-                {/* Image Left */}
-                <div className="w-full md:w-[45%] pl-16 md:pl-0 md:pr-12">
-                  <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_40px_rgba(0,180,216,0.15)] transition-all duration-500 group-hover:-translate-y-2">
-                    <div className="absolute inset-0 bg-[#00B4D8]/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <Image src="/assets/image5.jpeg" alt="Upgraded to Composite License" fill className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+                <div className="w-full md:w-[45%] pl-16 md:pl-0 md:pr-12 mt-8 md:mt-0">
+                  <div className="relative h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
+                    <Image src="/assets/image5.jpeg" alt="Composite License" fill className="object-cover" />
                   </div>
                 </div>
               </div>
@@ -124,120 +125,127 @@ export default function AboutPage() {
             {/* Timeline Item 3 */}
             <ScrollReveal direction="up" delay={0.3}>
               <div className="relative flex flex-col md:flex-row items-center justify-between group">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-[#021217] bg-white shadow-[0_0_20px_rgba(255,255,255,0.4)] z-10 shrink-0 absolute left-0 md:left-1/2 -translate-x-1/2">
-                  <Globe2 size={16} className="text-[#021217]" />
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-slate-800 shadow-sm z-10 shrink-0 absolute left-0 md:left-1/2 -translate-x-1/2">
+                  <Globe2 size={16} className="text-white" />
                 </div>
                 
-                {/* Content Left */}
-                <div className="w-full md:w-[45%] pl-16 md:pl-0 md:pr-12 md:text-right mb-8 md:mb-0">
-                  <div className="text-white font-bold tracking-widest text-sm mb-2">PRESENT</div>
-                  <h3 className="text-3xl font-display font-bold text-white mb-4">Global Expansion</h3>
-                  <p className="text-lg text-slate-300 leading-relaxed">
-                    We are constantly striving to excel and venture into exciting, uncharted territories within the Reinsurance Market.
+                <div className="w-full md:w-[45%] pl-16 md:pl-0 md:pr-12 md:text-right">
+                  <span className="text-slate-500 font-bold tracking-widest text-sm mb-2 block">PRESENT</span>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3">Global Expansion</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Continuously striving for excellence, we are actively venturing into uncharted global territories, providing bespoke reinsurance solutions to a worldwide clientele.
                   </p>
                 </div>
 
-                {/* Image Right */}
-                <div className="w-full md:w-[45%] pl-16 md:pl-12">
-                  <div className="relative h-64 md:h-80 w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_40px_rgba(255,255,255,0.1)] transition-all duration-500 group-hover:-translate-y-2">
-                    <div className="absolute inset-0 bg-white/5 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <Image src="/assets/image6.jpeg" alt="Global Reinsurance Expansion" fill className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+                <div className="w-full md:w-[45%] pl-16 md:pl-12 mt-8 md:mt-0">
+                  <div className="relative h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
+                    <Image src="/assets/image6.jpeg" alt="Global Reinsurance Expansion" fill className="object-cover" />
                   </div>
                 </div>
               </div>
             </ScrollReveal>
 
           </div>
-
-          {/* Sticky Feature Text */}
-          <div className="mt-32">
-            <ScrollReveal direction="up" delay={0.4}>
-              <div className="rounded-[3rem] bg-gradient-to-br from-[#00E5FF]/10 via-transparent to-transparent border border-[#00E5FF]/20 p-10 md:p-16 lg:p-20 backdrop-blur-xl relative overflow-hidden group">
-                <div className="absolute -top-10 -right-10 opacity-10 group-hover:opacity-20 transition-opacity duration-700 group-hover:rotate-12 group-hover:scale-110">
-                  <Building2 size={200} className="text-[#00E5FF]" />
-                </div>
-                <div className="grid lg:grid-cols-2 gap-12 relative z-10">
-                  <div>
-                    <h3 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
-                      Unmatched Efficiency & Speed
-                    </h3>
-                    <p className="text-xl text-slate-300 leading-relaxed font-medium">
-                      With us by your side, you can rest assured that all of your insurance needs will be met with speed and efficiency. Be it endorsements or new quotes for your company, we have you covered perfectly.
-                    </p>
-                  </div>
-                  <div className="flex flex-col justify-center space-y-6">
-                    {["Licensed by IRDAI", "15+ Years Experience", "Client-First Approach", "Tailored Risk Solutions"].map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-4 bg-white/5 rounded-full px-6 py-4 border border-white/5 hover:border-[#00E5FF]/30 transition-colors">
-                        <CheckCircle2 className="text-[#00E5FF] shrink-0" size={24} />
-                        <span className="text-slate-200 font-semibold text-lg">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-
         </div>
       </section>
 
-      {/* 3. Ultra-Premium Mission & Vision Section with Background Images */}
-      <section className="relative py-16 md:py-20 bg-[#020b0e] overflow-hidden">
-        {/* Background Accents */}
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00E5FF]/20 to-transparent" />
-        
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+      {/* 3. Core Values & Efficiency */}
+      <section className="py-20 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             
-            {/* Mission Panel */}
-            <ScrollReveal direction="up" delay={0.2} className="h-full">
-              <div className="group relative h-full rounded-[3rem] border border-white/10 p-12 overflow-hidden transition-all duration-700 hover:-translate-y-4 hover:shadow-[0_40px_100px_-20px_rgba(0,229,255,0.25)] flex flex-col items-start min-h-[450px]">
-                {/* Background Image */}
-                <Image src="/assets/image2.jpeg" alt="Mission" fill className="object-cover opacity-60 group-hover:scale-105 group-hover:opacity-80 transition-all duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020b0e] via-[#020b0e]/50 to-transparent" />
+            <ScrollReveal direction="up">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                  Unmatched Efficiency & Strategic Speed
+                </h2>
+                <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                  Time is a critical asset in risk management. Partnering with LMB ensures that your insurance requirements are executed with precision and promptness. From intricate endorsements to comprehensive new quotes, our streamlined processes guarantee flawless coverage.
+                </p>
                 
-                {/* Glow Effect */}
-                <div className="absolute -top-32 -right-32 w-64 h-64 bg-[#00E5FF] rounded-full mix-blend-screen filter blur-[100px] opacity-20 group-hover:opacity-50 transition-opacity duration-700" />
+                <div className="grid sm:grid-cols-2 gap-6">
+                  {[
+                    "Licensed by IRDAI", 
+                    "20+ Years of Expertise", 
+                    "Client-Centric Approach", 
+                    "Tailored Risk Solutions"
+                  ].map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                      <CheckCircle2 className="text-[#115E59] shrink-0 mt-1" size={20} />
+                      <span className="text-slate-700 font-medium">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="left" delay={0.2}>
+              <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-xl">
+                <Image src="/assets/image4.jpeg" alt="Professional Efficiency" fill className="object-cover" />
+                <div className="absolute inset-0 bg-slate-900/20" />
+              </div>
+            </ScrollReveal>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Mission & Vision */}
+      <section className="py-24 md:py-32 bg-slate-50 relative overflow-hidden">
+        {/* Subtle background decoration */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-40 pointer-events-none">
+          <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-b from-[#115E59]/5 to-transparent blur-3xl" />
+          <div className="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-t from-[#115E59]/5 to-transparent blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          
+          <div className="text-center max-w-2xl mx-auto mb-20">
+            <ScrollReveal>
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
+                Our Guiding Principles
+              </h2>
+              <div className="flex items-center justify-center gap-3">
+                <span className="h-px w-12 bg-slate-300" />
+                <span className="h-2 w-2 rounded-full bg-[#115E59]" />
+                <span className="h-px w-12 bg-slate-300" />
+              </div>
+            </ScrollReveal>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            
+            {/* Mission - Dark Premium Card */}
+            <ScrollReveal direction="up" delay={0.1} className="h-full">
+              <div className="group relative h-full bg-[#115E59] rounded-[2.5rem] p-10 md:p-14 overflow-hidden shadow-2xl hover:shadow-[#115E59]/20 transition-all duration-500 hover:-translate-y-2">
+                {/* Decorative large icon watermark */}
+                <Target className="absolute -right-8 -bottom-8 text-white/5 w-64 h-64 rotate-12 group-hover:scale-110 transition-transform duration-700" />
                 
-                <div className="mt-auto relative z-10 w-full">
-                  <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00B4D8] to-[#00E5FF] shadow-[0_10px_30px_rgba(0,229,255,0.3)] group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
-                    <Target className="h-10 w-10 text-[#04151a]" />
+                <div className="relative z-10">
+                  <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-10 border border-white/20 group-hover:bg-white/20 transition-colors">
+                    <Target className="text-white" size={32} />
                   </div>
-                  
-                  <h3 className="mb-6 font-display text-4xl font-bold text-white flex items-center gap-4">
-                    Our Mission
-                    <span className="h-px flex-1 bg-gradient-to-r from-[#00E5FF]/50 to-transparent" />
-                  </h3>
-                  
-                  <p className="text-xl leading-relaxed text-slate-300 group-hover:text-white transition-colors duration-500">
-                    To provide exceptional service to our clients while setting the industry standard for risk management consultation and reinsurance service.
+                  <h3 className="text-3xl font-bold text-white mb-6 tracking-wide">Our Mission</h3>
+                  <p className="text-white/80 leading-relaxed text-lg md:text-xl font-light">
+                    To deliver exceptional, personalized service to our clients while establishing the industry benchmark for risk management consultation and innovative reinsurance solutions. We exist to protect what matters most to you.
                   </p>
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Vision Panel */}
-            <ScrollReveal direction="up" delay={0.4} className="h-full">
-              <div className="group relative h-full rounded-[3rem] border border-white/10 p-12 overflow-hidden transition-all duration-700 hover:-translate-y-4 hover:shadow-[0_40px_100px_-20px_rgba(0,180,216,0.25)] flex flex-col items-start min-h-[450px]">
-                {/* Background Image */}
-                <Image src="/assets/image3.jpeg" alt="Vision" fill className="object-cover opacity-60 group-hover:scale-105 group-hover:opacity-80 transition-all duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020b0e] via-[#020b0e]/50 to-transparent" />
+            {/* Vision - Light Premium Card */}
+            <ScrollReveal direction="up" delay={0.2} className="h-full">
+              <div className="group relative h-full bg-white rounded-[2.5rem] p-10 md:p-14 overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                {/* Decorative large icon watermark */}
+                <Briefcase className="absolute -right-8 -bottom-8 text-slate-50 w-64 h-64 -rotate-12 group-hover:scale-110 transition-transform duration-700" />
                 
-                {/* Glow Effect */}
-                <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-[#00B4D8] rounded-full mix-blend-screen filter blur-[100px] opacity-20 group-hover:opacity-50 transition-opacity duration-700" />
-                
-                <div className="mt-auto relative z-10 w-full">
-                  <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-slate-300 shadow-[0_10px_30px_rgba(255,255,255,0.2)] group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
-                    <Globe2 className="h-10 w-10 text-[#04151a]" />
+                <div className="relative z-10">
+                  <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-10 border border-slate-100 group-hover:bg-[#115E59]/5 transition-colors">
+                    <Briefcase className="text-[#115E59]" size={32} />
                   </div>
-                  
-                  <h3 className="mb-6 font-display text-4xl font-bold text-white flex items-center gap-4">
-                    Our Vision
-                    <span className="h-px flex-1 bg-gradient-to-r from-white/30 to-transparent" />
-                  </h3>
-                  
-                  <p className="text-xl leading-relaxed text-slate-300 group-hover:text-white transition-colors duration-500">
-                    With the aim of becoming a premier insurance broker in India, we strive to cultivate connections domestically and globally. We endeavor to expand into untapped regions, solidifying our position as a premier force.
+                  <h3 className="text-3xl font-bold text-slate-900 mb-6 tracking-wide">Our Vision</h3>
+                  <p className="text-slate-600 leading-relaxed text-lg md:text-xl font-light">
+                    To be the preeminent insurance broker in India and beyond, cultivating robust connections both domestically and globally. We continuously endeavor to expand into untapped markets, solidifying our reputation as a globally trusted force.
                   </p>
                 </div>
               </div>
@@ -246,6 +254,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      
     </div>
   );
 }
