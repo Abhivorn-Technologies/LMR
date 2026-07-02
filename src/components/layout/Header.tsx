@@ -79,10 +79,10 @@ export function Header() {
               <Link
                 key={link.path}
                 href={link.path}
-                className={`font-bold text-[12px] xl:text-[13px] uppercase tracking-widest px-6 py-4 lg:py-2.5 max-lg:w-full max-lg:text-left max-lg:mb-3 transition-all duration-300 ${
+                className={`font-bold text-[12px] xl:text-[13px] uppercase tracking-widest px-6 py-4 lg:py-2.5 max-lg:w-full max-lg:text-left max-lg:mb-3 ${
                   isActive 
                     ? 'max-lg:bg-slate-100 max-lg:rounded-xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
-                    : 'text-slate-600 max-lg:hover:bg-slate-50 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-xl lg:rounded-full'
+                    : 'text-slate-600 max-lg:hover:bg-slate-50 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-xl lg:rounded-full transition-colors duration-200'
                 }`}
                 onClick={() => setMobileOpen(false)}
               >
