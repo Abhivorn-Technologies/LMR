@@ -2,8 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { companyProfile } from "@/lib/content/company";
 
@@ -125,54 +126,74 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Floating Cards */}
+          {/* Right Column: Premium Glassmorphic Hero Image */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-            className="hidden lg:block relative h-full min-h-[480px]"
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:block relative h-[550px] w-full group"
           >
-            {/* Decorative rings */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-80 rounded-full border border-[#0c494f]/10 border-dashed animate-[spin_40s_linear_infinite]" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-56 w-56 rounded-full border border-[#00B4D8]/15 animate-[spin_30s_linear_infinite_reverse]" />
-
-            {/* Card 1 */}
-            <motion.div
-              animate={{ y: [0, -14, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[8%] right-[5%] w-64 rounded-2xl border border-[#0c494f]/10 bg-white/90 p-6 backdrop-blur-xl shadow-[0_8px_30px_rgba(12,73,79,0.15)]"
+            {/* Decorative background glow for depth */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 0.6, scale: 1 }}
+              transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] rounded-full bg-gradient-to-tr from-[#00B4D8]/20 to-[#0c494f]/20 blur-[80px] -z-10 group-hover:opacity-100 transition-opacity duration-1000" 
+            />
+            
+            {/* Main Image Container with 3D Float effect and Glass Frame */}
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: [-8, 8, -8], opacity: 1 }}
+              transition={{ 
+                y: { duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 },
+                opacity: { duration: 0.8, delay: 0.3 }
+              }}
+              className="absolute inset-0 rounded-[2.5rem] shadow-[0_20px_50px_rgba(12,73,79,0.15)] border border-white/60 bg-white/20 p-2 backdrop-blur-md"
             >
-              <div className="mb-4 inline-flex rounded-lg bg-[#0c494f]/8 p-3 text-[#0c494f]">
-                <ShieldCheck size={22} />
-              </div>
-              <h3 className="mb-2 text-base font-bold text-[#04151a]">Risk Management</h3>
-              <p className="text-sm text-[#3a7080] leading-relaxed">Comprehensive analysis to protect your business assets.</p>
+              {/* Mask reveal animation for the image */}
+              <motion.div 
+                initial={{ clipPath: "inset(100% 0 0 0 round 2rem)" }}
+                animate={{ clipPath: "inset(0% 0 0 0 round 2rem)" }}
+                transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="relative w-full h-full overflow-hidden"
+              >
+                <motion.div
+                  initial={{ scale: 1.2 }}
+                  animate={{ scale: 1.05 }}
+                  transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full h-full"
+                >
+                  <Image
+                    src="/assets/image1.jpeg"
+                    alt="Professional Insurance Advisory"
+                    fill
+                    className="object-cover object-center group-hover:scale-100 transition-transform duration-1000"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#0c494f]/30 via-transparent to-white/20 mix-blend-overlay" />
+                </motion.div>
+              </motion.div>
             </motion.div>
 
-            {/* Card 2 */}
+            {/* Ultra-minimal floating element */}
             <motion.div
-              animate={{ y: [0, 18, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute top-[42%] -left-[5%] w-72 rounded-2xl border border-[#00B4D8]/15 bg-white/90 p-6 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,180,216,0.12)]"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
+              transition={{ 
+                opacity: { duration: 0.5, delay: 1.2 },
+                scale: { duration: 0.5, delay: 1.2, type: "spring", bounce: 0.4 },
+                y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.7 }
+              }}
+              className="absolute -right-6 top-1/4 rounded-2xl border border-white/50 bg-white/90 p-3 shadow-xl backdrop-blur-xl flex items-center gap-4 z-20"
             >
-              <div className="mb-4 inline-flex rounded-lg bg-[#00B4D8]/8 p-3 text-[#00869e]">
-                <Users size={22} />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0c494f] to-[#00869e] text-white shadow-md">
+                <ShieldCheck size={20} />
               </div>
-              <h3 className="mb-2 text-base font-bold text-[#04151a]">Client-Centric</h3>
-              <p className="text-sm text-[#3a7080] leading-relaxed">Tailored advisory focused entirely on your specific needs.</p>
-            </motion.div>
-
-            {/* Card 3 */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute bottom-[4%] right-[18%] w-60 rounded-2xl border border-[#5a8a96]/15 bg-white/90 p-6 backdrop-blur-xl shadow-[0_8px_30px_rgba(90,138,150,0.12)]"
-            >
-              <div className="mb-4 inline-flex rounded-lg bg-[#5a8a96]/10 p-3 text-[#3a7080]">
-                <TrendingUp size={22} />
+              <div className="pr-4">
+                <div className="text-sm font-bold text-[#04151a]">100% Secure</div>
+                <div className="text-xs text-[#3a7080] font-medium">Risk Protection</div>
               </div>
-              <h3 className="mb-2 text-base font-bold text-[#04151a]">Global Reach</h3>
-              <p className="text-sm text-[#3a7080] leading-relaxed">Placing complex risks across international markets.</p>
             </motion.div>
           </motion.div>
 
