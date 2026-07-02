@@ -2,7 +2,6 @@ import { Hero } from "@/components/sections/home/Hero";
 import { ServicesPreview } from "@/components/sections/home/ServicesPreview";
 import { IndustriesPreview } from "@/components/sections/home/IndustriesPreview";
 import { WhyPreview } from "@/components/sections/home/WhyPreview";
-import { CTA } from "@/components/sections/home/CTA";
 import { createPageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/content/company";
 
@@ -19,7 +18,6 @@ export default function HomePage() {
       <ServicesPreview />
       <IndustriesPreview />
       <WhyPreview />
-      <CTA />
     </>
   );
 }

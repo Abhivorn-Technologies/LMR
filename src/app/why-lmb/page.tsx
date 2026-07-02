@@ -2,7 +2,6 @@ import { PageHero } from "@/components/layout/PageHero";
 import { createPageMetadata } from "@/lib/metadata";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { Card } from "@/components/ui/Card";
-import { CTA } from "@/components/sections/home/CTA";
 import { whyLmbPoints } from "@/lib/content/pages";
 
 export const metadata = createPageMetadata({
@@ -42,8 +41,6 @@ export default function WhyLmbPage() {
           </div>
         </div>
       </section>
-
-      <CTA />
     </>
   );
 }

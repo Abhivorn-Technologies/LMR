@@ -34,6 +34,14 @@ export function Header() {
     };
   }, [mobileOpen]);
 
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About Us", path: "/about" },
+    { name: "Our Services", path: "/services" },
+    { name: "Reinsurance", path: "/reinsurance" },
+    { name: "Contact Us", path: "/contact" },
+  ];
+
   return (
     <nav className={`fixed top-0 left-0 w-full z-[1000] transition-all duration-300 ${scrolled ? 'shadow-[0_4px_25px_rgba(0,0,0,0.06)] bg-white/95 backdrop-blur-md' : 'shadow-sm bg-white'}`}>
       {/* Mobile Menu Backdrop */}
@@ -48,12 +56,12 @@ export function Header() {
             src={siteConfig.logo} 
             alt={siteConfig.name} 
             fill
-            className="object-contain object-left scale-[2] md:scale-[2.8] origin-left drop-shadow-sm" 
+            className="object-contain object-left scale-[2] md:scale-[2.8] origin-left drop-shadow-sm pointer-events-none" 
             priority 
           />
         </Link>
 
-        <div className={`flex gap-2 xl:gap-3 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[90vw] max-lg:sm:w-[400px] max-lg:shadow-[-10px_0_50px_rgba(0,0,0,0.2)] max-lg:transition-all max-lg:duration-500 max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0' : 'max-lg:-right-full'}`}>
+        <div className={`relative z-10 flex gap-2 xl:gap-3 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[90vw] max-lg:sm:w-[400px] max-lg:shadow-[-10px_0_50px_rgba(0,0,0,0.2)] max-lg:transition-all max-lg:duration-500 max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0' : 'max-lg:-right-full'}`}>
           
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-10 pb-4 border-b border-slate-100">
@@ -65,12 +73,12 @@ export function Header() {
             </button>
           </div>
 
-          {mainNavigation.map((item) => {
-            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/");
+          {navLinks.map((link) => {
+            const isActive = pathname === link.path || (pathname.startsWith(link.path) && link.path !== "/");
             return (
               <Link
-                key={item.href}
-                href={item.href}
+                key={link.path}
+                href={link.path}
                 className={`font-bold text-[12px] xl:text-[13px] uppercase tracking-widest px-6 py-4 lg:py-2.5 max-lg:w-full max-lg:text-left max-lg:mb-3 transition-all duration-300 ${
                   isActive 
                     ? 'max-lg:bg-slate-100 max-lg:rounded-xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
@@ -82,7 +90,7 @@ export function Header() {
                   <>
                     <span className="max-lg:hidden">
                       <ShinyText 
-                        text={item.label} 
+                        text={link.name} 
                         speed={2} 
                         delay={0}
                         color="#ffffff" 
@@ -95,11 +103,11 @@ export function Header() {
                       />
                     </span>
                     <span className="lg:hidden text-[#0c494f]">
-                      {item.label}
+                      {link.name}
                     </span>
                   </>
                 ) : (
-                  item.label
+                  link.name
                 )}
               </Link>
             );

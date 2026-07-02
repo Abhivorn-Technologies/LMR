@@ -4,7 +4,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LenisProvider } from "@/components/providers/LenisProvider";
 import { ScrollTriggerProvider } from "@/components/providers/ScrollTriggerProvider";
-import { PageTransition } from "@/components/layout/PageTransition";
 import { siteConfig } from "@/lib/content/company";
 import "./globals.css";
 
@@ -48,9 +47,7 @@ export default function RootLayout({
         <LenisProvider>
           <ScrollTriggerProvider>
             <Header />
-            <main>
-              <PageTransition>{children}</PageTransition>
-            </main>
+            <main>{children}</main>
             <Footer />
           </ScrollTriggerProvider>
         </LenisProvider>
