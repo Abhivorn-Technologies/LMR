@@ -1,7 +1,7 @@
 "use client";
 
 import { siteConfig } from "@/lib/content/company";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 export function PageHero({
   eyebrow,
@@ -16,7 +16,7 @@ export function PageHero({
   align?: "left" | "center";
   theme?: "dark" | "light" | "navy";
 }) {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -24,7 +24,7 @@ export function PageHero({
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,

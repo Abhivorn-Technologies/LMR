@@ -3,13 +3,13 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, TrendingUp, Users } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { companyProfile } from "@/lib/content/company";
 import ShinyText from "@/components/ui/ShinyText";
 
 export function Hero() {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -20,7 +20,7 @@ export function Hero() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
