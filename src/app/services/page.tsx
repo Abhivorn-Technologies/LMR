@@ -158,7 +158,7 @@ export default function ServicesPage() {
                 
                 <div className="space-y-6 text-lg text-slate-600 font-light leading-relaxed">
                   <p>
-                    Our team of highly proficient risk management specialists conducts a meticulous evaluation of our clients' needs, acquiring a detailed understanding of operations, assets, and potential liabilities.
+                    Our team of highly proficient risk management specialists conducts a meticulous evaluation of our clients&apos; needs, acquiring a detailed understanding of operations, assets, and potential liabilities.
                   </p>
                   <p>
                     Utilizing this information, we determine the optimal choices for risk retention and transfer, executing a thorough cost-benefit analysis to develop solutions that provide comprehensive coverage in a financially sound manner.

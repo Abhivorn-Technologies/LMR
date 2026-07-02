@@ -1,5 +1,4 @@
 import { Phone, Mail } from "lucide-react";
-import { PageHero } from "@/components/layout/PageHero";
 import { createPageMetadata } from "@/lib/metadata";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { ContactForm } from "@/components/sections/ContactForm";

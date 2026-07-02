@@ -36,7 +36,7 @@ export default function AboutPage() {
 
               <ScrollReveal direction="up" delay={0.3}>
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
-                  For over two decades, LMB Insurance Brokers has delivered unparalleled direct and reinsurance solutions, redefining risk management with unwavering integrity and a commitment to our clients' success.
+                  For over two decades, LMB Insurance Brokers has delivered unparalleled direct and reinsurance solutions, redefining risk management with unwavering integrity and a commitment to our clients&apos; success.
                 </p>
               </ScrollReveal>
             </div>
