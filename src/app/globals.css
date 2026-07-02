@@ -61,8 +61,7 @@ html.lenis body {
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+  @apply bg-background text-foreground;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { createPageMetadata, PageHero } from "@/components/layout/PageHero";
+import { PageHero } from "@/components/layout/PageHero";
+import { createPageMetadata } from "@/lib/metadata";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { Card } from "@/components/ui/Card";
 import { services } from "@/lib/content/services";

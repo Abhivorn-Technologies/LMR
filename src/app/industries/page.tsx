@@ -1,5 +1,6 @@
-import { createPageMetadata, PageHero } from "@/components/layout/PageHero";
-import { FadeIn } from "@/components/motion/FadeIn";
+import { PageHero } from "@/components/layout/PageHero";
+import { createPageMetadata } from "@/lib/metadata";
+import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { Card } from "@/components/ui/Card";
 import { industries } from "@/lib/content/industries";
 
@@ -24,22 +25,24 @@ export default function IndustriesPage() {
           {industries.map((industry, i) => {
             const Icon = industry.icon;
             return (
-              <FadeIn key={industry.id} delay={i * 0.06}>
+              <ScrollReveal key={industry.id} delay={0.1} direction={i % 2 === 0 ? "left" : "right"}>
                 <Card glow={i === 0}>
                   <div className="grid gap-8 lg:grid-cols-[auto_1fr]">
-                    <Icon className="h-10 w-10 text-cyan" />
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-[#00E5FF]/20 to-transparent shadow-[0_0_20px_rgba(0,180,216,0.2)]">
+                      <Icon className="h-12 w-12 text-[#00E5FF]" />
+                    </div>
                     <div>
-                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                      <h2 className="font-display text-2xl font-bold text-white md:text-3xl group-hover/card:text-[#00E5FF] transition-colors">
                         {industry.title}
                       </h2>
-                      <p className="mt-4 max-w-3xl leading-relaxed text-muted-light">
+                      <p className="mt-4 max-w-3xl leading-relaxed text-slate-300">
                         {industry.description}
                       </p>
-                      <div className="mt-6 flex flex-wrap gap-2">
+                      <div className="mt-6 flex flex-wrap gap-3">
                         {industry.coverageAreas.map((area) => (
                           <span
                             key={area}
-                            className="rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted-light"
+                            className="rounded-full border border-[#00B4D8]/30 bg-[#00B4D8]/10 px-4 py-1.5 text-xs font-semibold text-[#00E5FF] backdrop-blur-sm shadow-[0_0_10px_rgba(0,180,216,0.1)] transition-all hover:bg-[#00B4D8]/20 hover:scale-105 hover:-translate-y-1"
                           >
                             {area}
                           </span>
@@ -48,7 +51,7 @@ export default function IndustriesPage() {
                     </div>
                   </div>
                 </Card>
-              </FadeIn>
+              </ScrollReveal>
             );
           })}
         </div>

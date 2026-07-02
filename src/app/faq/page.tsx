@@ -1,4 +1,5 @@
-import { createPageMetadata, PageHero } from "@/components/layout/PageHero";
+import { PageHero } from "@/components/layout/PageHero";
+import { createPageMetadata } from "@/lib/metadata";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { faqItems } from "@/lib/content/pages";
 

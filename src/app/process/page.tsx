@@ -1,4 +1,5 @@
-import { createPageMetadata, PageHero } from "@/components/layout/PageHero";
+import { PageHero } from "@/components/layout/PageHero";
+import { createPageMetadata } from "@/lib/metadata";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { processSteps } from "@/lib/content/pages";
 

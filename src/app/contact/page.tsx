@@ -1,8 +1,8 @@
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { createPageMetadata, PageHero } from "@/components/layout/PageHero";
-import { FadeIn } from "@/components/motion/FadeIn";
+import { Phone, Mail } from "lucide-react";
+import { PageHero } from "@/components/layout/PageHero";
+import { createPageMetadata } from "@/lib/metadata";
+import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { ContactForm } from "@/components/sections/ContactForm";
-import { contactInfo } from "@/lib/content/company";
 
 export const metadata = createPageMetadata({
   title: "Contact",
@@ -11,12 +11,43 @@ export const metadata = createPageMetadata({
   path: "/contact",
 });
 
-const contactDetails = [
-  { icon: Phone, label: "Phone", value: contactInfo.phone },
-  { icon: Phone, label: "Alternate", value: contactInfo.phoneSecondary },
-  { icon: Mail, label: "Email", value: contactInfo.email },
-  { icon: MapPin, label: "Office", value: contactInfo.address },
-  { icon: Clock, label: "Hours", value: contactInfo.hours },
+const keyContacts = [
+  {
+    name: "Sreevallabhan S",
+    title: "Chairman and Managing Director",
+    phone: "+91 9847424144",
+    email: "cmd@lmbinsurancebroker.com"
+  },
+  {
+    name: "Jayasree S",
+    title: "Principal Officer",
+    phone: "+91 9744341440",
+    email: "jayasree@lmbinsurancebroker.com"
+  },
+  {
+    name: "Viswanathan Krishnan",
+    title: "Executive Director (Reinsurance)",
+    phone: "+91 9820317748",
+    email: "viswanathan@lmbinsurancebroker.com"
+  },
+  {
+    name: "K. B. Vijayasherakan Nair",
+    title: "Executive Director (Underwriting)",
+    phone: "+91 9447731159",
+    email: "kbv@lmbinsurancebroker.com"
+  },
+  {
+    name: "Vijayakumar T",
+    title: "Executive Director (Claims)",
+    phone: "+91 9447552135",
+    email: "vijayakumar@lmbinsurancebroker.com"
+  },
+  {
+    name: "Thangaraj Koilpillai",
+    title: "Executive Director (Reinsurance)",
+    phone: "+91 9969341529",
+    email: "thangaraj@lmbinsurancebroker.com"
+  }
 ];
 
 export default function ContactPage() {
@@ -26,46 +57,56 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Speak with our advisory team"
         description="Submit an inquiry and our team will respond during business hours."
+        align="center"
       />
 
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-12 lg:grid-cols-5">
+          <div className="grid gap-8 lg:grid-cols-5 relative z-10 -mt-12">
             <div className="lg:col-span-2">
-              <FadeIn>
-                <div className="space-y-6">
-                  {contactDetails.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <div key={item.label} className="flex items-start gap-4">
-                        <div className="rounded-xl border border-border bg-card p-3">
-                          <Icon className="h-5 w-5 text-cyan" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-semibold uppercase tracking-widest text-muted">
-                            {item.label}
-                          </p>
-                          <p className="mt-1 text-sm text-muted-light">
-                            {item.value}
-                          </p>
+              <ScrollReveal direction="left">
+                <div className="rounded-[2rem] border border-white/5 bg-[#0a2b33] p-8 md:p-10 shadow-2xl h-[700px] flex flex-col relative overflow-hidden">
+                  <div className="absolute top-0 right-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-[#00E5FF]/10 blur-[60px] pointer-events-none" />
+                  
+                  <h2 className="text-3xl font-display font-bold text-white mb-8 relative z-10">
+                    Key Contacts
+                  </h2>
+
+                  <div className="space-y-8 relative z-10 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                    {keyContacts.map((contact) => (
+                      <div key={contact.name} className="group border-b border-white/10 pb-6 last:border-0 last:pb-0">
+                        <p className="text-lg font-bold text-white group-hover:text-[#00E5FF] transition-colors">
+                          {contact.name}
+                        </p>
+                        <p className="text-sm font-medium text-[#00B4D8] mb-4">
+                          {contact.title}
+                        </p>
+                        
+                        <div className="space-y-3">
+                          <a href={`tel:${contact.phone.replace(/\s+/g, '')}`} className="flex items-center gap-3 text-sm text-slate-300 hover:text-white transition-colors">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black/20 border border-white/5 group-hover:border-[#00E5FF]/30 transition-colors">
+                              <Phone className="h-4 w-4 text-[#00E5FF]" />
+                            </div>
+                            {contact.phone}
+                          </a>
+                          <a href={`mailto:${contact.email}`} className="flex items-center gap-3 text-sm text-slate-300 hover:text-white transition-colors">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black/20 border border-white/5 group-hover:border-[#00E5FF]/30 transition-colors">
+                              <Mail className="h-4 w-4 text-[#00E5FF]" />
+                            </div>
+                            {contact.email}
+                          </a>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </FadeIn>
-
-              <FadeIn delay={0.15} className="mt-10">
-                <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-surface">
-                  <div className="flex h-full items-center justify-center text-sm text-muted">
-                    (Map placeholder — Content Required from Client)
+                    ))}
                   </div>
                 </div>
-              </FadeIn>
+              </ScrollReveal>
             </div>
 
             <div className="lg:col-span-3">
-              <ContactForm />
+              <ScrollReveal direction="right" delay={0.1}>
+                <ContactForm />
+              </ScrollReveal>
             </div>
           </div>
         </div>
