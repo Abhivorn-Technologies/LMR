@@ -7,6 +7,8 @@ import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { companyProfile } from "@/lib/content/company";
+import { TextReveal } from "@/components/motion/TextReveal";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 
 export function Hero() {
   const containerVariants: Variants = {
@@ -64,10 +66,10 @@ export function Hero() {
             {/* Heading */}
             <motion.div variants={itemVariants}>
               <h1 className="font-display text-4xl sm:text-5xl font-extrabold leading-[1.1] tracking-tight text-[#04151a] md:text-6xl lg:text-[5rem] lg:leading-[1.05]">
-                Insurance advisory{" "}
+                <TextReveal delay={0.2}>Insurance advisory</TextReveal>
                 <br />
-                <span className="bg-gradient-to-r from-[#0c494f] via-[#00869e] to-[#00B4D8] bg-clip-text text-transparent inline-block pb-2">
-                  built on trust.
+                <span className="text-[#00869e] inline-block pb-2">
+                  <TextReveal delay={0.4}>built on trust.</TextReveal>
                 </span>
               </h1>
             </motion.div>
@@ -85,23 +87,27 @@ export function Hero() {
               variants={itemVariants}
               className="mt-8 flex flex-wrap gap-4 w-full"
             >
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto bg-[#0c494f] hover:bg-[#083a40] text-white shadow-[0_6px_20px_rgba(12,73,79,0.35)] rounded-xl px-8 py-6 font-bold uppercase tracking-wider h-auto border-0 transition-all"
-                >
-                  Request Consultation
-                  <ArrowRight className="h-5 w-5 ml-2" />
-                </Button>
-              </Link>
-              <Link href="/services">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto bg-white/70 hover:bg-white text-[#0c494f] border border-[#0c494f]/25 rounded-xl px-8 py-6 font-bold uppercase tracking-wider h-auto transition-all shadow-sm"
-                >
-                  Explore Services
-                </Button>
-              </Link>
+              <MagneticButton strength={20}>
+                <Link href="/contact" className="block">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto bg-[#0c494f] hover:bg-[#083a40] text-white shadow-[0_6px_20px_rgba(12,73,79,0.35)] rounded-xl px-8 py-6 font-bold uppercase tracking-wider h-auto border-0 transition-all"
+                  >
+                    Request Consultation
+                    <ArrowRight className="h-5 w-5 ml-2" />
+                  </Button>
+                </Link>
+              </MagneticButton>
+              <MagneticButton strength={15}>
+                <Link href="/services" className="block">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto bg-white/70 hover:bg-white text-[#0c494f] border border-[#0c494f]/25 rounded-xl px-8 py-6 font-bold uppercase tracking-wider h-auto transition-all shadow-sm"
+                  >
+                    Explore Services
+                  </Button>
+                </Link>
+              </MagneticButton>
             </motion.div>
 
             {/* Trust bar */}

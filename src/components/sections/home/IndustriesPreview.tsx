@@ -2,18 +2,19 @@
 
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { industries } from "@/lib/content/industries";
 
 export function IndustriesPreview() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: true,
-    skipSnaps: false,
-  }, [Autoplay({ delay: 4000, stopOnInteraction: false })]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      align: "start",
+      loop: true,
+      skipSnaps: false,
+    }
+  );
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
 

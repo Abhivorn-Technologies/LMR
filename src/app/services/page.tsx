@@ -1,9 +1,11 @@
 import { createPageMetadata } from "@/lib/metadata";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { TextReveal } from "@/components/motion/TextReveal";
 import Image from "next/image";
 import Link from "next/link";
-import { Shield, Target, Activity } from "lucide-react";
 import { services } from "@/lib/content/services";
+import { MethodologySection } from "@/components/sections/MethodologySection";
+import { BusinessLinesSection } from "@/components/sections/BusinessLinesSection";
 
 export const metadata = createPageMetadata({
   title: "Services",
@@ -11,21 +13,19 @@ export const metadata = createPageMetadata({
   path: "/services",
 });
 
-
-
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-slate-50 relative z-0 selection:bg-[#115E59] selection:text-white">
       
-      {/* Premium Editorial Hero Section */}
-      <section className="pt-32 pb-12 px-6 max-w-7xl mx-auto w-full">
-        <ScrollReveal direction="down" delay={0.1}>
-          <div className="relative w-full h-[350px] md:h-[450px] lg:h-[550px] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-[8px] border-white ring-1 ring-slate-900/5">
+      <section className="pt-32 pb-12 px-6 max-w-6xl mx-auto w-full">
+        <ScrollReveal direction="down" delay={0.1} className="w-full">
+          <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-[8px] border-white ring-1 ring-slate-900/5 bg-slate-50">
             <Image 
               src="/assets/service-10.png" 
               alt="LMB Services Background" 
-              fill 
-              className="object-cover"
+              width={1600}
+              height={900}
+              className="w-full h-auto"
               priority
             />
           </div>
@@ -41,14 +41,15 @@ export default function ServicesPage() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal direction="up" delay={0.3}>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1] mb-8">
-            Comprehensive <br />
-            <span className="text-[#115E59] font-serif italic">Insurance Solutions.</span>
-          </h1>
-        </ScrollReveal>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1] mb-8">
+          <TextReveal delay={0.3}>Comprehensive </TextReveal>
+          <br />
+          <span className="text-[#115E59] font-serif italic">
+            <TextReveal delay={0.5}>Insurance Solutions.</TextReveal>
+          </span>
+        </h1>
         
-        <ScrollReveal direction="up" delay={0.4}>
+        <ScrollReveal direction="up" delay={0.6}>
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
             Tailored risk management and elite insurance broking services designed to protect what matters most to you and your enterprise.
           </p>
@@ -102,73 +103,11 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Methodology Section - Professional Redesign */}
-      <section className="py-24 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            
-            <ScrollReveal direction="left">
-              <div className="relative">
-                <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-5 py-2 mb-8 shadow-sm">
-                  <span className="flex h-2 w-2 rounded-full bg-[#115E59]" />
-                  <span className="text-xs font-bold tracking-[0.2em] text-[#115E59] uppercase">Our Methodology</span>
-                </div>
-                
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-8 leading-[1.1] tracking-tight">
-                  Partnering in <br />
-                  <span className="text-[#115E59] font-serif italic">Your Success.</span>
-                </h2>
-                
-                <div className="space-y-6 text-lg text-slate-600 font-light leading-relaxed">
-                  <p>
-                    Our team of highly proficient risk management specialists conducts a meticulous evaluation of our clients&apos; needs, acquiring a detailed understanding of operations, assets, and potential liabilities.
-                  </p>
-                  <p>
-                    Utilizing this information, we determine the optimal choices for risk retention and transfer, executing a thorough cost-benefit analysis to develop solutions that provide comprehensive coverage in a financially sound manner.
-                  </p>
-                </div>
-                
-                <div className="mt-10 flex flex-wrap gap-4">
-                  <div className="flex items-center gap-3 bg-white px-5 py-3.5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                    <Target className="text-[#115E59]" size={20} />
-                    <span className="text-sm font-semibold text-slate-700">Meticulous Evaluation</span>
-                  </div>
-                  <div className="flex items-center gap-3 bg-white px-5 py-3.5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                    <Shield className="text-[#115E59]" size={20} />
-                    <span className="text-sm font-semibold text-slate-700">Comprehensive Coverage</span>
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
+      {/* New Business Lines Section */}
+      <BusinessLinesSection />
 
-            <ScrollReveal direction="right" className="h-full">
-              <div className="relative h-[500px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl group">
-                <Image 
-                  src="/assets/image5.jpeg" 
-                  alt="Partnering in Success" 
-                  fill 
-                  className="object-cover group-hover:scale-105 transition-transform duration-1000"
-                />
-                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors duration-500" />
-                
-                {/* Floating Premium Badge */}
-                <div className="absolute bottom-8 left-8 right-8 md:right-auto bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white max-w-[300px]">
-                  <div className="flex items-center gap-4 mb-3">
-                    <div className="w-12 h-12 rounded-full bg-[#115E59]/10 flex items-center justify-center">
-                      <Activity className="text-[#115E59]" size={24} />
-                    </div>
-                    <div className="text-3xl font-bold text-slate-900 tracking-tight">100%</div>
-                  </div>
-                  <div className="text-sm font-medium text-slate-600 leading-relaxed">
-                    Committed to establishing the industry benchmark for risk management.
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-            
-          </div>
-        </div>
-      </section>
+      {/* Methodology Section with Pinning Scroll Effect */}
+      <MethodologySection />
 
     </div>
   );

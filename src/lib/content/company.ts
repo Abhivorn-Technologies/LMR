@@ -9,12 +9,12 @@ export const siteConfig = {
 } as const;
 
 export const contactInfo = {
-  phone: "+91 9847424144",
-  phoneSecondary: "+91 9744341440",
-  email: "cmd@lmbinsurancebroker.com",
-  address: "Head Office",
-  city: "Kerala",
-  state: "KL",
+  phone: "(0471) 2432301",
+  phoneSecondary: "",
+  email: "info@lmbinsurancebroker.com",
+  address: "TC No. 4/698, Vikesh, Toll Junction, Kowdiar, Trivandrum, Kerala, India, 695003.",
+  city: "Trivandrum",
+  state: "Kerala",
   country: "India",
   hours: "Monday – Friday, 9:00 AM – 6:00 PM",
 } as const;

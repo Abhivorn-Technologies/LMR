@@ -64,7 +64,7 @@ export function Footer() {
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
 
   return (
-    <footer ref={footerRef} className="relative bg-background text-white pt-16 lg:pt-24 pb-8 overflow-hidden border-t border-border">
+    <footer ref={footerRef} className="relative bg-background text-white pt-10 lg:pt-16 pb-8 overflow-hidden border-t border-border">
       {/* Background Decorators */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/40 to-transparent" />
