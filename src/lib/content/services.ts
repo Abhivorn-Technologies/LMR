@@ -18,6 +18,12 @@ export interface Service {
   href: string;
   features: string[];
   homePoints: string[];
+  subServices?: {
+    id: string;
+    title: string;
+    description: string;
+    href: string;
+  }[];
 }
 
 export const services: Service[] = [
@@ -41,6 +47,50 @@ export const services: Service[] = [
       "Custom property & liability shields",
       "Robust commercial program structures",
       "Seamless policy renewal management",
+    ],
+    subServices: [
+      {
+        id: "car-insurance",
+        title: "Car Insurance",
+        description: "Comprehensive coverage and third-party protection for your vehicle.",
+        href: "/services/general-insurance/car-insurance",
+      },
+      {
+        id: "two-wheeler-insurance",
+        title: "Two Wheeler Insurance",
+        description: "Complete protection for two-wheelers including own-damage and liability.",
+        href: "/services/general-insurance/two-wheeler-insurance",
+      },
+      {
+        id: "commercial-vehicle-insurance",
+        title: "Commercial Vehicle Insurance",
+        description: "Insurance solutions for commercial fleets and transport vehicles.",
+        href: "/services/general-insurance/commercial-vehicle-insurance",
+      },
+      {
+        id: "health-insurance",
+        title: "Health Insurance",
+        description: "Medical coverage plans tailored for individuals and families.",
+        href: "/services/general-insurance/health-insurance",
+      },
+      {
+        id: "home-insurance",
+        title: "Home Insurance",
+        description: "Protect your home and belongings against theft, fire, and natural disasters.",
+        href: "/services/general-insurance/home-insurance",
+      },
+      {
+        id: "travel-insurance",
+        title: "Travel Insurance",
+        description: "Coverage for medical emergencies, trip cancellations, and lost baggage.",
+        href: "/services/general-insurance/travel-insurance",
+      },
+      {
+        id: "business-insurance",
+        title: "Business Insurance",
+        description: "Comprehensive risk protection for your enterprise and commercial assets.",
+        href: "/services/general-insurance/business-insurance",
+      }
     ],
   },
   {
