@@ -54,8 +54,8 @@ export function MethodologySection() {
             </ScrollReveal>
           </div>
 
-          <ScrollReveal direction="right" className="w-full mt-12 lg:mt-0 lg:h-[500px]">
-            <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden shadow-2xl group flex items-center justify-center bg-slate-50">
+          <ScrollReveal direction="right" className="w-full mt-12 lg:mt-0">
+            <div className="relative h-[300px] md:h-[400px] lg:h-[500px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl group">
               <Image 
                 src="/assets/image5.jpeg" 
                 alt="Partnering in Success" 
