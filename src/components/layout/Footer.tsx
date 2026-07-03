@@ -64,7 +64,7 @@ export function Footer() {
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
 
   return (
-    <footer ref={footerRef} className="relative bg-background text-white pt-24 pb-8 overflow-hidden border-t border-border">
+    <footer ref={footerRef} className="relative bg-background text-white pt-16 lg:pt-24 pb-8 overflow-hidden border-t border-border">
       {/* Background Decorators */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/40 to-transparent" />
@@ -75,7 +75,7 @@ export function Footer() {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="mx-auto max-w-7xl px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-16"
+        className="mx-auto max-w-7xl px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10 lg:gap-12 mb-16"
       >
         {/* Company Section (2 Cols width) */}
         <motion.div variants={itemVariants} className="lg:col-span-2">
@@ -83,18 +83,18 @@ export function Footer() {
             <motion.div 
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
-              className="relative h-14 w-[180px] shrink-0 overflow-hidden"
+              className="relative h-12 md:h-14 w-[160px] md:w-[180px] shrink-0 overflow-hidden"
             >
               <Image 
                 src={siteConfig.logo} 
                 alt={siteConfig.name} 
                 fill
                 sizes="180px"
-                className="object-contain object-left scale-[2.8] origin-left ml-4 pointer-events-none brightness-0 invert" 
+                className="object-contain object-left scale-[2] md:scale-[2.8] origin-left pointer-events-none brightness-0 invert" 
               />
             </motion.div>
           </Link>
-          <div className="text-[#c4e0e6] mb-8 max-w-[380px] leading-relaxed text-[0.8rem] space-y-4">
+          <div className="text-[#c4e0e6] max-w-[380px] leading-relaxed text-[0.8rem] space-y-3">
             <p>
               LMB Insurance Brokers Pvt. Ltd is a company incorporated under the Companies Act, 1956. Licensed by Insurance Regulatory and Development Authority (IRDA), as per IRDA Act, 1999 and IRDA (Insurance Brokers) Regulations 2002.
             </p>
@@ -106,7 +106,7 @@ export function Footer() {
 
         {/* Quick Links */}
         <motion.div variants={itemVariants}>
-          <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
+          <h4 className="text-white font-bold tracking-widest uppercase mb-4 text-sm">
             Quick Links
           </h4>
           <ul className="space-y-3.5">
@@ -123,7 +123,7 @@ export function Footer() {
 
         {/* Services */}
         <motion.div variants={itemVariants}>
-          <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
+          <h4 className="text-white font-bold tracking-widest uppercase mb-4 text-sm">
             Services
           </h4>
           <ul className="space-y-3.5">
@@ -140,7 +140,7 @@ export function Footer() {
 
         {/* Contact Info */}
         <motion.div variants={itemVariants}>
-          <h4 className="text-white font-bold tracking-widest uppercase mb-6 text-sm">
+          <h4 className="text-white font-bold tracking-widest uppercase mb-4 text-sm">
             Contact Us
           </h4>
           <ul className="space-y-1.5">
@@ -156,7 +156,7 @@ export function Footer() {
                 <div className="w-8 h-8 rounded-full bg-[#00E5FF]/10 flex items-center justify-center text-[#00E5FF] group-hover:bg-[#00E5FF] group-hover:text-white transition-colors duration-300 shrink-0">
                   <item.icon size={14} className="group-hover:rotate-12 transition-transform duration-300" />
                 </div>
-                <span className="text-[0.8rem] leading-tight">{item.text}</span>
+                <span className="text-[0.85rem] md:text-[0.8rem] leading-tight">{item.text}</span>
               </li>
             ))}
           </ul>

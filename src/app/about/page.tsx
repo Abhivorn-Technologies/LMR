@@ -14,7 +14,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white text-slate-600 relative z-0 selection:bg-[#115E59] selection:text-white">
       
       {/* 1. Refined Corporate Hero Section */}
-      <section className="relative pt-12 pb-10 lg:pt-20 lg:pb-12 overflow-hidden bg-slate-50">
+      <section className="relative pt-24 pb-12 lg:pt-32 lg:pb-16 overflow-hidden bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
             
@@ -28,14 +28,14 @@ export default function AboutPage() {
               </ScrollReveal>
 
               <ScrollReveal direction="up" delay={0.2}>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-6 leading-tight">
                   A Tradition of <span className="text-[#115E59] font-serif italic">Trust</span> <br />
                   & <span className="text-[#115E59]">Excellence.</span>
                 </h1>
               </ScrollReveal>
 
               <ScrollReveal direction="up" delay={0.3}>
-                <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+                <p className="text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
                   For over two decades, LMB Insurance Brokers has delivered unparalleled direct and reinsurance solutions, redefining risk management with unwavering integrity and a commitment to our clients&apos; success.
                 </p>
               </ScrollReveal>
@@ -43,7 +43,7 @@ export default function AboutPage() {
 
             {/* Hero Image */}
             <ScrollReveal direction="left" delay={0.4}>
-              <div className="relative h-[400px] lg:h-[520px] w-full rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-2xl lg:mt-6">
+              <div className="relative h-[250px] sm:h-[400px] lg:h-[520px] w-full rounded-tl-[3rem] rounded-br-[3rem] lg:rounded-tl-[4rem] lg:rounded-br-[4rem] overflow-hidden shadow-2xl mt-4 lg:mt-6">
                 <Image 
                   src="/assets/blocks.jpeg" 
                   alt="LMB Corporate Family" 
@@ -91,8 +91,8 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                <div className="w-full md:w-[45%] pl-16 md:pl-12 mt-8 md:mt-0">
-                  <div className="relative h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
+                <div className="w-full md:w-[45%] pl-16 md:pl-12 mt-6 md:mt-0">
+                  <div className="relative h-48 sm:h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
                     <Image src="/assets/image1.jpeg" alt="Incorporation in 2003" fill className="object-cover" />
                   </div>
                 </div>
@@ -114,8 +114,8 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                <div className="w-full md:w-[45%] pl-16 md:pl-0 md:pr-12 mt-8 md:mt-0">
-                  <div className="relative h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
+                <div className="w-full md:w-[45%] pl-16 md:pl-0 md:pr-12 mt-6 md:mt-0">
+                  <div className="relative h-48 sm:h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
                     <Image src="/assets/image5.jpeg" alt="Composite License" fill className="object-cover" />
                   </div>
                 </div>
@@ -137,8 +137,8 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                <div className="w-full md:w-[45%] pl-16 md:pl-12 mt-8 md:mt-0">
-                  <div className="relative h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
+                <div className="w-full md:w-[45%] pl-16 md:pl-12 mt-6 md:mt-0">
+                  <div className="relative h-48 sm:h-56 w-full rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-all duration-500">
                     <Image src="/assets/image6.jpeg" alt="Global Reinsurance Expansion" fill className="object-cover" />
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export default function AboutPage() {
             </ScrollReveal>
 
             <ScrollReveal direction="left" delay={0.2}>
-              <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-xl">
+              <div className="relative h-[280px] sm:h-[400px] lg:h-[500px] w-full rounded-2xl overflow-hidden shadow-xl mt-8 lg:mt-0">
                 <Image src="/assets/image4.jpeg" alt="Professional Efficiency" fill className="object-cover" />
                 <div className="absolute inset-0 bg-slate-900/20" />
               </div>

@@ -28,7 +28,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative flex items-center overflow-hidden pt-28 pb-20 lg:pt-32 lg:pb-24"
+      className="relative flex items-center overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-24"
       style={{
         background:
           "linear-gradient(150deg, #f0f9fc 0%, #d8eff4 40%, #a8d5df 70%, #5a8a96 100%)",
@@ -63,7 +63,7 @@ export function Hero() {
 
             {/* Heading */}
             <motion.div variants={itemVariants}>
-              <h1 className="font-display text-5xl font-extrabold leading-[1.1] tracking-tight text-[#04151a] md:text-6xl lg:text-[5rem] lg:leading-[1.05]">
+              <h1 className="font-display text-4xl sm:text-5xl font-extrabold leading-[1.1] tracking-tight text-[#04151a] md:text-6xl lg:text-[5rem] lg:leading-[1.05]">
                 Insurance advisory{" "}
                 <br />
                 <span className="bg-gradient-to-r from-[#0c494f] via-[#00869e] to-[#00B4D8] bg-clip-text text-transparent inline-block pb-2">
@@ -107,18 +107,18 @@ export function Hero() {
             {/* Trust bar */}
             <motion.div
               variants={itemVariants}
-              className="mt-8 flex flex-wrap items-center gap-6 pt-6 border-t border-[#0c494f]/15"
+              className="mt-8 flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 pt-6 border-t border-[#0c494f]/15"
             >
               <div className="text-center">
                 <div className="text-2xl font-extrabold text-[#0c494f]">20+</div>
                 <div className="text-xs font-semibold text-[#3a7080] uppercase tracking-wide mt-0.5">Years Experience</div>
               </div>
-              <div className="h-8 w-px bg-[#0c494f]/20" />
+              <div className="hidden sm:block h-8 w-px bg-[#0c494f]/20" />
               <div className="text-center">
                 <div className="text-2xl font-extrabold text-[#0c494f]">500+</div>
                 <div className="text-xs font-semibold text-[#3a7080] uppercase tracking-wide mt-0.5">Clients Served</div>
               </div>
-              <div className="h-8 w-px bg-[#0c494f]/20" />
+              <div className="hidden sm:block h-8 w-px bg-[#0c494f]/20" />
               <div className="text-center">
                 <div className="text-2xl font-extrabold text-[#0c494f]">IRDAI</div>
                 <div className="text-xs font-semibold text-[#3a7080] uppercase tracking-wide mt-0.5">Licensed Broker</div>
@@ -131,7 +131,7 @@ export function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden lg:block relative h-[550px] w-full group"
+            className="block relative h-[300px] sm:h-[400px] lg:h-[550px] w-full group mt-10 lg:mt-0"
           >
             {/* Decorative background glow for depth */}
             <motion.div 
@@ -185,7 +185,7 @@ export function Hero() {
                 scale: { duration: 0.5, delay: 1.2, type: "spring", bounce: 0.4 },
                 y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.7 }
               }}
-              className="absolute -right-6 top-1/4 rounded-2xl border border-white/50 bg-white/90 p-3 shadow-xl backdrop-blur-xl flex items-center gap-4 z-20"
+              className="hidden sm:flex absolute -right-4 lg:-right-6 top-1/4 rounded-2xl border border-white/50 bg-white/90 p-3 shadow-xl backdrop-blur-xl items-center gap-4 z-20"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0c494f] to-[#00869e] text-white shadow-md">
                 <ShieldCheck size={20} />

@@ -61,7 +61,7 @@ export function Header() {
           />
         </Link>
 
-        <div className={`relative z-10 flex gap-2 xl:gap-3 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[90vw] max-lg:sm:w-[400px] max-lg:shadow-[-10px_0_50px_rgba(0,0,0,0.2)] max-lg:transition-all max-lg:duration-500 max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0' : 'max-lg:-right-full'}`}>
+        <div className={`relative z-10 flex gap-2 xl:gap-3 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-full max-lg:sm:w-[450px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.15)] max-lg:transition-all max-lg:duration-500 max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0' : 'max-lg:-right-full'}`}>
           
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-10 pb-4 border-b border-slate-100">
@@ -79,10 +79,10 @@ export function Header() {
               <Link
                 key={link.path}
                 href={link.path}
-                className={`font-bold text-[12px] xl:text-[13px] uppercase tracking-widest px-6 py-4 lg:py-2.5 max-lg:w-full max-lg:text-left max-lg:mb-3 ${
+                className={`font-bold uppercase tracking-widest px-6 py-5 lg:py-2.5 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[12px] xl:text-[13px] ${
                   isActive 
-                    ? 'max-lg:bg-slate-100 max-lg:rounded-xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
-                    : 'text-slate-600 max-lg:hover:bg-slate-50 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-xl lg:rounded-full transition-colors duration-200'
+                    ? 'max-lg:bg-[#115E59]/10 max-lg:text-[#115E59] max-lg:rounded-2xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
+                    : 'text-slate-500 max-lg:hover:bg-slate-50 max-lg:hover:text-slate-900 max-lg:hover:translate-x-2 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-2xl lg:rounded-full transition-all duration-300'
                 }`}
                 onClick={() => setMobileOpen(false)}
               >
@@ -102,8 +102,9 @@ export function Header() {
                         disabled={false}
                       />
                     </span>
-                    <span className="lg:hidden text-[#0c494f]">
+                    <span className="lg:hidden text-[#115E59] flex items-center">
                       {link.name}
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#115E59]" />
                     </span>
                   </>
                 ) : (
@@ -113,7 +114,7 @@ export function Header() {
             );
           })}
           <Link href="/contact" className="lg:hidden w-full mt-auto pt-6 pb-4" onClick={() => setMobileOpen(false)}>
-            <Button className="w-full bg-[#0c494f] hover:bg-[#083135] text-white shadow-md rounded-xl font-bold text-[12px] xl:text-[13px] uppercase tracking-widest h-12" size="lg">
+            <Button className="w-full bg-[#115E59] hover:bg-[#083135] text-white shadow-xl shadow-[#115E59]/20 rounded-2xl font-bold text-[14px] uppercase tracking-widest h-14 transition-all" size="lg">
               Join Now
             </Button>
           </Link>

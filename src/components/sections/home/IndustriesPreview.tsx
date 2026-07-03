@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -12,20 +13,26 @@ export function IndustriesPreview() {
     align: "start",
     loop: true,
     skipSnaps: false,
-  });
+  }, [Autoplay({ delay: 4000, stopOnInteraction: false })]);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
 
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
     const update = () => {
       setCanPrev(emblaApi.canScrollPrev());
       setCanNext(emblaApi.canScrollNext());
+      setSelectedIndex(emblaApi.selectedScrollSnap());
     };
     update();
+    setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", update);
     emblaApi.on("reInit", update);
     return () => {
@@ -113,6 +120,22 @@ export function IndustriesPreview() {
               })}
             </div>
           </div>
+        </div>
+        
+        {/* Mobile Navigation Dots */}
+        <div className="flex lg:hidden justify-center items-center gap-2 mt-8 mb-4">
+          {scrollSnaps.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollTo(index)}
+              className={`transition-all duration-300 rounded-full ${
+                index === selectedIndex
+                  ? "w-6 h-1.5 bg-[#115E59]"
+                  : "w-1.5 h-1.5 bg-slate-200 hover:bg-slate-300"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
 
         {/* Footer CTA */}

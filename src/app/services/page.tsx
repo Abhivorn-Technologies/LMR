@@ -2,7 +2,7 @@ import { createPageMetadata } from "@/lib/metadata";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
-import { Shield, Target, Activity, ArrowRight } from "lucide-react";
+import { Shield, Target, Activity } from "lucide-react";
 import { services } from "@/lib/content/services";
 
 export const metadata = createPageMetadata({
@@ -58,7 +58,9 @@ export default function ServicesPage() {
       {/* Elegant Service Cards with Images */}
       <section className="relative z-20 max-w-7xl mx-auto px-6 mb-32">
         <div className="flex flex-wrap justify-center gap-8">
-          {services.map((service, index) => (
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
             <div key={service.id} className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]">
               <ScrollReveal direction="up" delay={0.1 * (index + 1)} className="h-full">
                 <Link href={service.href} className="block h-full group">
@@ -79,7 +81,7 @@ export default function ServicesPage() {
                     <div className="p-8 pt-10 flex flex-col flex-grow relative">
                       {/* Floating Icon */}
                       <div className="absolute -top-10 left-8 w-16 h-16 rounded-2xl bg-white flex items-center justify-center border-4 border-white shadow-sm group-hover:bg-[#115E59] group-hover:border-[#115E59] transition-colors duration-500 z-10">
-                        <service.icon size={24} className="text-[#115E59] group-hover:text-white transition-colors duration-500" />
+                        <Icon size={24} className="text-[#115E59] group-hover:text-white transition-colors duration-500" />
                       </div>
                       
                       <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-[#115E59] transition-colors duration-300">
@@ -95,7 +97,8 @@ export default function ServicesPage() {
                 </Link>
               </ScrollReveal>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
