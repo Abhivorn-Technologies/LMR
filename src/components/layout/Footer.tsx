@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useInView, AnimatePresence, type Variants } from 'framer-motion';
-import { Mail, Phone, MapPin, ArrowUp } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, Building2, FileText, Calendar, Award } from 'lucide-react';
 import { siteConfig, contactInfo } from "@/lib/content/company";
 import { footerNavigation } from "@/lib/content/navigation";
 
@@ -75,11 +75,11 @@ export function Footer() {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="mx-auto max-w-7xl px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10 lg:gap-12 mb-16"
+        className="mx-auto max-w-7xl px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8 lg:gap-10 mb-12"
       >
-        {/* Company Section (2 Cols width) */}
-        <motion.div variants={itemVariants} className="lg:col-span-2">
-          <Link href="/" className="inline-block group mb-8">
+        {/* Column 1: Company Paragraph (Wider) */}
+        <motion.div variants={itemVariants} className="lg:col-span-2 flex flex-col">
+          <Link href="/" className="inline-block group mb-5">
             <motion.div 
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
@@ -94,13 +94,40 @@ export function Footer() {
               />
             </motion.div>
           </Link>
-          <div className="text-[#c4e0e6] max-w-[380px] leading-relaxed text-[0.8rem] space-y-3">
-            <p>
-              LMB Insurance Brokers Pvt. Ltd is a company incorporated under the Companies Act, 1956. Licensed by Insurance Regulatory and Development Authority (IRDA), as per IRDA Act, 1999 and IRDA (Insurance Brokers) Regulations 2002.
+          <div className="text-[#c4e0e6] leading-relaxed text-[0.85rem] pr-4">
+            <p className="text-left">
+              L M B Insurance Brokers Pvt. Ltd., is a Private Limited Company incorporated under the Companies Act, 1956, and registered with the Insurance Regulatory and Development Authority of India (IRDAI) vide Certificate of Registration (CoR) No: 116 to solicit insurance (Direct (Life & General) and Reinsurance) business as per IRDAI (Insurance Brokers) Regulations and such other applicable Regulations as issued/amended by the Authority (IRDAI) from time to time.
             </p>
-            <p className="text-[#00E5FF] font-semibold pt-2">
-              IRDAI License No: 116
-            </p>
+          </div>
+        </motion.div>
+
+        {/* Column 2: Company Data Cards */}
+        <motion.div variants={itemVariants} className="flex flex-col">
+          <div className="flex flex-col gap-2.5">
+            <div className="bg-[#0c494f]/40 border border-[#00E5FF]/20 rounded-lg px-2.5 py-2 hover:bg-[#0c494f]/60 transition-colors">
+              <div className="text-[0.6rem] uppercase tracking-wider text-[#00E5FF] mb-0.5 flex items-center gap-1.5 font-bold">
+                 <Building2 size={11} /> CIN
+              </div>
+              <div className="text-[0.65rem] xl:text-[0.7rem] font-medium text-white tracking-tight">U66010KL2002PTC015686</div>
+            </div>
+            <div className="bg-[#0c494f]/40 border border-[#00E5FF]/20 rounded-lg px-2.5 py-2 hover:bg-[#0c494f]/60 transition-colors">
+              <div className="text-[0.6rem] uppercase tracking-wider text-[#00E5FF] mb-0.5 flex items-center gap-1.5 font-bold">
+                 <FileText size={11} /> MCA REG NO
+              </div>
+              <div className="text-[0.65rem] xl:text-[0.7rem] font-medium text-white tracking-tight">015686 (RoC Ernakulam)</div>
+            </div>
+            <div className="bg-[#0c494f]/40 border border-[#00E5FF]/20 rounded-lg px-2.5 py-2 hover:bg-[#0c494f]/60 transition-colors">
+              <div className="text-[0.6rem] uppercase tracking-wider text-[#00E5FF] mb-0.5 flex items-center gap-1.5 font-bold">
+                 <Calendar size={11} /> INCORPORATION
+              </div>
+              <div className="text-[0.65rem] xl:text-[0.7rem] font-medium text-white tracking-tight">08/10/2002</div>
+            </div>
+            <div className="bg-[#0c494f]/40 border border-[#00E5FF]/20 rounded-lg px-2.5 py-2 hover:bg-[#0c494f]/60 transition-colors">
+              <div className="text-[0.6rem] uppercase tracking-wider text-[#00E5FF] mb-0.5 flex items-center gap-1.5 font-bold">
+                 <Award size={11} /> IRDAI LICENSE
+              </div>
+              <div className="text-[0.65rem] xl:text-[0.7rem] font-medium text-white tracking-tight">18-02-2003 (First Issued)</div>
+            </div>
           </div>
         </motion.div>
 
@@ -151,9 +178,9 @@ export function Footer() {
             ].map((item, i) => (
               <li 
                 key={i} 
-                className="flex items-center gap-4 text-[#c4e0e6] p-2 -ml-2 rounded-lg cursor-default transition-colors duration-300 group hover:bg-white/5 hover:translate-x-1"
+                className="flex items-start gap-4 text-[#c4e0e6] p-2 -ml-2 rounded-lg cursor-default transition-colors duration-300 group hover:bg-white/5 hover:translate-x-1"
               >
-                <div className="w-8 h-8 rounded-full bg-[#00E5FF]/10 flex items-center justify-center text-[#00E5FF] group-hover:bg-[#00E5FF] group-hover:text-white transition-colors duration-300 shrink-0">
+                <div className="w-8 h-8 rounded-full bg-[#00E5FF]/10 flex items-center justify-center text-[#00E5FF] group-hover:bg-[#00E5FF] group-hover:text-white transition-colors duration-300 shrink-0 mt-0.5">
                   <item.icon size={14} className="group-hover:rotate-12 transition-transform duration-300" />
                 </div>
                 <span className="text-[0.85rem] md:text-[0.8rem] leading-tight">{item.text}</span>
