@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { services } from "@/lib/content/services";
 import { MethodologySection } from "@/components/sections/MethodologySection";
-import { BusinessLinesSection } from "@/components/sections/BusinessLinesSection";
 
 export const metadata = createPageMetadata({
   title: "Services",
@@ -56,40 +55,38 @@ export default function ServicesPage() {
         </ScrollReveal>
       </section>
 
-      {/* Elegant Service Cards with Images */}
+      {/* Elegant Icon-Centric Service Cards */}
       <section className="relative z-20 max-w-7xl mx-auto px-6 mb-32">
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-            <div key={service.id} className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]">
-              <ScrollReveal direction="up" delay={0.1 * (index + 1)} className="h-full">
+              <ScrollReveal key={service.id} direction="up" delay={0.1 * (index + 1)} className="h-full">
                 <Link href={service.href} className="block h-full group">
-                  <div className="bg-white rounded-[2rem] border border-slate-100 shadow-xl hover:shadow-2xl hover:shadow-[#115E59]/10 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden flex flex-col h-full">
+                  <div className="bg-white hover:bg-[#115E59] rounded-2xl border border-slate-200/60 hover:border-[#115E59] p-8 shadow-sm hover:shadow-[0_20px_40px_rgba(17,94,89,0.25)] transition-all duration-700 ease-out relative overflow-hidden flex flex-col h-full z-10">
                     
-                    {/* Image Header */}
-                    <div className="relative h-48 w-full overflow-hidden">
-                      <Image 
-                        src={service.image} 
-                        alt={service.title} 
-                        fill 
-                        className="object-cover group-hover:scale-105 transition-transform duration-700" 
-                      />
-                      <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors duration-500" />
+                    {/* Top Icon Area */}
+                    <div className="mb-8 flex justify-between items-start">
+                      <div className="w-20 h-20 rounded-2xl bg-slate-50 group-hover:bg-gradient-to-br group-hover:from-white/10 group-hover:to-white/0 flex items-center justify-center border border-slate-100 group-hover:border-white/20 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] transition-all duration-700 ease-out">
+                        <div className="transition-all duration-700 ease-out group-hover:scale-[1.3] group-hover:-translate-y-1 group-hover:drop-shadow-[0_0_25px_rgba(0,229,255,0.8)]">
+                          <Icon className="w-11 h-11" />
+                        </div>
+                      </div>
+                      
+                      {/* Arrow indicator */}
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-700 group-hover:bg-white/10 opacity-0 group-hover:opacity-100 -translate-x-3 group-hover:translate-x-0">
+                        <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </div>
                     </div>
                     
                     {/* Content Section */}
-                    <div className="p-8 pt-10 flex flex-col flex-grow relative">
-                      {/* Floating Icon */}
-                      <div className="absolute -top-10 left-8 w-16 h-16 rounded-2xl bg-white flex items-center justify-center border-4 border-white shadow-sm group-hover:bg-[#115E59] group-hover:border-[#115E59] transition-colors duration-500 z-10">
-                        <Icon size={24} className="text-[#115E59] group-hover:text-white transition-colors duration-500" />
-                      </div>
-                      
-                      <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-[#115E59] transition-colors duration-300">
+                    <div className="flex flex-col flex-grow">
+                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-white mb-3 transition-colors duration-700">
                         {service.title}
                       </h3>
-                      
-                      <p className="text-slate-600 font-light leading-relaxed mb-4 flex-grow">
+                      <p className="text-slate-600 font-medium text-sm leading-relaxed flex-grow group-hover:text-white transition-colors duration-700">
                         {service.shortDescription}
                       </p>
                     </div>
@@ -97,14 +94,12 @@ export default function ServicesPage() {
                   </div>
                 </Link>
               </ScrollReveal>
-            </div>
             );
           })}
         </div>
       </section>
 
-      {/* New Business Lines Section */}
-      <BusinessLinesSection />
+
 
       {/* Methodology Section with Pinning Scroll Effect */}
       <MethodologySection />

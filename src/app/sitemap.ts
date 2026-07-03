@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/reinsurance",
     "/industries",
     "/why-lmb",
-    "/process",
     "/leadership",
     "/careers",
     "/resources",

@@ -27,11 +27,6 @@ export function CTA() {
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>
-                <Link href="/process">
-                  <Button variant="secondary" size="lg" className="border-[#04151a]/20 text-[#04151a] hover:bg-[#04151a]/5 hover:text-[#04151a] hover:border-[#04151a]/40">
-                    Our Process
-                  </Button>
-                </Link>
               </div>
             </div>
           </div>
