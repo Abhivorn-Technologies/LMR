@@ -146,7 +146,7 @@ export const services: Service[] = [
       "Comprehensive claim handling support from intimation to final settlement, ensuring fair representation, policy compliance, and accelerated recovery.",
     icon: ClaimServicesIcon,
     image: "/assets/service-10.png",
-    href: "/services/claim-services",
+    href: "/services/claims",
     features: [
       "Claim preparation and filing",
       "Loss assessment representation",
