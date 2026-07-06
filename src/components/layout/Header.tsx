@@ -26,10 +26,10 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
     >
       <Link
         href={link.path}
-        className={`font-bold uppercase tracking-widest whitespace-nowrap px-6 py-5 lg:py-1.5 lg:px-1.5 xl:px-2.5 flex items-center max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[10px] xl:text-[11px] ${
+        className={`font-semibold whitespace-nowrap flex items-center px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
           isActive 
-            ? 'max-lg:bg-[#115E59]/10 max-lg:text-[#115E59] max-lg:rounded-2xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
-            : 'text-slate-500 max-lg:hover:bg-slate-50 max-lg:hover:text-slate-900 max-lg:hover:translate-x-2 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-2xl lg:rounded-full transition-all duration-300'
+            ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] border-b-[3px] border-[#ffb800]' 
+            : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors border-b-[3px] border-transparent'
         }`}
         onClick={() => {
           if (window.innerWidth < 1024) {
@@ -39,26 +39,7 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
           }
         }}
       >
-        {isActive ? (
-          <>
-            <span className="max-lg:hidden">
-              <ShinyText 
-                text={link.name} 
-                speed={2} 
-                delay={0}
-                color="#ffffff" 
-                shineColor="#a5f3fc" 
-                spread={120}
-                direction="left"
-              />
-            </span>
-            <span className="lg:hidden text-[#115E59] flex items-center">
-              {link.name}
-            </span>
-          </>
-        ) : (
-          link.name
-        )}
+        {link.name}
         <ChevronDown size={14} className={`ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </Link>
 
@@ -165,7 +146,7 @@ export function Header() {
     { name: "Life insurance", path: "/services/life-insurance" },
     { name: "General insurance", path: "/services/general-insurance" },
     { name: "Risk Management", path: "/services/risk-management" },
-    { name: "Claims Consultancy", path: "/services/claims-consultancy" },
+    { name: "Claims Consultancy", path: "/services/claims" },
     { name: "Reinsurance", path: "/reinsurance" },
     { name: "Clients", path: "/clients" },
     { name: "Contact Us", path: "/contact" },
@@ -193,7 +174,7 @@ export function Header() {
           </Link>
         </div>
 
-        <div className={`relative z-10 flex-1 flex justify-center gap-1 xl:gap-2 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[72%] max-lg:sm:w-[340px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
+        <div className={`relative z-10 flex-1 flex justify-center gap-4 xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[72%] max-lg:sm:w-[340px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
           
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-10 pb-4 border-b border-slate-100">
@@ -241,10 +222,6 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4 xl:gap-6">
-          <a href="tel:04712432301" className="hidden lg:flex items-center gap-2 text-[#0f172a] font-bold text-[14px] hover:text-[#10b981] transition-colors whitespace-nowrap">
-            <Phone size={18} className="text-[#10b981]" />
-            (0471) 2432301
-          </a>
           <Link href="/contact" className="max-lg:hidden whitespace-nowrap">
             <Button className="bg-[#ffb800] hover:bg-[#e6a600] text-[#0f172a] shadow-[0_4px_12px_rgba(255,184,0,0.3)] hover:shadow-[0_6px_16px_rgba(255,184,0,0.4)] rounded-xl px-5 py-2 font-bold text-[13px] h-auto whitespace-nowrap transition-all hover:-translate-y-0.5">
               Join Now

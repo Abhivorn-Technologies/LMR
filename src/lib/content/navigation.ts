@@ -9,7 +9,7 @@ export const mainNavigation: NavItem[] = [
   { label: "Life insurance", href: "/services/life-insurance" },
   { label: "General insurance", href: "/services/general-insurance" },
   { label: "Risk Management", href: "/services/risk-management" },
-  { label: "Claims Consultancy", href: "/services/claims-consultancy" },
+  { label: "Claims Consultancy", href: "/services/claims" },
   { label: "Reinsurance", href: "/reinsurance" },
   { label: "Clients", href: "/#clients" },
   { label: "Contact Us", href: "/contact" },
