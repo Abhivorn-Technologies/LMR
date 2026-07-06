@@ -216,11 +216,7 @@ export function Header() {
               <Link
                 key={link.path}
                 href={link.path}
-<<<<<<< HEAD
                 className={`font-semibold whitespace-nowrap px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
-=======
-                className={`font-bold uppercase tracking-widest whitespace-nowrap px-6 py-5 lg:py-1.5 lg:px-1.5 xl:px-2.5 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[10px] xl:text-[11px] ${
->>>>>>> 761fd8521da254e7fad3415cee8b259e201fa9c7
                   isActive 
                     ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] border-b-[3px] border-[#ffb800]' 
                     : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors border-b-[3px] border-transparent'
@@ -232,14 +228,10 @@ export function Header() {
             );
           })}
           <div className="lg:hidden w-full mt-auto pt-6 pb-4 flex flex-col gap-4">
-<<<<<<< HEAD
             <a href="tel:04712432301" className="flex items-center justify-center gap-2 text-[#0f172a] font-bold text-[16px]">
               <Phone size={20} className="text-[#10b981]" />
               (0471) 2432301
             </a>
-=======
-
->>>>>>> 761fd8521da254e7fad3415cee8b259e201fa9c7
             <Link href="/contact" className="w-full" onClick={() => setMobileOpen(false)}>
               <Button className="w-full bg-[#ffb800] hover:bg-[#e6a600] text-[#0f172a] shadow-[0_8px_20px_rgba(255,184,0,0.3)] rounded-2xl font-bold text-[15px] h-14 transition-all" size="lg">
                 Join Now
@@ -248,16 +240,11 @@ export function Header() {
           </div>
         </div>
 
-<<<<<<< HEAD
         <div className="flex items-center gap-4 xl:gap-6">
           <a href="tel:04712432301" className="hidden lg:flex items-center gap-2 text-[#0f172a] font-bold text-[14px] hover:text-[#10b981] transition-colors whitespace-nowrap">
             <Phone size={18} className="text-[#10b981]" />
             (0471) 2432301
           </a>
-=======
-        <div className="flex-shrink-0 flex items-center justify-end gap-4 xl:gap-6">
-
->>>>>>> 761fd8521da254e7fad3415cee8b259e201fa9c7
           <Link href="/contact" className="max-lg:hidden whitespace-nowrap">
             <Button className="bg-[#ffb800] hover:bg-[#e6a600] text-[#0f172a] shadow-[0_4px_12px_rgba(255,184,0,0.3)] hover:shadow-[0_6px_16px_rgba(255,184,0,0.4)] rounded-xl px-5 py-2 font-bold text-[13px] h-auto whitespace-nowrap transition-all hover:-translate-y-0.5">
               Join Now
