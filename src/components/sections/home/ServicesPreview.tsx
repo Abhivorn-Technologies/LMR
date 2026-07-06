@@ -1,66 +1,64 @@
 import Link from "next/link";
+import { CheckCircle2 } from "lucide-react";
 
 import { FadeIn } from "@/components/motion/FadeIn";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Card } from "@/components/ui/Card";
 import { services } from "@/lib/content/services";
 
 export function ServicesPreview() {
   return (
-    <section className="relative py-16 md:py-20 bg-[#04151a]">
-      <div className="mx-auto max-w-7xl px-6">
-        <FadeIn>
-          <SectionHeading
-            align="center"
-            eyebrow="Services"
-            title="Comprehensive insurance broking"
-            description="Advisory and placement across general insurance, reinsurance, life insurance, and risk management."
-          />
-        </FadeIn>
+    <section className="relative py-20 bg-white">
+      <div className="mx-auto max-w-[1400px] px-6">
+        
+        {/* Header Section */}
+        <div className="text-center mb-16">
+          <FadeIn>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-[#0c494f] mb-4">
+              What would you like us to <span className="relative inline-block">take care of?<div className="absolute bottom-2 left-0 w-full h-[6px] bg-[#115E59]/20 -z-10 rounded-full" /></span>
+            </h2>
+            <p className="text-lg md:text-xl text-slate-500 font-medium max-w-3xl mx-auto">
+              Comprehensive broking across general insurance, life insurance, reinsurance, and risk management.
+            </p>
+          </FadeIn>
+        </div>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-6">
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, i) => {
             const Icon = service.icon;
             return (
-              <FadeIn 
-                key={service.id} 
-                delay={i * 0.1}
-                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-md flex"
-              >
-                <div className="relative w-full h-[320px]">
-                  <Link href={service.href} className="block w-full h-full outline-none">
-                    <Card className="group relative w-full h-full bg-[#041d24] border-cyan/10 hover:border-cyan/40 hover:bg-[#062630] hover:shadow-2xl hover:shadow-[#00B4D8]/10 transition-all duration-500 overflow-hidden flex flex-col p-7">
-                      <div className="mb-5 inline-flex rounded-2xl border border-cyan/20 bg-cyan/5 p-3.5 transition-colors group-hover:bg-cyan/10 self-start">
-                        <Icon className="h-6 w-6 text-cyan" />
-                      </div>
-                      
-                      <h3 className="text-[1.15rem] font-bold text-white mb-3 tracking-tight z-10">
-                        {service.title}
-                      </h3>
-                      
-                      {/* Main Content Area - Crossfade and Slide */}
-                      <div className="relative flex-grow w-full">
-                        {/* Default Description */}
-                        <div className="absolute inset-0 transition-all duration-500 transform group-hover:-translate-y-8 group-hover:opacity-0 opacity-100 translate-y-0">
-                          <p className="text-[0.95rem] leading-relaxed text-[#a8d5df] line-clamp-3">
-                            {service.shortDescription}
-                          </p>
+              <FadeIn key={service.id} delay={i * 0.1}>
+                <div className="h-full bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[#115E59]/30 transition-all duration-300 p-8 flex flex-col group">
+                  
+                  {/* Icon */}
+                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-[#115E59]/5 transition-colors">
+                    <Icon className="h-8 w-8 text-[#0c494f]" strokeWidth={1.5} />
+                  </div>
+                  
+                  {/* Title & Description */}
+                  <h3 className="text-2xl font-bold text-[#0c494f] mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8 flex-grow">
+                    {service.shortDescription}
+                  </p>
+
+                  {/* Feature List */}
+                  <ul className="space-y-3 mb-8">
+                    {service.homePoints.map((point, idx) => (
+                      <li key={idx} className="flex items-start text-sm font-semibold text-[#0c494f]">
+                        <div className="mt-0.5 mr-3 flex shrink-0 h-4 w-4 rounded-full bg-[#115E59] items-center justify-center">
+                          <CheckCircle2 className="w-2.5 h-2.5 text-white" strokeWidth={3} />
                         </div>
-                        
-                        {/* Hover Points */}
-                        <div className="absolute inset-0 transition-all duration-500 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto">
-                          <ul className="space-y-3">
-                            {service.homePoints.map((point, idx) => (
-                              <li key={idx} className="flex items-start text-[0.9rem] text-[#a8d5df]/90 leading-snug">
-                                <span className="text-cyan mr-2 mt-0.5 text-[0.7rem] opacity-80">✦</span>
-                                {point}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </Card>
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Explore Link */}
+                  <Link href={service.href} className="inline-flex items-center text-sm font-bold text-[#115E59] group-hover:text-[#0c494f] transition-colors mt-auto pt-4 border-t border-slate-100">
+                    Explore <span className="ml-1 text-[16px]">→</span>
                   </Link>
+
                 </div>
               </FadeIn>
             );

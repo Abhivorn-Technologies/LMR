@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/home/Hero";
+import { StatsBar } from "@/components/sections/home/StatsBar";
 import { ServicesPreview } from "@/components/sections/home/ServicesPreview";
 import { IndustriesPreview } from "@/components/sections/home/IndustriesPreview";
 import { WhyPreview } from "@/components/sections/home/WhyPreview";
@@ -17,6 +18,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <StatsBar />
       <ServicesPreview />
       <IndustriesPreview />
       <WhyPreview />
