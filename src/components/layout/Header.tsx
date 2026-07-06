@@ -79,7 +79,7 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
                 })}
               </ul>
 
-              <ul className="w-[55%] p-4 flex flex-col gap-3 bg-white max-lg:w-full max-lg:pl-8 max-lg:pt-2 max-lg:bg-transparent max-lg:hidden">
+              <ul className="w-[55%] p-4 flex flex-col gap-3 bg-white max-lg:w-full max-lg:pl-8 max-lg:pt-2 max-lg:bg-transparent max-lg:flex">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeChild?.label}
@@ -174,7 +174,7 @@ export function Header() {
           </Link>
         </div>
 
-        <div className={`relative z-10 flex-1 flex justify-center gap-4 xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[72%] max-lg:sm:w-[340px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
+        <div className={`relative z-10 flex-1 flex justify-center gap-4 xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[72%] max-lg:sm:w-[340px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
           
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-10 pb-4 border-b border-slate-100">
