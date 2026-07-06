@@ -12,10 +12,10 @@ export function ServicesPreview() {
         {/* Header Section */}
         <div className="text-center mb-16">
           <FadeIn>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#0c494f] mb-4">
-              What would you like us to <span className="relative inline-block">take care of?<div className="absolute bottom-2 left-0 w-full h-[6px] bg-[#115E59]/20 -z-10 rounded-full" /></span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-[#0f172a] mb-4">
+              What would you like us to <span className="relative inline-block">take care of?<div className="absolute bottom-2 left-0 w-full h-[6px] bg-[#ffb800] -z-10 rounded-sm" /></span>
             </h2>
-            <p className="text-lg md:text-xl text-slate-500 font-medium max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-[#64748b] font-medium max-w-3xl mx-auto">
               Comprehensive broking across general insurance, life insurance, reinsurance, and risk management.
             </p>
           </FadeIn>
@@ -27,27 +27,27 @@ export function ServicesPreview() {
             const Icon = service.icon;
             return (
               <FadeIn key={service.id} delay={i * 0.1}>
-                <div className="h-full bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[#115E59]/30 transition-all duration-300 p-8 flex flex-col group">
+                <div className="h-full bg-white rounded-3xl border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-1 hover:border-[#0ea5e9]/30 transition-all duration-300 p-8 flex flex-col group">
                   
                   {/* Icon */}
-                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-[#115E59]/5 transition-colors">
-                    <Icon className="h-8 w-8 text-[#0c494f]" strokeWidth={1.5} />
+                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f8fafc] border border-slate-100 group-hover:bg-[#f0f9ff] group-hover:border-[#0ea5e9]/20 transition-colors">
+                    <Icon className="h-8 w-8 text-[#0ea5e9]" strokeWidth={1.5} />
                   </div>
                   
                   {/* Title & Description */}
-                  <h3 className="text-2xl font-bold text-[#0c494f] mb-3">
+                  <h3 className="text-[22px] font-bold text-[#0f172a] mb-3 tracking-tight">
                     {service.title}
                   </h3>
-                  <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8 flex-grow">
+                  <p className="text-[14px] text-[#64748b] font-medium leading-relaxed mb-8 flex-grow">
                     {service.shortDescription}
                   </p>
 
                   {/* Feature List */}
-                  <ul className="space-y-3 mb-8">
+                  <ul className="space-y-3.5 mb-8">
                     {service.homePoints.map((point, idx) => (
-                      <li key={idx} className="flex items-start text-sm font-semibold text-[#0c494f]">
-                        <div className="mt-0.5 mr-3 flex shrink-0 h-4 w-4 rounded-full bg-[#115E59] items-center justify-center">
-                          <CheckCircle2 className="w-2.5 h-2.5 text-white" strokeWidth={3} />
+                      <li key={idx} className="flex items-start text-[13px] font-semibold text-[#0f172a]">
+                        <div className="mt-0.5 mr-3 flex shrink-0 h-[18px] w-[18px] rounded-full bg-[#10b981] items-center justify-center">
+                          <CheckCircle2 className="w-3 h-3 text-white" strokeWidth={3} />
                         </div>
                         {point}
                       </li>
@@ -55,7 +55,7 @@ export function ServicesPreview() {
                   </ul>
 
                   {/* Explore Link */}
-                  <Link href={service.href} className="inline-flex items-center text-sm font-bold text-[#115E59] group-hover:text-[#0c494f] transition-colors mt-auto pt-4 border-t border-slate-100">
+                  <Link href={service.href} className="inline-flex items-center text-[13px] font-bold text-[#0ea5e9] group-hover:text-[#0284c7] transition-colors mt-auto pt-5 border-t border-slate-100">
                     Explore <span className="ml-1 text-[16px]">→</span>
                   </Link>
 
