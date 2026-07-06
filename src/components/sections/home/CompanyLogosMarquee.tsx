@@ -101,7 +101,7 @@ export function CompanyLogosMarquee() {
   if (!isMounted) return null;
 
   return (
-    <section className="py-16 overflow-hidden bg-[#f4f9f9] relative border-t border-b border-[#e5f0f0]">
+    <section id="clients" className="scroll-mt-24 py-16 overflow-hidden bg-[#f4f9f9] relative border-t border-b border-[#e5f0f0]">
       <div className="max-w-7xl mx-auto px-6 mb-12 flex flex-col items-center text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-[#0c494f] mb-4">
           Our notable clients
