@@ -36,7 +36,10 @@ export function Header() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
-    { name: "Our Services", path: "/services" },
+    { name: "Life insurance", path: "/services/life-insurance" },
+    { name: "General insurance", path: "/services/general-insurance" },
+    { name: "Risk Management", path: "/services/risk-management" },
+    { name: "Claims Consultancy", path: "/services/claims-consultancy" },
     { name: "Reinsurance", path: "/reinsurance" },
     { name: "Clients", path: "/clients" },
     { name: "Contact Us", path: "/contact" },
