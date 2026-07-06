@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/content/company";
 import { Button } from "@/components/ui/Button";
 import ShinyText from "@/components/ui/ShinyText";
@@ -38,6 +38,7 @@ export function Header() {
     { name: "About Us", path: "/about" },
     { name: "Our Services", path: "/services" },
     { name: "Reinsurance", path: "/reinsurance" },
+    { name: "Clients", path: "/clients" },
     { name: "Contact Us", path: "/contact" },
   ];
 
@@ -49,8 +50,8 @@ export function Header() {
         onClick={() => setMobileOpen(false)}
       />
 
-      <div className="mx-auto max-w-7xl relative z-[1000] flex justify-between items-center py-2 lg:py-3 px-6">
-        <Link href="/" className="flex items-center h-10 md:h-12 w-[180px] md:w-[260px] relative shrink-0 -ml-2 md:-ml-4">
+      <div className="mx-auto max-w-[1600px] relative z-[1000] flex justify-between items-center py-2 lg:py-3 px-6 xl:px-10">
+        <Link href="/" className="flex items-center h-10 md:h-12 w-[180px] md:w-[260px] relative shrink-0 ml-0 md:ml-4 xl:ml-8">
           <Image 
             src={siteConfig.logo} 
             alt={siteConfig.name} 
@@ -79,7 +80,7 @@ export function Header() {
               <Link
                 key={link.path}
                 href={link.path}
-                className={`font-bold uppercase tracking-widest px-6 py-5 lg:py-2.5 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[12px] xl:text-[13px] ${
+                className={`font-bold uppercase tracking-widest whitespace-nowrap px-6 py-5 lg:py-2.5 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[12px] xl:text-[13px] ${
                   isActive 
                     ? 'max-lg:bg-[#115E59]/10 max-lg:text-[#115E59] max-lg:rounded-2xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
                     : 'text-slate-500 max-lg:hover:bg-slate-50 max-lg:hover:text-slate-900 max-lg:hover:translate-x-2 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-2xl lg:rounded-full transition-all duration-300'
@@ -113,16 +114,26 @@ export function Header() {
               </Link>
             );
           })}
-          <Link href="/contact" className="lg:hidden w-full mt-auto pt-6 pb-4" onClick={() => setMobileOpen(false)}>
-            <Button className="w-full bg-[#115E59] hover:bg-[#083135] text-white shadow-xl shadow-[#115E59]/20 rounded-2xl font-bold text-[14px] uppercase tracking-widest h-14 transition-all" size="lg">
-              Join Now
-            </Button>
-          </Link>
+          <div className="lg:hidden w-full mt-auto pt-6 pb-4 flex flex-col gap-4">
+            <a href="tel:04712432301" className="flex items-center justify-center gap-2 text-[#0c494f] font-bold text-[16px]">
+              <Phone size={20} />
+              (0471) 2432301
+            </a>
+            <Link href="/contact" className="w-full" onClick={() => setMobileOpen(false)}>
+              <Button className="w-full bg-[#115E59] hover:bg-[#083135] text-white shadow-xl shadow-[#115E59]/20 rounded-2xl font-bold text-[14px] uppercase tracking-widest h-14 transition-all" size="lg">
+                Join Now
+              </Button>
+            </Link>
+          </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <Link href="/contact" className="max-lg:hidden">
-            <Button className="bg-[#0c494f] hover:bg-[#083135] text-white shadow-[0_4px_12px_rgba(12,73,79,0.3)] rounded-full px-8 py-3 font-bold text-[12px] xl:text-[13px] uppercase tracking-widest h-auto">
+        <div className="flex items-center gap-4 xl:gap-6">
+          <a href="tel:04712432301" className="hidden lg:flex items-center gap-2 text-[#0c494f] font-bold text-[15px] hover:text-[#115E59] transition-colors whitespace-nowrap">
+            <Phone size={18} />
+            (0471) 2432301
+          </a>
+          <Link href="/contact" className="max-lg:hidden whitespace-nowrap">
+            <Button className="bg-[#0c494f] hover:bg-[#083135] text-white shadow-[0_4px_12px_rgba(12,73,79,0.3)] rounded-full px-8 py-3 font-bold text-[12px] xl:text-[13px] uppercase tracking-widest h-auto whitespace-nowrap">
               Join Now
             </Button>
           </Link>
