@@ -244,12 +244,10 @@ export function Footer() {
           </h4>
           <ul className="space-y-3.5">
             {footerNavigation.services.map((link) => {
-              if ('children' in link && link.children) {
-                return <FooterServiceDropdown key={link.label} link={link} />;
-              }
+              const href = link.label === "General Insurance" && link.href === "#" ? "/services/general-insurance" : link.href;
               return (
-                <li key={link.href}>
-                  <Link href={link.href} className="group flex items-center text-[#c4e0e6] text-[0.95rem] hover:text-white transition-colors duration-300">
+                <li key={link.label}>
+                  <Link href={href} className="group flex items-center text-[#c4e0e6] text-[0.95rem] hover:text-white transition-colors duration-300">
                     <span className="h-[2px] w-0 bg-[#00E5FF] transition-all duration-300 group-hover:w-3 group-hover:mr-2 rounded-full"></span>
                     {link.label}
                   </Link>

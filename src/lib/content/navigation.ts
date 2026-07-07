@@ -111,7 +111,61 @@ export const footerNavigation = {
         }
       ]
     },
-    { label: "Life Insurance", href: "/services/life-insurance" },
+    { 
+      label: "Life Insurance", 
+      href: "#",
+      children: [
+        { 
+          label: "Term Life", 
+          href: "#",
+          icon: "Shield",
+          children: [
+            { label: "Digit Glow Term Life Insurance New", href: "/services/life-insurance/term/digit-glow-new" },
+            { label: "Digit Glow Plus Term Life Insurance New", href: "/services/life-insurance/term/digit-glow-plus-new" },
+            { label: "Digit Glow Lite Term Life Insurance New", href: "/services/life-insurance/term/digit-glow-lite-new" },
+            { label: "Term Insurance", href: "/services/life-insurance/term/insurance" },
+            { label: "Term Insurance Calculator", href: "/services/life-insurance/term/calculator" },
+            { label: "1 Crore Term Insurance", href: "/services/life-insurance/term/1-crore" }
+          ]
+        },
+        { 
+          label: "Savings Plan", 
+          href: "#",
+          icon: "PiggyBank",
+          children: [
+            { label: "Digit ICON Guaranteed Returns Savings Plan", href: "/services/life-insurance/savings/digit-icon" }
+          ]
+        },
+        { 
+          label: "Retirement and Pension Plans", 
+          href: "#",
+          icon: "Coins",
+          children: [
+            { label: "Retirement and Pension Plans", href: "/services/life-insurance/retirement/plans" },
+            { label: "Guaranteed Pension Plan", href: "/services/life-insurance/retirement/guaranteed" }
+          ]
+        },
+        { 
+          label: "Group Life Products", 
+          href: "#",
+          icon: "Users",
+          children: [
+            { label: "Digit Life Group Term Life Insuranc", href: "/services/life-insurance/group/term" },
+            { label: "Digit Life Group Long Term Plan", href: "/services/life-insurance/group/long-term" },
+            { label: "Digit Life Group Micro Term Life Insurance", href: "/services/life-insurance/group/micro-term" }
+          ]
+        },
+        { 
+          label: "Product Documents", 
+          href: "#",
+          icon: "FileText",
+          children: [
+            { label: "Policy Documents & Brochures", href: "/services/life-insurance/documents/policy-brochures" },
+            { label: "List of Withdrawn Products", href: "/services/life-insurance/documents/withdrawn-products" }
+          ]
+        }
+      ]
+    },
     { label: "Reinsurance", href: "/services/reinsurance" },
     { label: "Claim Services", href: "/services/claim-services" },
     { label: "Risk Management", href: "/services/risk-management" },

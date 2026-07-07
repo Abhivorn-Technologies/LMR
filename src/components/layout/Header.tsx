@@ -4,17 +4,19 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, Shield, PiggyBank, Coins, Users, FileText } from "lucide-react";
 import { siteConfig } from "@/lib/content/company";
 import { footerNavigation } from "@/lib/content/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import ShinyText from "@/components/ui/ShinyText";
 
+const iconMap: Record<string, any> = { Shield, PiggyBank, Coins, Users, FileText };
+
 const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
   const [isOpen, setIsOpen] = useState(false);
-  const generalServices = footerNavigation.services.find(s => s.label === "General Insurance");
-  const [activeChild, setActiveChild] = useState<any>(generalServices?.children?.[0]);
+  const serviceData = footerNavigation.services.find(s => s.label.toLowerCase() === link.name.toLowerCase()) as any;
+  const [activeChild, setActiveChild] = useState<any>(serviceData?.children?.[0]);
 
   return (
     <div 
@@ -61,7 +63,7 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
       </Link>
 
       <AnimatePresence>
-        {isOpen && generalServices?.children && (
+        {isOpen && serviceData?.children && (
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,7 +74,9 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
             <div className="flex bg-white text-slate-800 rounded-xl border border-slate-200 overflow-hidden shadow-2xl max-lg:flex-col max-lg:shadow-none max-lg:border-none max-lg:bg-transparent">
               
               <ul className="w-[45%] border-r border-slate-200 p-2 flex flex-col gap-1 bg-slate-50 max-lg:w-full max-lg:border-none max-lg:bg-transparent">
-                {generalServices.children.map((child: any) => (
+                {serviceData.children.map((child: any) => {
+                  const Icon = child.icon ? iconMap[child.icon] : null;
+                  return (
                   <li key={child.label}>
                     <button
                       onClick={(e) => {
@@ -80,16 +84,18 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
                         setActiveChild(child);
                       }}
                       onMouseEnter={() => setActiveChild(child)}
-                      className={`w-full text-left flex items-center text-[0.85rem] transition-colors duration-300 p-3 rounded-lg ${
+                      className={`w-full text-left flex items-center gap-3 text-[0.85rem] transition-colors duration-300 p-3 rounded-lg ${
                         activeChild?.label === child.label 
                           ? "bg-white text-[#F57C00] font-medium shadow-sm max-lg:bg-slate-100" 
                           : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                       }`}
                     >
+                      {Icon && <Icon size={18} className={activeChild?.label === child.label ? "text-[#F57C00]" : "text-slate-400"} />}
                       {child.label}
                     </button>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
 
               <ul className="w-[55%] p-4 flex flex-col gap-3 bg-white max-lg:w-full max-lg:pl-8 max-lg:pt-2 max-lg:bg-transparent max-lg:hidden">
@@ -202,7 +208,7 @@ export function Header() {
           {navLinks.map((link) => {
             const isActive = pathname === link.path || (pathname.startsWith(link.path) && link.path !== "/");
             
-            if (link.name === "General insurance") {
+            if (link.name === "General insurance" || link.name === "Life insurance") {
               return <HeaderMegaMenu key={link.path} link={link} isActive={isActive} setMobileOpen={setMobileOpen} />;
             }
             
