@@ -24,7 +24,7 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
     >
       <Link
         href={link.path}
-        className={`font-bold uppercase tracking-widest whitespace-nowrap px-6 py-5 lg:py-2 lg:px-2 xl:px-3 flex items-center max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[10px] xl:text-[11px] ${
+        className={`font-bold uppercase tracking-widest whitespace-nowrap px-6 py-5 lg:py-1.5 lg:px-1.5 xl:px-2.5 flex items-center max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[10px] xl:text-[11px] ${
           isActive 
             ? 'max-lg:bg-[#115E59]/10 max-lg:text-[#115E59] max-lg:rounded-2xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
             : 'text-slate-500 max-lg:hover:bg-slate-50 max-lg:hover:text-slate-900 max-lg:hover:translate-x-2 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-2xl lg:rounded-full transition-all duration-300'
@@ -174,7 +174,7 @@ export function Header() {
       />
 
       <div className="mx-auto max-w-[1600px] relative z-[1000] flex justify-between items-center py-2 lg:py-3 px-6 xl:px-10">
-        <div className="lg:flex-1 flex justify-start">
+        <div className="flex-shrink-0 flex items-center">
           <Link href="/" className="flex items-center h-10 md:h-12 w-[180px] md:w-[260px] relative shrink-0 ml-0">
             <Image 
               src={siteConfig.logo} 
@@ -187,7 +187,7 @@ export function Header() {
           </Link>
         </div>
 
-        <div className={`relative z-10 flex justify-center gap-1 xl:gap-2 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[72%] max-lg:sm:w-[340px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
+        <div className={`relative z-10 flex-1 flex justify-center gap-1 xl:gap-2 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[72%] max-lg:sm:w-[340px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
           
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-10 pb-4 border-b border-slate-100">
@@ -210,7 +210,7 @@ export function Header() {
               <Link
                 key={link.path}
                 href={link.path}
-                className={`font-bold uppercase tracking-widest whitespace-nowrap px-6 py-5 lg:py-2 lg:px-2 xl:px-3 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[10px] xl:text-[11px] ${
+                className={`font-bold uppercase tracking-widest whitespace-nowrap px-6 py-5 lg:py-1.5 lg:px-1.5 xl:px-2.5 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[10px] xl:text-[11px] ${
                   isActive 
                     ? 'max-lg:bg-[#115E59]/10 max-lg:text-[#115E59] max-lg:rounded-2xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
                     : 'text-slate-500 max-lg:hover:bg-slate-50 max-lg:hover:text-slate-900 max-lg:hover:translate-x-2 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-2xl lg:rounded-full transition-all duration-300'
@@ -254,7 +254,7 @@ export function Header() {
           </div>
         </div>
 
-        <div className="lg:flex-1 flex justify-end items-center gap-4 xl:gap-6">
+        <div className="flex-shrink-0 flex items-center justify-end gap-4 xl:gap-6">
 
           <Link href="/contact" className="max-lg:hidden whitespace-nowrap">
             <Button className="bg-[#0c494f] hover:bg-[#083135] text-white shadow-[0_4px_12px_rgba(12,73,79,0.3)] rounded-full px-8 py-3 font-bold text-[12px] xl:text-[13px] uppercase tracking-widest h-auto whitespace-nowrap">
