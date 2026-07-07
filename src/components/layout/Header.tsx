@@ -4,10 +4,130 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { siteConfig } from "@/lib/content/company";
+import { footerNavigation } from "@/lib/content/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import ShinyText from "@/components/ui/ShinyText";
+
+const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const generalServices = footerNavigation.services.find(s => s.label === "General Insurance");
+  const [activeChild, setActiveChild] = useState<any>(generalServices?.children?.[0]);
+
+  return (
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <Link
+        href={link.path}
+        className={`font-bold uppercase tracking-widest whitespace-nowrap px-6 py-5 lg:py-2 lg:px-2 xl:px-3 flex items-center max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[14px] lg:text-[10px] xl:text-[11px] ${
+          isActive 
+            ? 'max-lg:bg-[#115E59]/10 max-lg:text-[#115E59] max-lg:rounded-2xl lg:bg-[#0c494f] lg:shadow-[0_4px_12px_rgba(12,73,79,0.3)] lg:ring-1 lg:ring-white/20 lg:rounded-full lg:text-white' 
+            : 'text-slate-500 max-lg:hover:bg-slate-50 max-lg:hover:text-slate-900 max-lg:hover:translate-x-2 lg:hover:bg-slate-50 hover:text-[#0c494f] max-lg:rounded-2xl lg:rounded-full transition-all duration-300'
+        }`}
+        onClick={() => {
+          if (window.innerWidth < 1024) {
+            setIsOpen(!isOpen);
+          } else {
+            setMobileOpen(false);
+          }
+        }}
+      >
+        {isActive ? (
+          <>
+            <span className="max-lg:hidden">
+              <ShinyText 
+                text={link.name} 
+                speed={2} 
+                delay={0}
+                color="#ffffff" 
+                shineColor="#a5f3fc" 
+                spread={120}
+                direction="left"
+              />
+            </span>
+            <span className="lg:hidden text-[#115E59] flex items-center">
+              {link.name}
+            </span>
+          </>
+        ) : (
+          link.name
+        )}
+        <ChevronDown size={14} className={`ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </Link>
+
+      <AnimatePresence>
+        {isOpen && generalServices?.children && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[550px] z-[1000] max-lg:static max-lg:w-full max-lg:translate-x-0 max-lg:mt-0"
+          >
+            <div className="flex bg-white text-slate-800 rounded-xl border border-slate-200 overflow-hidden shadow-2xl max-lg:flex-col max-lg:shadow-none max-lg:border-none max-lg:bg-transparent">
+              
+              <ul className="w-[45%] border-r border-slate-200 p-2 flex flex-col gap-1 bg-slate-50 max-lg:w-full max-lg:border-none max-lg:bg-transparent">
+                {generalServices.children.map((child: any) => (
+                  <li key={child.label}>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveChild(child);
+                      }}
+                      onMouseEnter={() => setActiveChild(child)}
+                      className={`w-full text-left flex items-center text-[0.85rem] transition-colors duration-300 p-3 rounded-lg ${
+                        activeChild?.label === child.label 
+                          ? "bg-white text-[#F57C00] font-medium shadow-sm max-lg:bg-slate-100" 
+                          : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                      }`}
+                    >
+                      {child.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <ul className="w-[55%] p-4 flex flex-col gap-3 bg-white max-lg:w-full max-lg:pl-8 max-lg:pt-2 max-lg:bg-transparent max-lg:hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeChild?.label}
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 5 }}
+                    transition={{ duration: 0.15 }}
+                    className="flex flex-col gap-3"
+                  >
+                    {activeChild?.children ? (
+                      activeChild.children.map((subChild: any) => (
+                        <div key={subChild.label} className="mb-1 last:mb-0">
+                          <Link href={subChild.href} onClick={() => setMobileOpen(false)} className="group flex items-center text-slate-600 text-[0.85rem] hover:text-[#F57C00] transition-colors duration-300">
+                            {subChild.label}
+                          </Link>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="mb-1">
+                        <Link href={activeChild?.href || "#"} onClick={() => setMobileOpen(false)} className="group flex items-center text-slate-600 text-[0.85rem] hover:text-[#F57C00] transition-colors duration-300">
+                          Explore {activeChild?.label}
+                        </Link>
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </ul>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -81,6 +201,11 @@ export function Header() {
 
           {navLinks.map((link) => {
             const isActive = pathname === link.path || (pathname.startsWith(link.path) && link.path !== "/");
+            
+            if (link.name === "General insurance") {
+              return <HeaderMegaMenu key={link.path} link={link} isActive={isActive} setMobileOpen={setMobileOpen} />;
+            }
+            
             return (
               <Link
                 key={link.path}

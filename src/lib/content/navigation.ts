@@ -50,11 +50,65 @@ export const footerNavigation = {
             { label: "Own Damage Bike Insurance", href: "/services/general-insurance/two-wheeler/own-damage" }
           ]
         },
-        { label: "Commercial Vehicle Insurance", href: "/services/general-insurance/commercial" },
-        { label: "Health Insurance", href: "/services/general-insurance/health" },
-        { label: "Home Insurance", href: "/services/general-insurance/home" },
-        { label: "Travel Insurance", href: "/services/general-insurance/travel" },
-        { label: "Business Insurance", href: "/services/general-insurance/business" }
+        { 
+          label: "Commercial Vehicle Insurance", 
+          href: "#",
+          children: [
+            { label: "Commercial Vehicle Insurance", href: "/services/general-insurance/commercial/commercial-vehicle" },
+            { label: "Auto Rickshaw Insurance", href: "/services/general-insurance/commercial/auto-rickshaw" },
+            { label: "e-Rickshaw Insurance", href: "/services/general-insurance/commercial/e-rickshaw" },
+            { label: "Taxi Insurance", href: "/services/general-insurance/commercial/taxi" },
+            { label: "Tata Ace Insurance", href: "/services/general-insurance/commercial/tata-ace" },
+            { label: "Tractor Insurance", href: "/services/general-insurance/commercial/tractor" },
+            { label: "Truck Insurance", href: "/services/general-insurance/commercial/truck" },
+            { label: "JCB Insurance", href: "/services/general-insurance/commercial/jcb" }
+          ]
+        },
+        { 
+          label: "Health Insurance", 
+          href: "#",
+          children: [
+            { label: "Health Insurance", href: "/services/general-insurance/health" },
+            { label: "Health & Term Insurance Combo New", href: "/services/general-insurance/health/combo-new" },
+            { label: "Cashless Health Insurance", href: "/services/general-insurance/health/cashless" },
+            { label: "Health Insurance Premium Calculator", href: "/services/general-insurance/health/premium-calculator" },
+            { label: "Health Insurance Portability", href: "/services/general-insurance/health/portability" },
+            { label: "Super Top Up Health Insurance", href: "/services/general-insurance/health/super-top-up" },
+            { label: "Health Insurance for Parents", href: "/services/general-insurance/health/parents" },
+            { label: "Group Medical Health Insurance", href: "/services/general-insurance/health/group-medical" },
+            { label: "Family Health Insurance", href: "/services/general-insurance/health/family" },
+            { label: "Family Floater Health Insurance", href: "/services/general-insurance/health/family-floater" },
+            { label: "Senior Citizens Health Insurance", href: "/services/general-insurance/health/senior-citizens" }
+          ]
+        },
+        { 
+          label: "Home Insurance", 
+          href: "#",
+          children: [
+            { label: "Bharat Griha Raksha Policy", href: "/services/general-insurance/home/bharat-griha-raksha" },
+            { label: "Home Insurance", href: "/services/general-insurance/home" },
+            { label: "Home Insurance for Home Loan", href: "/services/general-insurance/home/home-loan" }
+          ]
+        },
+        { 
+          label: "Travel Insurance", 
+          href: "#",
+          children: [
+            { label: "International Travel Insurance", href: "/services/general-insurance/travel/international" },
+            { label: "Multi-Trip Travel Insurance New", href: "/services/general-insurance/travel/multi-trip-new" },
+            { label: "Schengen Travel Insurance", href: "/services/general-insurance/travel/schengen" },
+            { label: "Family Travel Insurance", href: "/services/general-insurance/travel/family" }
+          ]
+        },
+        { 
+          label: "Business Insurance", 
+          href: "#",
+          children: [
+            { label: "Workmen Compensation Insurance", href: "/services/general-insurance/business/workmen-compensation" },
+            { label: "Contractors All Risk Insurance", href: "/services/general-insurance/business/contractors-all-risk" },
+            { label: "Contractors Plant & Machinery Insur", href: "/services/general-insurance/business/contractors-plant-machinery" }
+          ]
+        }
       ]
     },
     { label: "Life Insurance", href: "/services/life-insurance" },
