@@ -51,32 +51,32 @@ export default async function SubServiceDetail({ params }: { params: Promise<{ s
   return (
     <div className="bg-slate-50 flex flex-col h-full min-h-screen">
       {/* Premium Hero */}
-      <section className="pt-40 pb-32 bg-[#04151a] relative overflow-hidden flex-shrink-0">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#115E59]/20 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#00B4D8]/10 blur-[100px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" />
+      <section className="pt-40 pb-32 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden flex-shrink-0">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-100/50 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-orange-50/50 blur-[100px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" />
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <Link href={`/services/${service.id}`} className="inline-flex items-center text-[#00B4D8] hover:text-white transition-colors mb-8 text-sm font-semibold uppercase tracking-wider">
+          <Link href={`/services/${service.id}`} className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8 text-[13px] font-bold uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-full border border-blue-100">
             &larr; Back to {service.title}
           </Link>
           
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="lg:w-1/2">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
+              <h1 className="text-4xl md:text-[52px] lg:text-[60px] font-extrabold text-[#0F172A] mb-6 leading-[1.1] tracking-tight">
                 {subService.title}
               </h1>
               <div className="mb-12 max-w-2xl">
-                <p className="text-2xl text-white font-light leading-relaxed mb-10">
+                <p className="text-[22px] text-slate-600 font-medium leading-relaxed mb-10">
                   {subService.description}
                 </p>
                 
-                <div className="flex gap-4 items-start">
-                  <div className="flex-shrink-0 text-[#00B4D8] mt-1">
+                <div className="flex gap-4 items-start p-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex-shrink-0 text-blue-600 mt-1">
                     <Shield className="w-8 h-8" />
                   </div>
-                  <p className="text-lg text-slate-300 leading-relaxed">
-                    <span className="text-white font-semibold tracking-wide">Expert {subService.title} Solutions by LMB.</span><br/>
-                    As your dedicated independent broker, we provide comprehensive {subService.title.toLowerCase()} services tailored to your exact needs. While we are not a direct insurer, we work entirely on your behalf—leveraging our deep industry expertise to source, compare, and meticulously structure your coverage through top-tier providers to secure the absolute best protection.
+                  <p className="text-[15px] text-slate-500 leading-relaxed font-medium">
+                    <span className="text-[#0F172A] font-bold tracking-wide text-[16px]">Expert {subService.title} Solutions by LMB.</span><br/>
+                    As your dedicated independent broker, we provide comprehensive {subService.title.toLowerCase()} services tailored to your exact needs. We work entirely on your behalf to secure the absolute best protection.
                   </p>
                 </div>
               </div>
@@ -84,14 +84,13 @@ export default async function SubServiceDetail({ params }: { params: Promise<{ s
             
             <div className="lg:w-1/2 w-full relative">
               {/* Stunning 3D Photorealistic Render */}
-              <div className="relative w-full aspect-[4/3] max-h-[500px] rounded-[3rem] overflow-hidden group shadow-2xl shadow-[#115E59]/30">
+              <div className="relative w-full aspect-[4/3] max-h-[500px] rounded-[2.5rem] overflow-hidden group shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-200">
                 <Image
                   src={getSubServiceImage(subService.id)}
                   alt={subService.title}
                   fill
                   className="object-cover transform transition-transform duration-700 group-hover:scale-105 ease-out"
                 />
-                <div className="absolute inset-0 bg-[#04151a]/10 pointer-events-none" />
               </div>
             </div>
           </div>

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TextReveal } from "@/components/motion/TextReveal";
 import Link from "next/link";
 import { 
   Shield, FileText, TrendingUp, Target, LineChart, 
@@ -89,10 +90,10 @@ export default function ConsultingPage() {
                 <span className="text-xs font-bold tracking-wider text-[#17233A] uppercase">LMB Insurance Brokers</span>
               </motion.div>
               
-              <motion.h1 variants={fadeUp} className="text-4xl lg:text-6xl font-extrabold text-[#17233A] leading-[1.15] tracking-tight mb-6">
-                Insurance Consulting<br className="hidden lg:block" />
-                That Protects Every<br className="hidden lg:block" />
-                <span className="text-[#19C8D6]">Business Decision</span>
+              <motion.h1 className="text-4xl lg:text-6xl font-extrabold text-[#17233A] leading-[1.15] tracking-tight mb-6">
+                <TextReveal delay={0.2}>Insurance Consulting</TextReveal><br className="hidden lg:block" />
+                <TextReveal delay={0.3}>That Protects Every</TextReveal><br className="hidden lg:block" />
+                <span className="text-[#19C8D6]"><TextReveal delay={0.4}>Business Decision</TextReveal></span>
               </motion.h1>
               
               <motion.p variants={fadeUp} className="text-lg text-[#58667E] leading-relaxed mb-10 max-w-xl">

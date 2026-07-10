@@ -31,6 +31,7 @@ export const footerNavigation = {
         { 
           label: "Car Insurance", 
           href: "#",
+          icon: "Car",
           children: [
             { label: "Car Insurance", href: "/services/general-insurance/car" },
             { label: "Comprehensive Car Insurance", href: "/services/general-insurance/car/comprehensive" },
@@ -43,6 +44,7 @@ export const footerNavigation = {
         { 
           label: "Two Wheeler Insurance", 
           href: "#",
+          icon: "Bike",
           children: [
             { label: "Bike Insurance", href: "/services/general-insurance/two-wheeler/bike" },
             { label: "Comprehensive Bike Insurance", href: "/services/general-insurance/two-wheeler/comprehensive" },
@@ -54,6 +56,7 @@ export const footerNavigation = {
         { 
           label: "Commercial Vehicle Insurance", 
           href: "#",
+          icon: "Truck",
           children: [
             { label: "Commercial Vehicle Insurance", href: "/services/general-insurance/commercial/commercial-vehicle" },
             { label: "Auto Rickshaw Insurance", href: "/services/general-insurance/commercial/auto-rickshaw" },
@@ -68,9 +71,10 @@ export const footerNavigation = {
         { 
           label: "Health Insurance", 
           href: "#",
+          icon: "HeartPulse",
           children: [
             { label: "Health Insurance", href: "/services/general-insurance/health" },
-            { label: "Health & Term Insurance Combo New", href: "/services/general-insurance/health/combo-new" },
+            { label: "Health & Term Insurance Combo", href: "/services/general-insurance/health/combo" },
             { label: "Cashless Health Insurance", href: "/services/general-insurance/health/cashless" },
             { label: "Health Insurance Premium Calculator", href: "/services/general-insurance/health/premium-calculator" },
             { label: "Health Insurance Portability", href: "/services/general-insurance/health/portability" },
@@ -85,6 +89,7 @@ export const footerNavigation = {
         { 
           label: "Home Insurance", 
           href: "#",
+          icon: "Home",
           children: [
             { label: "Bharat Griha Raksha Policy", href: "/services/general-insurance/home/bharat-griha-raksha" },
             { label: "Home Insurance", href: "/services/general-insurance/home" },
@@ -94,9 +99,10 @@ export const footerNavigation = {
         { 
           label: "Travel Insurance", 
           href: "#",
+          icon: "Plane",
           children: [
             { label: "International Travel Insurance", href: "/services/general-insurance/travel/international" },
-            { label: "Multi-Trip Travel Insurance New", href: "/services/general-insurance/travel/multi-trip-new" },
+            { label: "Multi-Trip Travel Insurance", href: "/services/general-insurance/travel/multi-trip" },
             { label: "Schengen Travel Insurance", href: "/services/general-insurance/travel/schengen" },
             { label: "Family Travel Insurance", href: "/services/general-insurance/travel/family" }
           ]
@@ -104,6 +110,7 @@ export const footerNavigation = {
         { 
           label: "Business Insurance", 
           href: "#",
+          icon: "Briefcase",
           children: [
             { label: "Workmen Compensation Insurance", href: "/services/general-insurance/business/workmen-compensation" },
             { label: "Contractors All Risk Insurance", href: "/services/general-insurance/business/contractors-all-risk" },
@@ -121,10 +128,7 @@ export const footerNavigation = {
           href: "#",
           icon: "Shield",
           children: [
-            { label: "Digit Glow Term Life Insurance New", href: "/services/life-insurance/term/digit-glow-new" },
-            { label: "Digit Glow Plus Term Life Insurance New", href: "/services/life-insurance/term/digit-glow-plus-new" },
-            { label: "Digit Glow Lite Term Life Insurance New", href: "/services/life-insurance/term/digit-glow-lite-new" },
-            { label: "Term Insurance", href: "/services/life-insurance/term/insurance" },
+            { label: "Term Life Insurance", href: "/services/life-insurance/term/insurance" },
             { label: "Term Insurance Calculator", href: "/services/life-insurance/term/calculator" },
             { label: "1 Crore Term Insurance", href: "/services/life-insurance/term/1-crore" }
           ]
@@ -134,7 +138,7 @@ export const footerNavigation = {
           href: "#",
           icon: "PiggyBank",
           children: [
-            { label: "Digit ICON Guaranteed Returns Savings Plan", href: "/services/life-insurance/savings/digit-icon" }
+            { label: "Guaranteed Returns Savings Plan", href: "/services/life-insurance/savings/guaranteed-returns" }
           ]
         },
         { 
@@ -151,9 +155,9 @@ export const footerNavigation = {
           href: "#",
           icon: "Users",
           children: [
-            { label: "Digit Life Group Term Life Insuranc", href: "/services/life-insurance/group/term" },
-            { label: "Digit Life Group Long Term Plan", href: "/services/life-insurance/group/long-term" },
-            { label: "Digit Life Group Micro Term Life Insurance", href: "/services/life-insurance/group/micro-term" }
+            { label: "Group Term Life Insurance", href: "/services/life-insurance/group/term" },
+            { label: "Group Long Term Plan", href: "/services/life-insurance/group/long-term" },
+            { label: "Group Micro Term Life Insurance", href: "/services/life-insurance/group/micro-term" }
           ]
         },
         { 

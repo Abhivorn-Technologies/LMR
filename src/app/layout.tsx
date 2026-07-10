@@ -43,8 +43,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${dmSans.variable}`}>
-      <body className="min-h-screen bg-background antialiased">
+    <html lang="en" className={`${inter.variable} ${dmSans.variable} overflow-x-hidden`}>
+      <body className="min-h-screen bg-background antialiased overflow-x-hidden">
         <LenisProvider>
           <ScrollTriggerProvider>
             <Header />

@@ -37,10 +37,10 @@ export function ScrollReveal({
   const y = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   const directionOffset = {
-    up: { y: 40, x: 0 },
-    down: { y: -40, x: 0 },
-    left: { x: 40, y: 0 },
-    right: { x: -40, y: 0 },
+    up: { y: 60, x: 0 },
+    down: { y: -60, x: 0 },
+    left: { x: 60, y: 0 },
+    right: { x: -60, y: 0 },
     none: { x: 0, y: 0 },
   };
 
@@ -53,7 +53,7 @@ export function ScrollReveal({
   const baseContent = (
     <motion.div
       ref={ref}
-      className={cn("w-full h-full", className)}
+      className={cn(className)} // Removed w-full h-full to stop layout breaks
       initial={{ opacity: 0, ...offset, ...(scale ? { scale: 0.95 } : {}) }}
       animate={isInView ? { opacity: 1, x: 0, y: 0, ...(scale ? { scale: 1 } : {}) } : { opacity: 0, ...offset, ...(scale ? { scale: 0.95 } : {}) }}
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -64,7 +64,7 @@ export function ScrollReveal({
 
   if (parallax) {
     return (
-      <motion.div style={{ y }} className="w-full h-full">
+      <motion.div style={{ y }} className={cn(className)}>
         {baseContent}
       </motion.div>
     );

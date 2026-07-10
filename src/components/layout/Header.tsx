@@ -4,14 +4,14 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronDown, Shield, PiggyBank, Coins, Users, FileText } from "lucide-react";
+import * as Icons from "lucide-react";
 import { siteConfig } from "@/lib/content/company";
 import { footerNavigation } from "@/lib/content/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import ShinyText from "@/components/ui/ShinyText";
 
-const iconMap: Record<string, any> = { Shield, PiggyBank, Coins, Users, FileText };
+const iconMap: Record<string, any> = { Shield: Icons.Shield, PiggyBank: Icons.PiggyBank, Coins: Icons.Coins, Users: Icons.Users, FileText: Icons.FileText };
 
 const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,18 +20,18 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
 
   return (
     <div 
-      className="relative"
+      className="relative lg:static lg:py-6 lg:-my-6"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <Link
-        href={link.path}
+      <button
         className={`font-semibold whitespace-nowrap flex items-center px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
           isActive 
-            ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] border-b-[3px] border-[#ffb800]' 
-            : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors border-b-[3px] border-transparent'
+            ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] lg:border-b-[3px] lg:border-[#ffb800]' 
+            : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors lg:border-b-[3px] lg:border-transparent'
         }`}
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           if (window.innerWidth < 1024) {
             setIsOpen(!isOpen);
           } else {
@@ -40,8 +40,8 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
         }}
       >
         {link.name}
-        <ChevronDown size={14} className={`ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-      </Link>
+        <Icons.ChevronDown size={14} className={`ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
 
       <AnimatePresence>
         {isOpen && serviceData?.children && (
@@ -50,13 +50,15 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[550px] z-[1000] max-lg:static max-lg:w-full max-lg:translate-x-0 max-lg:mt-0"
+            className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[650px] z-[1000] max-lg:static max-lg:w-full max-lg:translate-x-0 max-lg:mt-0 max-lg:pt-0"
           >
-            <div className="flex bg-white text-slate-800 rounded-xl border border-slate-200 overflow-hidden shadow-2xl max-lg:flex-col max-lg:shadow-none max-lg:border-none max-lg:bg-transparent">
+            <div className="flex max-lg:hidden bg-white overflow-hidden rounded-2xl shadow-xl border border-slate-200">
               
-              <ul className="w-[45%] border-r border-slate-200 p-2 flex flex-col gap-1 bg-slate-50 max-lg:w-full max-lg:border-none max-lg:bg-transparent">
+              {/* Column 1: Categories (The Tabs) */}
+              <ul className="w-[45%] p-2 border-r border-slate-100 flex flex-col bg-slate-50/50">
                 {serviceData.children.map((child: any) => {
-                  const Icon = child.icon ? iconMap[child.icon] : null;
+                  const Icon = child.icon ? (Icons as any)[child.icon] || iconMap[child.icon] : Icons.ShieldCheck;
+                  const isSelected = activeChild?.label === child.label;
                   return (
                   <li key={child.label}>
                     <button
@@ -65,21 +67,25 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
                         setActiveChild(child);
                       }}
                       onMouseEnter={() => setActiveChild(child)}
-                      className={`w-full text-left flex items-center gap-3 text-[0.85rem] transition-colors duration-300 p-3 rounded-lg ${
-                        activeChild?.label === child.label 
-                          ? "bg-white text-[#F57C00] font-medium shadow-sm max-lg:bg-slate-100" 
-                          : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                      className={`w-full text-left flex items-center justify-between gap-3 text-[0.9rem] font-medium transition-all duration-200 py-2.5 px-3 mb-0.5 rounded-xl ${
+                        isSelected 
+                          ? "bg-white shadow-sm text-[#ffb800]" 
+                          : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
                       }`}
                     >
-                      {Icon && <Icon size={18} className={activeChild?.label === child.label ? "text-[#F57C00]" : "text-slate-400"} />}
-                      {child.label}
+                      <div className="flex items-center gap-2.5">
+                        {Icon && <Icon size={18} className={isSelected ? "text-[#ffb800]" : "text-slate-400"} strokeWidth={1.5} />}
+                        {child.label}
+                      </div>
+                      <Icons.ChevronRight size={16} className={isSelected ? "text-[#ffb800]" : "text-slate-300 opacity-0 group-hover:opacity-100"} />
                     </button>
                   </li>
                   );
                 })}
               </ul>
 
-              <ul className="w-[55%] p-4 flex flex-col gap-3 bg-white max-lg:w-full max-lg:pl-8 max-lg:pt-2 max-lg:bg-transparent max-lg:flex">
+              {/* Column 2: Links (Sub-items) */}
+              <div className="w-[55%] p-6 flex flex-col bg-white">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeChild?.label}
@@ -87,27 +93,152 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 5 }}
                     transition={{ duration: 0.15 }}
-                    className="flex flex-col gap-3"
+                    className="flex flex-col h-full"
                   >
-                    {activeChild?.children ? (
-                      activeChild.children.map((subChild: any) => (
-                        <div key={subChild.label} className="mb-1 last:mb-0">
-                          <Link href={subChild.href} onClick={() => setMobileOpen(false)} className="group flex items-center text-slate-600 text-[0.85rem] hover:text-[#F57C00] transition-colors duration-300">
-                            {subChild.label}
+                    <div className="flex items-center justify-between mb-4">
+                      <h4 className="text-[0.85rem] text-slate-400 font-medium tracking-wide flex items-center gap-2">
+                        {activeChild?.label} 
+                      </h4>
+                    </div>
+                    
+                    <div className="flex flex-col gap-3.5">
+                      {activeChild?.children ? (
+                        activeChild.children.map((subChild: any) => (
+                          <div key={subChild.label} className="group w-fit">
+                            <Link href={subChild.href} onClick={() => { setIsOpen(false); setMobileOpen(false); }} className="flex items-center gap-1.5 text-slate-700 hover:text-[#ffb800] text-[0.9rem] font-medium transition-colors relative pb-0.5">
+                              {subChild.label}
+                              <Icons.ArrowUpRight size={14} className="text-slate-300 group-hover:text-[#ffb800] transition-colors" />
+                              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#ffb800] transition-all duration-300 group-hover:w-full" />
+                            </Link>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="group w-fit">
+                          <Link href={activeChild?.href || "#"} onClick={() => { setIsOpen(false); setMobileOpen(false); }} className="flex items-center gap-1.5 text-slate-700 hover:text-[#ffb800] text-[0.9rem] font-medium transition-colors relative pb-0.5">
+                            Explore {activeChild?.label}
+                            <Icons.ArrowUpRight size={14} className="text-slate-300 group-hover:text-[#ffb800] transition-colors" />
+                            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#ffb800] transition-all duration-300 group-hover:w-full" />
                           </Link>
                         </div>
-                      ))
-                    ) : (
-                      <div className="mb-1">
-                        <Link href={activeChild?.href || "#"} onClick={() => setMobileOpen(false)} className="group flex items-center text-slate-600 text-[0.85rem] hover:text-[#F57C00] transition-colors duration-300">
-                          Explore {activeChild?.label}
-                        </Link>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </motion.div>
                 </AnimatePresence>
-              </ul>
+              </div>
+            </div>
 
+            {/* Mobile Layout (Accordion) */}
+            <div className="flex flex-col lg:hidden w-full px-2 py-1">
+              {serviceData.children.map((child: any) => {
+                const Icon = child.icon ? (Icons as any)[child.icon] || iconMap[child.icon] : Icons.ShieldCheck;
+                const isSelected = activeChild?.label === child.label;
+                return (
+                  <div key={child.label} className="w-full flex flex-col">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveChild(isSelected ? null : child);
+                      }}
+                      className={`w-full text-left flex items-center justify-between gap-3 text-[15px] font-medium transition-all duration-200 py-3.5 px-4 mb-1 rounded-xl ${
+                        isSelected ? "bg-slate-50 text-[#ffb800]" : "text-slate-600"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        {Icon && <Icon size={20} className={isSelected ? "text-[#ffb800]" : "text-slate-400"} />}
+                        {child.label}
+                      </div>
+                      <Icons.ChevronDown size={18} className={`transition-transform duration-200 ${isSelected ? "text-[#ffb800] rotate-180" : "text-slate-300"}`} />
+                    </button>
+                    
+                    <AnimatePresence>
+                      {isSelected && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="flex flex-col gap-3 pl-12 pr-4 pb-4 pt-1">
+                            {child.children ? (
+                              child.children.map((subChild: any) => (
+                                <Link 
+                                  key={subChild.label} 
+                                  href={subChild.href} 
+                                  onClick={() => setMobileOpen(false)} 
+                                  className="text-slate-500 hover:text-[#ffb800] text-[14px] font-medium py-1"
+                                >
+                                  {subChild.label}
+                                </Link>
+                              ))
+                            ) : (
+                              <Link 
+                                href={child.href || "#"} 
+                                onClick={() => setMobileOpen(false)} 
+                                className="text-slate-500 hover:text-[#ffb800] text-[14px] font-medium py-1"
+                              >
+                                Explore {child.label}
+                              </Link>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const HeaderSimpleDropdown = ({ link, options, isActive, setMobileOpen }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div 
+      className="relative lg:py-6 lg:-my-6"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <button
+        className={`font-semibold whitespace-nowrap flex items-center px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
+          isActive 
+            ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] lg:border-b-[3px] lg:border-[#ffb800]' 
+            : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors lg:border-b-[3px] lg:border-transparent'
+        }`}
+        onClick={() => {
+          if (window.innerWidth < 1024) {
+            setIsOpen(!isOpen);
+          }
+        }}
+      >
+        {link.name}
+        <Icons.ChevronDown size={14} className={`ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[220px] z-[1000] max-lg:static max-lg:w-full max-lg:translate-x-0 max-lg:mt-0"
+          >
+            <div className="flex flex-col bg-white text-slate-800 rounded-xl border border-slate-200 overflow-hidden shadow-2xl max-lg:shadow-none max-lg:border-none max-lg:bg-transparent max-lg:pl-8">
+              {options.map((opt: any) => (
+                <Link
+                  key={opt.path}
+                  href={opt.path}
+                  onClick={() => setMobileOpen(false)}
+                  className="px-4 py-3 text-[0.85rem] font-medium hover:bg-slate-50 hover:text-[#F57C00] transition-colors max-lg:text-[0.9rem] max-lg:py-2"
+                >
+                  {opt.name}
+                </Link>
+              ))}
             </div>
           </motion.div>
         )}
@@ -174,15 +305,15 @@ export function Header() {
           </Link>
         </div>
 
-        <div className={`relative z-10 flex-1 flex justify-center gap-4 xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:h-screen max-lg:w-[72%] max-lg:sm:w-[340px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
+        <div data-lenis-prevent="true" className={`relative z-10 flex-1 flex justify-center gap-4 xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:pt-6 max-lg:h-[100dvh] max-lg:pb-28 max-lg:w-[85%] max-lg:sm:w-[360px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto max-lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
           
           {/* Mobile Sidebar Header */}
-          <div className="lg:hidden flex items-center justify-between w-full mb-10 pb-4 border-b border-slate-100">
+          <div className="lg:hidden flex items-center justify-between w-full mb-4 pb-4 border-b border-slate-100">
             <div className="relative h-10 w-[180px] -ml-2">
               <Image src={siteConfig.logo} alt={siteConfig.name} fill priority sizes="150px" className="object-contain object-left scale-[2] origin-left pointer-events-none" />
             </div>
             <button className="text-slate-400 hover:text-slate-700 p-2.5 bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors" onClick={() => setMobileOpen(false)}>
-              <X size={20} />
+              <Icons.X size={20} />
             </button>
           </div>
 
@@ -192,6 +323,14 @@ export function Header() {
             if (link.name === "General insurance" || link.name === "Life insurance") {
               return <HeaderMegaMenu key={link.path} link={link} isActive={isActive} setMobileOpen={setMobileOpen} />;
             }
+
+            if (link.name === "Claims Consultancy") {
+              const options = [
+                { name: "Claim Services", path: "/services/claims" },
+                { name: "Consulting Services", path: "/services/consulting" }
+              ];
+              return <HeaderSimpleDropdown key={link.name} link={link} options={options} isActive={isActive} setMobileOpen={setMobileOpen} />;
+            }
             
             return (
               <Link
@@ -199,8 +338,8 @@ export function Header() {
                 href={link.path}
                 className={`font-semibold whitespace-nowrap px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
                   isActive 
-                    ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] border-b-[3px] border-[#ffb800]' 
-                    : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors border-b-[3px] border-transparent'
+                    ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] lg:border-b-[3px] lg:border-[#ffb800]' 
+                    : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors lg:border-b-[3px] lg:border-transparent'
                 }`}
                 onClick={() => setMobileOpen(false)}
               >
@@ -208,27 +347,17 @@ export function Header() {
               </Link>
             );
           })}
-          <div className="lg:hidden w-full mt-auto pt-6 pb-4 flex flex-col gap-4">
-            <a href="tel:04712432301" className="flex items-center justify-center gap-2 text-[#0f172a] font-bold text-[16px]">
-              <Phone size={20} className="text-[#10b981]" />
-              (0471) 2432301
-            </a>
-            <Link href="/contact" className="w-full" onClick={() => setMobileOpen(false)}>
-              <Button className="w-full bg-[#ffb800] hover:bg-[#e6a600] text-[#0f172a] shadow-[0_8px_20px_rgba(255,184,0,0.3)] rounded-2xl font-bold text-[15px] h-14 transition-all" size="lg">
-                Join Now
-              </Button>
-            </Link>
-          </div>
+
         </div>
 
         <div className="flex items-center gap-4 xl:gap-6">
           <Link href="/contact" className="max-lg:hidden whitespace-nowrap">
-            <Button className="bg-[#ffb800] hover:bg-[#e6a600] text-[#0f172a] shadow-[0_4px_12px_rgba(255,184,0,0.3)] hover:shadow-[0_6px_16px_rgba(255,184,0,0.4)] rounded-xl px-5 py-2 font-bold text-[13px] h-auto whitespace-nowrap transition-all hover:-translate-y-0.5">
-              Join Now
+            <Button className="bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold rounded-full px-7 py-5 border-none transition-colors">
+              Contact Us
             </Button>
           </Link>
           <button className="lg:hidden text-slate-600 p-2 hover:bg-slate-100 rounded-lg transition-colors" onClick={() => setMobileOpen(true)}>
-            <Menu size={28} />
+            <Icons.Menu size={28} />
           </button>
         </div>
       </div>

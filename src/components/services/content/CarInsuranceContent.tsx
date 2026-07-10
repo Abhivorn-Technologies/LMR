@@ -1,367 +1,375 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { CheckCircle2, ShieldAlert, Car, Zap, FileText, Activity, TrendingUp, ShieldCheck, Users, Navigation } from "lucide-react";
+import { motion, Variants, AnimatePresence } from "framer-motion";
+import { ChevronRight, CheckCircle2, ShieldCheck, Star, HelpCircle, ChevronDown } from "lucide-react";
+
+const slideInLeft: Variants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+
+const slideInRight: Variants = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
 
 const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-};
-
-const fadeInLeft: Variants = {
-  hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
-};
-
-const fadeInRight: Variants = {
-  hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
 };
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.2 }
+    transition: { staggerChildren: 0.08 }
   }
 };
 
 export function CarInsuranceContent() {
-  const [activePolicy, setActivePolicy] = useState("");
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
 
   return (
-    <div className="flex flex-col gap-16 font-sans selection:bg-[#115E59] selection:text-white pb-20 overflow-hidden">
+    <div className="flex flex-col font-sans selection:bg-[#F97316] selection:text-white bg-white text-[#1f2937] overflow-hidden">
       
-      {/* Introduction */}
-      <motion.div 
-        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
-        variants={fadeInUp}
-        className="max-w-4xl mx-auto text-center pt-10 px-6 lg:px-0"
-      >
-        <h2 className="text-3xl md:text-4xl font-bold text-[#04151a] mb-6">
-          Buy/Renew Car Insurance Policy <span className="text-[#115E59]">Online in India 2026</span>
-        </h2>
-        <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-          Car insurance serves as your financial safety net, helping to cover costs if your car is damaged, stolen, or involved in an accident. It’s designed to protect you from unexpected expenses and ensure you are legally protected.
-        </p>
-      </motion.div>
-
-      {/* Premium Bento Box Intro */}
-      <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00B4D8]/5 rounded-full blur-[80px] pointer-events-none -z-10" />
-        
-        {/* Left Column - What is Car Insurance */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:col-span-7 p-6 md:p-10 lg:p-12 rounded-[2rem] lg:rounded-[3rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 relative overflow-hidden flex flex-col justify-between group">
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#115E59]/5 blur-[80px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2 group-hover:bg-[#115E59]/10 transition-colors duration-700" />
-          
-          <div className="relative z-10">
-            <div className="flex items-center gap-5 mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#115E59] to-[#04151a] flex items-center justify-center text-white shadow-lg shadow-[#115E59]/30 flex-shrink-0">
-                <Car size={28} />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#04151a]">What is Car Insurance?</h2>
+      {/* 1. What is Car Insurance? */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={slideInLeft}
+            className="flex justify-center relative order-first lg:order-none"
+          >
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-100 to-orange-50 rounded-[2rem] md:rounded-[3rem] transform -rotate-3 scale-105 -z-10"></div>
+            <img src="https://d2h44aw7l5xdvz.cloudfront.net/assets/car%20front-01-1.svg" alt="What is Car Insurance" className="w-full max-w-[480px] drop-shadow-2xl hover:scale-105 transition-transform duration-500" />
+          </motion.div>
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={slideInRight}
+            className="space-y-6"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-700 font-bold text-sm mb-2">
+              <ShieldCheck size={18} /> Verified Protection
             </div>
-            <div className="space-y-6">
-              <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                Car insurance is a type of vehicle insurance that protects you from unexpected expenses due to accidents, theft, natural disasters, or third-party damages.
-              </p>
-              <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                It covers repair costs, replacements, and legal liabilities, helping reduce the financial burden on vehicle owners. In India, it’s legally mandatory to have at least a third-party car insurance policy to ensure that any injury or damage caused to another person or their property while driving is covered.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-8 p-6 bg-[#00B4D8]/5 border border-[#00B4D8]/20 rounded-2xl relative z-10 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-            <div className="w-10 h-10 rounded-full bg-[#00B4D8]/20 flex items-center justify-center text-[#00B4D8] flex-shrink-0">
-              <ShieldAlert size={20} />
-            </div>
-            <p className="text-[#008ba8] font-medium leading-relaxed text-base">
-              <strong className="text-[#00708a]">Three main types:</strong> Third-Party covers damage to others, Own Damage (OD) covers your vehicle, and Comprehensive includes both.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Right Column - Why is it Mandatory */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="lg:col-span-5 p-6 md:p-10 lg:p-12 rounded-[2rem] lg:rounded-[3rem] bg-[#04151a] text-white relative overflow-hidden flex flex-col justify-center">
-          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#00B4D8]/10 blur-[80px] rounded-full pointer-events-none translate-y-1/3 -translate-x-1/3" />
-          
-          <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-[#00B4D8]">
-                <Activity size={24} />
-              </div>
-              Why is it Mandatory?
+            <h2 className="text-3xl md:text-4xl lg:text-[44px] font-extrabold text-[#0F172A] leading-[1.15] tracking-tight">
+              What is <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">Car Insurance?</span>
             </h2>
-            <p className="text-slate-400 leading-relaxed mb-8 text-base md:text-lg">
-              Guidelines are made for the overall safety of people like you and me. Valid insurance takes care of exhausting hurdles.
+            <p className="text-[16px] md:text-lg text-slate-600 leading-relaxed font-medium">
+              Car insurance is a vehicle insurance policy that protects your car against financial losses caused by accidents, theft, fire, natural disasters, and third-party liabilities. In India, having at least third-party car insurance is legally mandatory.
             </p>
-            
-            <div className="space-y-4">
-              {[
-                { title: "Road Accidents", desc: "Ensures no one bears the financial brunt." },
-                { title: "Protects Third Party", desc: "Compensates for car or personal damages." },
-                { title: "Legal Processes", desc: "Takes care of time-consuming legal hurdles." }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4 items-center p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors duration-300 group">
-                  <div className="flex-shrink-0 text-[#00B4D8] bg-[#00B4D8]/10 w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-[#00B4D8] group-hover:text-white transition-all duration-300">
-                    <CheckCircle2 size={20} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-base mb-1">{item.title}</h4>
-                    <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
+            <p className="text-[16px] md:text-lg text-slate-600 leading-relaxed">
+              A car insurance policy can help cover the cost of repairing or replacing your car in case of damage. It also protects you against legal and financial liabilities if your car causes injury, death, or property damage to a third party.
+            </p>
+            <div className="pt-4 flex items-center gap-4">
+              <div className="flex -space-x-4 shrink-0">
+                <img className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=1" alt="" />
+                <img className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=2" alt="" />
+                <img className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=3" alt="" />
+              </div>
+              <div className="text-xs md:text-sm font-bold text-slate-700">
+                Trusted by 10,000+ <br className="hidden sm:block"/><span className="text-slate-500 font-normal">Happy Customers</span>
+              </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Dynamic Expanding Accordion for Policy Types */}
-      <motion.div 
-        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}
-      >
-        <div className="text-center mb-10 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#04151a] mb-4">Different Types of Car Insurance Policies</h2>
-          <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
-            In India, insurers offer three main types of car insurance policies. Choosing the right one depends on your car’s age, usage, and the level of protection you need.
-          </p>
+          </motion.div>
         </div>
+      </section>
 
-        <div className="max-w-4xl mx-auto flex flex-col gap-4">
-          {[
-            { 
-              id: "comprehensive", 
-              label: "Comprehensive Car Insurance",
-              icon: ShieldCheck,
-              content: (
-                <div className="space-y-4">
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                    Comprehensive car insurance combines third-party liability cover with protection for damage or loss to your own car under a single plan. It protects you against financial losses arising from road accidents, theft of the car, fire, natural disasters such as floods and cyclones, and certain man-made incidents.
-                  </p>
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                    Unlike basic third-party insurance, which only fulfils legal requirements, comprehensive insurance also safeguards your own vehicle. The coverage can be further enhanced with add-ons such as zero depreciation, engine protection, or roadside assistance to reduce out-of-pocket costs.
-                  </p>
-                  <div className="mt-6 p-6 bg-[#115E59]/5 rounded-2xl border border-[#115E59]/10">
-                    <h4 className="font-bold text-[#115E59] text-lg mb-3">Why Choose It?</h4>
-                    <ul className="space-y-2 text-slate-700 font-medium text-base">
-                      <li className="flex items-center gap-3"><CheckCircle2 className="text-[#115E59] w-5 h-5"/> Wider coverage for both you and third parties.</li>
-                      <li className="flex items-center gap-3"><CheckCircle2 className="text-[#115E59] w-5 h-5"/> Flexibility to add useful covers like zero depreciation.</li>
-                      <li className="flex items-center gap-3"><CheckCircle2 className="text-[#115E59] w-5 h-5"/> Greater financial security in case of major accidents or theft.</li>
-                    </ul>
+      {/* 2. Key Features */}
+      <section className="bg-gradient-to-b from-slate-50 to-white py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeInUp} className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-3xl lg:text-[40px] font-extrabold text-[#0F172A] mb-4 md:mb-5 tracking-tight">Key Features of LMB Car Insurance</h2>
+            <div className="w-16 md:w-20 h-1.5 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full mx-auto mb-4 md:mb-6"></div>
+            <p className="text-[16px] md:text-[19px] text-slate-600 max-w-3xl mx-auto leading-relaxed px-2">
+              Car insurance policies in India are designed to provide complete financial and legal protection.
+            </p>
+          </motion.div>
+
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {[
+              { 
+                icon: "https://d2h44aw7l5xdvz.cloudfront.net/assets/img/hatchback-damaged-driving.svg", 
+                title: "Protection for Your Own Car", 
+                desc: "Comprehensive car insurance covers damages to your own vehicle arising from accidents, theft, natural calamities, and fire.",
+                anim: slideInLeft
+              },
+              { 
+                icon: "https://d2h44aw7l5xdvz.cloudfront.net/assets/img/banged-cars.svg", 
+                title: "Coverage for Third-party Losses", 
+                desc: "Protects you against financial and legal liabilities if your car causes damage to another person's property, vehicle, or results in injury/death.",
+                anim: fadeInUp
+              },
+              { 
+                icon: "https://d2h44aw7l5xdvz.cloudfront.net/assets/icons/happy-giftbox.svg", 
+                title: "Add-On Covers for Extra Safety", 
+                desc: "Policyholders can enhance coverage by opting for add-ons such as zero depreciation cover, engine protection, or roadside assistance.",
+                anim: slideInRight
+              },
+              { 
+                icon: "https://d2h44aw7l5xdvz.cloudfront.net/assets/icons/discount.svg", 
+                title: "Earn No Claim Bonus (NCB)", 
+                desc: "Safe drivers are rewarded with premium discounts of up to 50% for each claim-free year.",
+                anim: slideInLeft
+              },
+              { 
+                icon: "https://d2h44aw7l5xdvz.cloudfront.net/assets/icons/1_cashless%20garage.svg", 
+                title: "Cashless Repairs at Network", 
+                desc: "Most insurers offer access to a vast network of cashless garages where you don't have to pay out of pocket for covered repairs.",
+                anim: fadeInUp
+              },
+              { 
+                icon: "https://d2h44aw7l5xdvz.cloudfront.net/assets/img/man-with-hand-injured.svg", 
+                title: "Personal Accident Cover", 
+                desc: "Mandatory coverage that offers financial compensation in the event of accidental death or permanent disability of the owner-driver.",
+                anim: slideInRight
+              }
+            ].map((feature, i) => (
+                <motion.div key={i} variants={feature.anim} className="bg-white border border-slate-200 rounded-[1.5rem] p-8 shadow-sm hover:shadow-[0_20px_50px_rgba(37,99,235,0.1)] hover:-translate-y-2 transition-all duration-300 group">
+                  <div className="h-24 flex items-center justify-start mb-6">
+                     <img src={feature.icon} alt={feature.title} className="h-full object-contain group-hover:scale-110 transition-transform duration-300" />
                   </div>
+                  <h3 className="text-xl font-bold text-[#0F172A] mb-3 leading-tight">{feature.title}</h3>
+                  <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
+                </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 3. Different Types of Car Insurance Policies */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 space-y-10 md:space-y-16">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeInUp} className="text-center border-b border-slate-100 pb-8 md:pb-12">
+          <h2 className="text-2xl md:text-3xl lg:text-[40px] font-extrabold text-[#0F172A] tracking-tight mb-4 md:mb-5">Different Types of Car Insurance Policies</h2>
+          <div className="w-16 md:w-20 h-1.5 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto"></div>
+        </motion.div>
+
+        <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="space-y-8 md:space-y-12">
+          
+          <motion.div variants={slideInLeft} className="bg-white p-8 md:p-12 rounded-[2rem] border border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden group hover:border-blue-300 transition-colors">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-bl-[100px] -z-10 group-hover:scale-110 transition-transform duration-500"></div>
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className="shrink-0">
+                    <img src="https://d2h44aw7l5xdvz.cloudfront.net/assets/img/car-full-circle-chart.svg" alt="Comprehensive" className="w-32 h-32 object-contain drop-shadow-xl" />
                 </div>
-              )
-            },
-            { 
-              id: "thirdparty", 
-              label: "Third Party Car Insurance",
-              icon: Users,
-              content: (
                 <div className="space-y-4">
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                    Third party car insurance, also known as third party liability insurance, is a mandatory motor insurance policy in India that covers your legal and financial liability if your car causes injury, death, or property damage to a third party.
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-4 mt-6">
-                    <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
-                      <h4 className="font-bold text-emerald-700 text-lg mb-3 flex items-center gap-2"><CheckCircle2 size={20}/> It covers:</h4>
-                      <ul className="space-y-2 text-slate-600 font-medium text-base">
-                        <li>• Injury or death of a third-party person</li>
-                        <li>• Damage to a third-party vehicle or property</li>
-                      </ul>
-                    </div>
-                    <div className="p-6 bg-rose-50 rounded-2xl border border-rose-100">
-                      <h4 className="font-bold text-rose-700 text-lg mb-3 flex items-center gap-2"><ShieldAlert size={20}/> It does NOT cover:</h4>
-                      <ul className="space-y-2 text-slate-600 font-medium text-base">
-                        <li>• Damage to your own car</li>
-                        <li>• Theft, fire, or natural calamities affecting your car</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-slate-50 rounded-xl mt-4 text-slate-500 text-sm font-medium">
-                    *As per the Motor Vehicles Act, driving a car without valid third-party insurance is illegal in India and can attract fines.
-                  </div>
-                </div>
-              )
-            },
-            { 
-              id: "owndamage", 
-              label: "Standalone Own Damage (OD)",
-              icon: Car,
-              content: (
-                <div className="space-y-4">
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                    Standalone Own Damage (OD) car insurance is the part of a motor insurance policy that covers the cost of repairing, replacing, or compensating for damage to your own vehicle, subject to policy terms, depreciation, deductibles, and exclusions.
-                  </p>
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                    It does not cover third-party liabilities, including injury, death, or property damage caused to others. Those liabilities are covered under a separate Third-Party (TP) insurance policy, which is mandatory under Indian law.
-                  </p>
-                  <div className="mt-6 p-6 bg-[#00B4D8]/5 rounded-2xl border border-[#00B4D8]/10">
-                    <p className="text-[#008ba8] text-base font-semibold">
-                      This policy gives you the flexibility to protect your car without having to commit to a long-term comprehensive policy from the insurer.
+                    <h3 className="text-[26px] font-bold text-[#0F172A]">Comprehensive Car Insurance</h3>
+                    <p className="text-[17px] text-slate-600 leading-relaxed font-medium">
+                        The most extensive form of coverage available. It protects your vehicle against accidental damage, theft, fire, natural events, and human-caused incidents, while also covering third-party liabilities.
                     </p>
-                  </div>
+                    <div className="mt-4 inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-lg font-bold text-sm">
+                        <Star size={16} /> Best Suited For: New cars, frequent drivers, city/highway users.
+                    </div>
                 </div>
-              )
-            },
-            { 
-              id: "electric", 
-              label: "LMB Insurance for Electric Vehicles",
-              icon: Zap,
-              content: (
+            </div>
+          </motion.div>
+
+          <motion.div variants={slideInRight} className="bg-white p-8 md:p-12 rounded-[2rem] border border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden group hover:border-orange-300 transition-colors">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-orange-50 rounded-bl-[100px] -z-10 group-hover:scale-110 transition-transform duration-500"></div>
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className="shrink-0">
+                    <img src="https://d2h44aw7l5xdvz.cloudfront.net/assets/img/car-quarter-circle-chart.svg" alt="Third Party" className="w-32 h-32 object-contain drop-shadow-xl" />
+                </div>
                 <div className="space-y-4">
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                    LMB Car Insurance for Electric Vehicles (EVs) offers comprehensive protection tailored for modern electric cars. It not only covers accidents, theft, and third-party liabilities like regular car insurance, but also safeguards high-value components.
-                  </p>
-                  <div className="grid gap-3 mt-6">
-                    {[
-                      "Coverage for the expensive EV battery systems.",
-                      "Protection for specialized charging equipment.",
-                      "EV Shield Cover addon for advanced electrical systems."
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                        <div className="w-8 h-8 rounded-full bg-[#115E59]/10 flex items-center justify-center text-[#115E59] flex-shrink-0">
-                          <Zap size={16} />
+                    <h3 className="text-[26px] font-bold text-[#0F172A]">Third-Party & Standalone OD</h3>
+                    <p className="text-[17px] text-slate-600 leading-relaxed font-medium">
+                        Third-party is legally mandatory and provides financial protection if your car causes damage to someone else. Standalone Own-Damage focuses solely on covering damage to your own vehicle.
+                    </p>
+                    <div className="mt-4 inline-flex items-center gap-2 bg-orange-50 text-orange-700 px-4 py-2 rounded-lg font-bold text-sm">
+                        <CheckCircle2 size={16} /> Best suited for: Old cars, rarely used vehicles, legal compliance.
+                    </div>
+                </div>
+            </div>
+          </motion.div>
+          
+        </motion.div>
+      </section>
+
+      {/* 4. Which Policy is Right for Me? */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-100">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeInUp} className="text-center mb-10 md:mb-16">
+          <h2 className="text-2xl md:text-3xl lg:text-[40px] font-extrabold text-[#0F172A] mb-4 md:mb-5 tracking-tight">Which Car Insurance Policy is Right for Me?</h2>
+          <div className="w-16 md:w-20 h-1.5 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto mb-4 md:mb-6"></div>
+          <p className="text-[16px] md:text-[19px] text-slate-600 max-w-3xl mx-auto leading-relaxed px-2">
+            Whether you own a new car or an older vehicle, these three questions can help you choose the right type of car insurance coverage.
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={slideInLeft}
+            className="flex justify-center"
+          >
+            <div className="relative w-full">
+              <div className="absolute inset-0 bg-blue-600 rounded-full transform scale-90 blur-3xl opacity-20 -z-10"></div>
+              <img src="https://d2h44aw7l5xdvz.cloudfront.net/assets/car%20front-01-1.svg" alt="Which policy is right" className="w-full max-w-[500px] mx-auto drop-shadow-2xl filter hue-rotate-15" />
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer}
+            className="space-y-6"
+          >
+            {[
+              {
+                q: "1. Is your car new or old?",
+                points: [
+                  "New (0–5 years): Go for Comprehensive Insurance",
+                  "Older (5+ years): Consider Third-party or OD combo"
+                ]
+              },
+              {
+                q: "2. Do you want full protection or just legal compliance?",
+                points: [
+                  "Full protection: Comprehensive Insurance",
+                  "Only legal minimum: Third-party Insurance"
+                ]
+              },
+              {
+                q: "3. How often do you drive?",
+                points: [
+                  "Daily use / commutes: Comprehensive Insurance",
+                  "Occasional use: Standalone OD or Third-party"
+                ]
+              }
+            ].map((item, i) => (
+                <motion.div key={i} variants={slideInRight} className="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg transition-shadow duration-300">
+                  <h3 className="text-2xl font-bold text-[#0F172A] mb-4">{item.q}</h3>
+                  <ul className="space-y-3">
+                    {item.points.map((pt, j) => (
+                      <li key={j} className="flex items-center gap-3 text-slate-700 font-medium text-[16px]">
+                        <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                          <ChevronRight className="text-blue-600 w-4 h-4" />
                         </div>
-                        <span className="text-slate-700 font-medium text-base">{item}</span>
-                      </div>
+                        <span>{pt}</span>
+                      </li>
                     ))}
+                  </ul>
+                </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 5. What's Covered */}
+      <section className="bg-[#0F172A] py-16 md:py-24 relative overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute top-0 right-0 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-blue-600 rounded-full blur-[80px] md:blur-[120px] opacity-20 transform translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-orange-500 rounded-full blur-[80px] md:blur-[120px] opacity-10 transform -translate-x-1/3 translate-y-1/3"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeInUp} className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-3xl lg:text-[40px] font-extrabold text-white mb-4 md:mb-5 tracking-tight">What's Covered in LMB Car Insurance?</h2>
+            <div className="w-16 md:w-20 h-1.5 bg-orange-500 rounded-full mx-auto mb-4 md:mb-6"></div>
+            <p className="text-[16px] md:text-[19px] text-slate-300 max-w-4xl mx-auto leading-relaxed px-2">
+              LMB Car Insurance provides protection under Comprehensive, Own Damage, Third-party Liability, and Personal Accident Cover.
+            </p>
+          </motion.div>
+
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {[
+              {
+                img: "https://d2h44aw7l5xdvz.cloudfront.net/assets/img/hatchback-damaged-driving.svg",
+                title: "Accidental Damage",
+                desc: "We cover damages resulting from road accidents and collisions, whether it's a small dent or major structural damage."
+              },
+              {
+                img: "https://d2h44aw7l5xdvz.cloudfront.net/assets/img/banged-cars.svg",
+                title: "Third-party Property Damage",
+                desc: "If your vehicle causes injury, damage, or loss to another person or property, we cover your legal and financial liabilities."
+              },
+              {
+                img: "https://d2h44aw7l5xdvz.cloudfront.net/assets/img/getaway-car.svg",
+                title: "Protection Against Theft",
+                desc: "If your car is stolen and cannot be recovered, we compensate you for the loss based on your policy terms."
+              },
+              {
+                img: "https://d2h44aw7l5xdvz.cloudfront.net/direct-portal/homepage/care-got-fire.svg",
+                title: "Damage Due to Fire",
+                desc: "We provide coverage for damages caused by fire, self-ignition, explosion, or lightning."
+              },
+              {
+                img: "https://d2h44aw7l5xdvz.cloudfront.net/direct-portal/homepage/natural_disaster.svg",
+                title: "Natural Disasters",
+                desc: "Your car is protected against damages caused by natural calamities such as floods, earthquakes, cyclones, and landslides."
+              },
+              {
+                img: "https://d2h44aw7l5xdvz.cloudfront.net/assets/img/man-with-hand-injured.svg",
+                title: "Personal Accident Cover",
+                desc: "This provides a mandatory sum insured for the owner-driver in case of accidental death or permanent total disability."
+              }
+            ].map((item, i) => (
+                <motion.div key={i} variants={fadeInUp} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[1.5rem] p-8 flex flex-col text-left hover:bg-white/15 transition-all duration-300 shadow-xl group">
+                  <div className="h-20 flex items-center justify-start mb-6">
+                     <img src={item.img} alt={item.title} className="h-full object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed mt-4">
-                    With options for add-on covers and access to LMB’s extensive cashless garage network, it ensures EV owners enjoy worry-free driving while staying fully compliant.
-                  </p>
-                </div>
-              )
-            },
-            { 
-              id: "payas", 
-              label: "Pay as you Drive Insurance",
-              icon: Navigation,
-              content: (
-                <div className="space-y-4">
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                    A flexible, modern policy where your premium is based on the kilometers you drive. Perfect for individuals who don't drive frequently but still want full comprehensive protection.
-                  </p>
-                  <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                    Contact our expert brokers today to structure a custom kilometer band for your vehicle and save significantly on your premiums.
-                  </p>
-                </div>
-              )
-            }
-          ].map((policy) => {
-            const isActive = activePolicy === policy.id;
-            return (
+                  <h3 className="text-xl font-bold text-white mb-4 leading-tight">{item.title}</h3>
+                  <p className="text-slate-300 leading-relaxed font-medium">{item.desc}</p>
+                </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 6. Frequently Asked Questions */}
+      <section className="bg-slate-50 py-16 md:py-24 border-t border-slate-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeInUp} className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-3xl lg:text-[40px] font-extrabold text-[#0F172A] mb-4 md:mb-5 tracking-tight">Frequently Asked Questions</h2>
+            <div className="w-16 md:w-20 h-1.5 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto"></div>
+          </motion.div>
+
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="space-y-3 md:space-y-4">
+            {[
+              { q: "Is third-party insurance mandatory in India?", a: "Yes, under the Motor Vehicles Act of 1988, it is legally mandatory to have at least a third-party car insurance policy to drive on Indian roads." },
+              { q: "What happens if I don't renew my policy on time?", a: "If your policy expires, you lose your No Claim Bonus (NCB) after 90 days. Moreover, your car may require an inspection before a new policy is issued, and driving without insurance is a punishable offense." },
+              { q: "Can I transfer my No Claim Bonus (NCB) to a new car?", a: "Yes, the NCB is tied to the policyholder, not the car. If you sell your old car and buy a new one, you can easily transfer your accumulated NCB to the new insurance policy." },
+              { q: "What is a Zero Depreciation add-on?", a: "Normally, insurers deduct depreciation on replaced car parts during a claim. A Zero Depreciation cover ensures you get the full claim amount without any deductions for the depreciated value of parts." }
+            ].map((faq, i) => (
               <motion.div 
-                key={policy.id} 
-                layout 
-                initial={false}
-                className={`group overflow-hidden rounded-[1.5rem] lg:rounded-[2rem] border transition-all duration-500 ${isActive ? 'bg-white border-[#115E59]/30 shadow-xl shadow-[#115E59]/10' : 'bg-slate-50 border-slate-200 hover:border-[#115E59]/30 hover:bg-white'}`}
+                key={i} 
+                variants={fadeInUp} 
+                className="bg-white rounded-[1rem] shadow-sm border border-slate-200 border-l-[4px] border-l-orange-500 hover:shadow-md transition-all overflow-hidden"
               >
                 <button 
-                  onClick={() => setActivePolicy(isActive ? "" : policy.id)}
-                  className="w-full flex items-center justify-between p-6 lg:p-8 text-left focus:outline-none"
+                  onClick={() => toggleFaq(i)}
+                  className="w-full text-left py-4 px-5 md:py-5 md:px-6 flex justify-between items-center focus:outline-none"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-500 flex-shrink-0 ${isActive ? 'bg-[#115E59] text-white shadow-md shadow-[#115E59]/20' : 'bg-slate-200/50 text-slate-400 group-hover:bg-[#115E59]/10 group-hover:text-[#115E59]'}`}>
-                      <policy.icon size={24} />
-                    </div>
-                    <h3 className={`text-xl lg:text-2xl font-bold transition-colors duration-300 ${isActive ? 'text-[#115E59]' : 'text-[#04151a]'}`}>
-                      {policy.label}
-                    </h3>
-                  </div>
-                  <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full flex items-center justify-center transition-all duration-500 flex-shrink-0 ${isActive ? 'bg-[#115E59]/10 text-[#115E59] rotate-45' : 'bg-slate-200 text-slate-400 group-hover:bg-slate-300'}`}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </div>
+                  <h3 className="text-[15px] md:text-[17px] font-semibold text-[#0F172A] pr-4">
+                    {faq.q}
+                  </h3>
+                  <motion.div 
+                    animate={{ rotate: openFaqIndex === i ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="shrink-0 text-slate-400"
+                  >
+                    <ChevronDown size={20} />
+                  </motion.div>
                 </button>
-                <AnimatePresence initial={false}>
-                  {isActive && (
-                    <motion.div
+                
+                <AnimatePresence>
+                  {openFaqIndex === i && (
+                    <motion.div 
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
                     >
-                      <div className="px-6 lg:px-8 pb-8 pt-2 border-t border-slate-100">
-                        {policy.content}
+                      <div className="px-5 md:px-6 pb-5 pt-0 text-slate-600 font-medium leading-relaxed text-[14px] md:text-[15px]">
+                        {faq.a}
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
-            );
-          })}
+            ))}
+          </motion.div>
         </div>
-      </motion.div>
-
-      {/* Key Features List */}
-      <motion.div 
-        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}
-      >
-        <div className="text-center mb-10 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#04151a] mb-4">Key Features of Car Insurance in India</h2>
-          <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
-            Policies are designed to provide complete financial and legal protection to vehicle owners.
-          </p>
-        </div>
-        
-        <motion.div variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 lg:gap-x-12 lg:gap-y-16 max-w-7xl mx-auto">
-          {[
-            { icon: FileText, title: "Mandatory Legal Requirement", desc: "Every car owner must have at least a third-party car insurance policy. This ensures you are legally compliant." },
-            { icon: Activity, title: "Own Damage Coverage", desc: "Covers damages to your own vehicle arising from accidents, theft, natural calamities (floods, cyclones), and fire." },
-            { icon: ShieldAlert, title: "Third-Party Liability Cover", desc: "Protects you against financial and legal liabilities if your car causes damage or injury to another person." },
-            { icon: Zap, title: "Add-On Covers", desc: "Enhance coverage with zero depreciation, engine protection, consumables cover, or roadside assistance." },
-            { icon: TrendingUp, title: "No Claim Bonus (NCB)", desc: "Safe drivers are rewarded with premium discounts of up to 50% for each consecutive claim-free year." },
-            { icon: Car, title: "Cashless Repairs", desc: "Access thousands of partner garages where you can avail cashless repairs without upfront payments." }
-          ].map((feature, i) => (
-            <motion.div key={i} variants={fadeInUp} className="group flex flex-col items-center text-center px-4">
-              <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm flex items-center justify-center text-slate-400 group-hover:bg-[#115E59] group-hover:text-white group-hover:-translate-y-2 transition-all duration-500 mb-5 group-hover:shadow-lg group-hover:shadow-[#115E59]/20">
-                <feature.icon size={28} />
-              </div>
-              <h4 className="font-bold text-[#04151a] text-lg lg:text-xl mb-3">{feature.title}</h4>
-              <p className="text-slate-600 text-base leading-relaxed">{feature.desc}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.div>
-
-      {/* Types of Cars Covered */}
-      <motion.div 
-        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}
-        className="relative overflow-hidden pt-10"
-      >
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#115E59]/5 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#00B4D8]/5 blur-[100px] rounded-full pointer-events-none" />
-        
-        <div className="relative z-10 mb-10 lg:mb-16 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#04151a]">Different Types of Cars We Cover</h2>
-          <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            LMB offers coverage for a wide range of vehicles, perfectly tailored to suit various ownership types and specialized usage patterns.
-          </p>
-        </div>
-
-        <motion.div variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10 max-w-6xl mx-auto">
-          {[
-            { title: "Brand New Cars", icon: Car, desc: "Typically insured with comprehensive policies covering accidents, theft, fire, and natural disasters." },
-            { title: "Electric Cars", icon: Zap, desc: "Specialised plans for EVs which include coverage for batteries, charging equipment, and roadside assistance." },
-            { title: "Second-Hand Cars", icon: Activity, desc: "Used cars are just as insurable. Affordable policies help protect against unexpected repairs." },
-            { title: "Commercial Cars", icon: TrendingUp, desc: "For taxis, delivery vans, or company cars. Covers third-party liabilities and driver protection." },
-            { title: "CNG Cars", icon: FileText, desc: "Coverage includes damage to the CNG kit and related components if declared during policy purchase." },
-            { title: "Old Cars", icon: ShieldAlert, desc: "Often insured with basic third-party liability coverage to ensure legal compliance and basic protection." }
-          ].map((car, i) => (
-            <motion.div key={i} variants={fadeInUp} className="group flex flex-col items-center text-center p-6 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] bg-white border-2 border-slate-100 transition-all duration-500 shadow-sm shadow-slate-200/40 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#115E59]/20 hover:border-[#115E59] cursor-pointer">
-              <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#115E59] mb-5 group-hover:scale-110 group-hover:bg-[#115E59] group-hover:text-white transition-all duration-500 group-hover:shadow-md group-hover:shadow-[#115E59]/30">
-                <car.icon size={28} />
-              </div>
-              <h4 className="text-[#04151a] group-hover:text-[#115E59] font-bold text-lg lg:text-xl mb-3 transition-colors duration-500">{car.title}</h4>
-              <p className="text-slate-600 text-sm lg:text-base leading-relaxed transition-colors duration-500">{car.desc}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.div>
+      </section>
+      
     </div>
   );
-};
+}

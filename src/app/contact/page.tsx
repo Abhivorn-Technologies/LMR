@@ -1,6 +1,7 @@
 import { Phone, Mail } from "lucide-react";
 import { createPageMetadata } from "@/lib/metadata";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { TextReveal } from "@/components/motion/TextReveal";
 import { ContactForm } from "@/components/sections/ContactForm";
 
 export const metadata = createPageMetadata({
@@ -56,7 +57,8 @@ export default function ContactPage() {
         <ScrollReveal direction="up">
           <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-slate-900 tracking-tight mb-6">
-              Speak with our <span className="text-[#115E59] font-serif italic">advisory team.</span>
+              <TextReveal delay={0.2}>Speak with our </TextReveal>
+              <span className="text-[#115E59] font-serif italic"><TextReveal delay={0.3}>advisory team.</TextReveal></span>
             </h1>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
               Submit an inquiry below and our expert team will respond promptly during business hours.

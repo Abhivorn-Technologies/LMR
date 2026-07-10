@@ -1,5 +1,7 @@
 import { createPageMetadata } from "@/lib/metadata";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { TextReveal } from "@/components/motion/TextReveal";
+import { MethodologySection } from "@/components/sections/MethodologySection";
 import Image from "next/image";
 import { CheckCircle2, ShieldCheck, Globe2, Target, Award, Briefcase } from "lucide-react";
 
@@ -29,8 +31,11 @@ export default function AboutPage() {
 
               <ScrollReveal direction="up" delay={0.2}>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-6 leading-tight">
-                  A Tradition of <span className="text-[#115E59] font-serif italic">Trust</span> <br />
-                  & <span className="text-[#115E59]">Excellence.</span>
+                  <TextReveal delay={0.3}>A Tradition of </TextReveal>
+                  <span className="text-[#115E59] font-serif italic"><TextReveal delay={0.4}>Trust </TextReveal></span>
+                  <br />
+                  <TextReveal delay={0.5}>& </TextReveal>
+                  <span className="text-[#115E59]"><TextReveal delay={0.6}>Excellence.</TextReveal></span>
                 </h1>
               </ScrollReveal>
 
@@ -149,102 +154,70 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. Core Values & Efficiency */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            
-            <ScrollReveal direction="up">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                  Unmatched Efficiency & Strategic Speed
-                </h2>
-                <p className="text-lg text-slate-600 leading-relaxed mb-10">
-                  Time is a critical asset in risk management. Partnering with LMB ensures that your insurance requirements are executed with precision and promptness. From intricate endorsements to comprehensive new quotes, our streamlined processes guarantee flawless coverage.
-                </p>
-                
-                <div className="grid sm:grid-cols-2 gap-6">
-                  {[
-                    "Licensed by IRDAI", 
-                    "20+ Years of Expertise", 
-                    "Client-Centric Approach", 
-                    "Tailored Risk Solutions"
-                  ].map((feature, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <CheckCircle2 className="text-[#115E59] shrink-0 mt-1" size={20} />
-                      <span className="text-slate-700 font-medium">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal direction="left" delay={0.2}>
-              <div className="relative h-[280px] sm:h-[400px] lg:h-[500px] w-full rounded-2xl overflow-hidden shadow-xl mt-8 lg:mt-0">
-                <Image src="/assets/image4.jpeg" alt="Professional Efficiency" fill className="object-cover" />
-                <div className="absolute inset-0 bg-slate-900/20" />
-              </div>
-            </ScrollReveal>
-
-          </div>
-        </div>
-      </section>
+      {/* 3. Company Profile / Methodology */}
+      <MethodologySection />
 
       {/* 4. Mission & Vision */}
-      <section className="py-24 md:py-32 bg-slate-50 relative overflow-hidden">
-        {/* Subtle background decoration */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-40 pointer-events-none">
-          <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-b from-[#115E59]/5 to-transparent blur-3xl" />
-          <div className="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-t from-[#115E59]/5 to-transparent blur-3xl" />
+      <section className="py-24 md:py-32 bg-[#F8FBFC] relative overflow-hidden">
+        {/* Cinematic Background Glows */}
+        <div className="absolute top-0 left-0 w-full h-[800px] z-0 pointer-events-none">
+          <div className="absolute top-[10%] right-[20%] h-[500px] w-[500px] rounded-full bg-[#00B4D8]/10 blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
+          <div className="absolute bottom-[10%] left-[20%] h-[600px] w-[600px] rounded-full bg-[#115E59]/10 blur-[120px] animate-[pulse_10s_ease-in-out_infinite_reverse]" />
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           
-          <div className="text-center max-w-2xl mx-auto mb-20">
+          <div className="text-center max-w-3xl mx-auto mb-20">
             <ScrollReveal>
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
-                Our Guiding Principles
-              </h2>
-              <div className="flex items-center justify-center gap-3">
-                <span className="h-px w-12 bg-slate-300" />
-                <span className="h-2 w-2 rounded-full bg-[#115E59]" />
-                <span className="h-px w-12 bg-slate-300" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#00B4D8]/20 bg-[#00B4D8]/5 px-4 py-2 mb-6 shadow-sm">
+                <span className="flex h-2 w-2 rounded-full bg-[#00B4D8] animate-pulse" />
+                <span className="text-xs font-bold tracking-[0.2em] text-[#00B4D8] uppercase">Core Philosophy</span>
               </div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#04151a] mb-6 tracking-tight leading-tight">
+                Our Guiding <span className="text-[#115E59] font-serif italic">Principles.</span>
+              </h2>
             </ScrollReveal>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
             
-            {/* Mission - Dark Premium Card */}
+            {/* Mission Card */}
             <ScrollReveal direction="up" delay={0.1} className="h-full">
-              <div className="group relative h-full bg-[#115E59] rounded-[2.5rem] p-10 md:p-14 overflow-hidden shadow-2xl hover:shadow-[#115E59]/20 transition-all duration-500 hover:-translate-y-2">
-                {/* Decorative large icon watermark */}
-                <Target className="absolute -right-8 -bottom-8 text-white/5 w-64 h-64 rotate-12 group-hover:scale-110 transition-transform duration-700" />
+              <div className="group relative h-full rounded-[2.5rem] bg-gradient-to-br from-[#115E59] to-[#083A38] p-10 md:p-12 overflow-hidden shadow-2xl transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(17,94,89,0.3)] flex flex-col justify-between">
+                {/* Number Watermark */}
+                <div className="absolute -right-4 top-4 text-[150px] font-extrabold text-white/[0.03] leading-none select-none group-hover:scale-110 group-hover:-translate-x-4 transition-transform duration-700">01</div>
+                {/* Glow */}
+                <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#00B4D8]/20 blur-3xl rounded-full group-hover:bg-[#00B4D8]/30 transition-colors duration-700" />
                 
                 <div className="relative z-10">
-                  <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-10 border border-white/20 group-hover:bg-white/20 transition-colors">
-                    <Target className="text-white" size={32} />
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-lg mb-8 group-hover:scale-110 group-hover:bg-white group-hover:text-[#115E59] transition-all duration-500">
+                    <Target className="h-8 w-8" />
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-6 tracking-wide">Our Mission</h3>
-                  <p className="text-white/80 leading-relaxed text-lg md:text-xl font-light">
+                  <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
+                    Our Mission
+                  </h3>
+                  <p className="text-[#a8d5df] leading-relaxed text-lg md:text-xl font-medium">
                     To deliver exceptional, personalized service to our clients while establishing the industry benchmark for risk management consultation and innovative reinsurance solutions. We exist to protect what matters most to you.
                   </p>
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Vision - Light Premium Card */}
+            {/* Vision Card */}
             <ScrollReveal direction="up" delay={0.2} className="h-full">
-              <div className="group relative h-full bg-white rounded-[2.5rem] p-10 md:p-14 overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                {/* Decorative large icon watermark */}
-                <Briefcase className="absolute -right-8 -bottom-8 text-slate-50 w-64 h-64 -rotate-12 group-hover:scale-110 transition-transform duration-700" />
+              <div className="group relative h-full rounded-[2.5rem] bg-white/60 backdrop-blur-2xl border border-white/80 p-10 md:p-12 overflow-hidden shadow-[0_8px_30px_rgba(12,73,79,0.06)] transition-all duration-700 hover:-translate-y-2 hover:bg-white/90 hover:shadow-[0_20px_50px_rgba(0,180,216,0.15)] flex flex-col justify-between">
+                {/* Number Watermark */}
+                <div className="absolute -right-4 top-4 text-[150px] font-extrabold text-[#115E59]/[0.03] leading-none select-none group-hover:scale-110 group-hover:-translate-x-4 transition-transform duration-700">02</div>
                 
                 <div className="relative z-10">
-                  <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-10 border border-slate-100 group-hover:bg-[#115E59]/5 transition-colors">
-                    <Briefcase className="text-[#115E59]" size={32} />
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#00B4D8]/10 border border-[#00B4D8]/20 text-[#00869e] shadow-sm mb-8 group-hover:scale-110 group-hover:bg-[#00B4D8] group-hover:text-white transition-all duration-500">
+                    <Briefcase className="h-8 w-8" />
                   </div>
-                  <h3 className="text-3xl font-bold text-slate-900 mb-6 tracking-wide">Our Vision</h3>
-                  <p className="text-slate-600 leading-relaxed text-lg md:text-xl font-light">
+                  <h3 className="text-3xl md:text-4xl font-display font-bold text-[#04151a] mb-6">
+                    Our Vision
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed text-lg md:text-xl font-medium group-hover:text-slate-800 transition-colors">
                     To be the preeminent insurance broker in India and beyond, cultivating robust connections both domestically and globally. We continuously endeavor to expand into untapped markets, solidifying our reputation as a globally trusted force.
                   </p>
                 </div>
