@@ -356,48 +356,50 @@ function ViewPricesContent() {
                       </div>
                     )}
 
-                    <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 relative z-0">
+                    <div className="p-5 md:p-8 flex flex-col md:flex-row gap-5 md:gap-8 relative z-0">
 
-                      {/* Left: Insurer & IDV */}
-                      <div className="flex-[1.2] border-b md:border-b-0 md:border-r border-slate-100 pb-6 md:pb-0 md:pr-8 flex flex-col md:flex-row items-center md:items-start gap-5">
-                        <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shrink-0 border border-slate-100 shadow-sm">
-                          <ShieldCheck className="w-10 h-10 text-[#ffb800]" strokeWidth={1.5} />
+                      {/* Top/Left: Insurer & IDV */}
+                      <div className="flex-[1.2] border-b md:border-b-0 md:border-r border-slate-100 pb-5 md:pb-0 md:pr-8 flex flex-row items-center md:items-start gap-4">
+                        <div className="w-14 h-14 md:w-20 md:h-20 bg-white rounded-xl md:rounded-2xl flex items-center justify-center shrink-0 border border-slate-100 shadow-sm">
+                          <ShieldCheck className="w-7 h-7 md:w-10 md:h-10 text-[#ffb800]" strokeWidth={1.5} />
                         </div>
-                        <div className="text-center md:text-left flex flex-col justify-center h-full">
-                          <h3 className="font-extrabold text-[18px] text-slate-900 leading-tight mb-2">{quote.insurer}</h3>
+                        <div className="text-left flex flex-col justify-center h-full">
+                          <h3 className="font-extrabold text-[15px] sm:text-[16px] md:text-[18px] text-slate-900 leading-tight mb-1 md:mb-2">{quote.insurer}</h3>
                           <div className="flex flex-col">
-                            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">IDV (Cover Value)</span>
-                            <span className="font-extrabold text-slate-700 text-[15px]">{quote.idv}</span>
+                            <span className="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-widest">IDV (Cover Value)</span>
+                            <span className="font-extrabold text-slate-700 text-[14px] md:text-[15px]">{quote.idv}</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Middle: Features */}
                       <div className="flex-[1.5] flex flex-col justify-center px-0 md:px-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 mb-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 mb-3 md:mb-4">
                           {quote.features.map(f => (
-                            <span key={f} className="flex items-center gap-2 text-[13px] font-semibold text-slate-600">
-                              <CheckCircle2 size={16} className="text-emerald-500 shrink-0" /> {f}
+                            <span key={f} className="flex items-center gap-2 text-[12px] md:text-[13px] font-semibold text-slate-600">
+                              <CheckCircle2 size={14} className="text-emerald-500 shrink-0 md:w-4 md:h-4" /> {f}
                             </span>
                           ))}
                         </div>
                         <button
                           onClick={() => setDetailsModalOpen(quote)}
-                          className="text-[13px] font-bold text-blue-600 hover:text-blue-700 text-center md:text-left flex items-center justify-center md:justify-start gap-1 transition-colors w-fit"
+                          className="text-[12px] md:text-[13px] font-bold text-blue-600 hover:text-blue-700 text-left flex items-center justify-start gap-1 transition-colors w-fit"
                         >
-                          View full coverage details <ChevronRight size={16} />
+                          View full coverage details <ChevronRight size={14} className="md:w-4 md:h-4" />
                         </button>
                       </div>
 
-                      {/* Right: Price & CTA */}
-                      <div className="flex-1 flex flex-col items-center md:items-end justify-center pt-4 md:pt-0 border-t md:border-t-0 border-slate-100">
-                        <div className="text-[32px] font-extrabold text-slate-900 mb-1 leading-none tracking-tight">
-                          ₹{quote.premium}
+                      {/* Bottom/Right: Price & CTA */}
+                      <div className="flex-1 flex flex-row md:flex-col items-center justify-between md:items-end md:justify-center pt-5 md:pt-0 border-t md:border-t-0 border-slate-100">
+                        <div className="flex flex-col items-start md:items-end">
+                          <div className="text-[22px] md:text-[32px] font-extrabold text-slate-900 mb-0 md:mb-1 leading-none tracking-tight">
+                            ₹{quote.premium}
+                          </div>
+                          <span className="text-[9px] md:text-[11px] text-slate-500 font-bold uppercase tracking-widest">1 Year (Inc. GST)</span>
                         </div>
-                        <span className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-4">1 Year (Inc. GST)</span>
                         <Button
                           onClick={() => handleBuyNow(quote)}
-                          className="w-full md:w-auto bg-[#ffb800] hover:bg-[#F39C12] text-slate-900 font-extrabold uppercase tracking-widest px-8 py-6 rounded-xl shadow-sm hover:shadow-md transition-all border-none text-[13px]"
+                          className="w-auto bg-[#ffb800] hover:bg-[#F39C12] text-slate-900 font-extrabold uppercase tracking-widest px-6 py-5 md:px-8 md:py-6 rounded-xl shadow-sm hover:shadow-md transition-all border-none text-[12px] md:text-[13px]"
                         >
                           Buy Now
                         </Button>
@@ -405,17 +407,17 @@ function ViewPricesContent() {
                     </div>
 
                     {/* Banner at bottom */}
-                    <div className="bg-slate-50/80 px-6 md:px-8 py-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 text-[13px] font-bold text-slate-600">
-                        <ShieldAlert size={16} className="text-emerald-500" /> Cashless Garages: 250+ in your city
+                    <div className="bg-slate-50/80 px-5 md:px-8 py-3 md:py-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+                      <div className="flex items-center gap-1.5 md:gap-2 text-[11px] md:text-[13px] font-bold text-slate-600">
+                        <ShieldAlert size={14} className="text-emerald-500 md:w-4 md:h-4 shrink-0" /> <span className="truncate max-w-[200px] sm:max-w-none">Cashless Garages: 250+ in city</span>
                       </div>
-                      <div className="flex items-center gap-6">
-                        <span className="text-[12px] font-semibold text-slate-500">Claim Settlement: 98%</span>
+                      <div className="flex items-center gap-3 md:gap-6">
+                        <span className="text-[11px] md:text-[12px] font-semibold text-slate-500 shrink-0">Claim Settlement: 98%</span>
                         <button
                           onClick={() => setDetailsModalOpen(quote)}
-                          className="text-[12px] font-bold text-slate-400 flex items-center gap-1 hover:text-[#ffb800] transition-colors"
+                          className="text-[11px] md:text-[12px] font-bold text-slate-400 flex items-center gap-1 hover:text-[#ffb800] transition-colors shrink-0"
                         >
-                          T&C Apply <Info size={14} />
+                          T&C Apply <Info size={12} className="md:w-3 md:h-3" />
                         </button>
                       </div>
                     </div>
