@@ -23,22 +23,7 @@ const getSubServiceImage = (id: string) => {
   }
 };
 
-export async function generateStaticParams() {
-  const params: { serviceId: string; subServiceId: string }[] = [];
-  
-  services.forEach((service) => {
-    if (service.subServices) {
-      service.subServices.forEach((sub) => {
-        params.push({
-          serviceId: service.id,
-          subServiceId: sub.id,
-        });
-      });
-    }
-  });
 
-  return params;
-}
 
 export default async function SubServiceDetail({ params }: { params: Promise<{ serviceId: string, subServiceId: string }> }) {
   const resolvedParams = await params;
