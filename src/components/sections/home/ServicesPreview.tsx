@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -6,7 +5,7 @@ import { services } from "@/lib/content/services";
 
 export function ServicesPreview() {
   return (
-    <section className="relative py-20 bg-white">
+    <section id="life-insurance" className="relative py-20 bg-white">
       <div className="mx-auto max-w-[1400px] px-6">
         
         {/* Header Section */}
@@ -27,7 +26,7 @@ export function ServicesPreview() {
             const Icon = service.icon;
             return (
               <FadeIn key={service.id} delay={i * 0.1} className="h-full">
-                <Link href={service.href} className="block h-full group">
+                <div className="block h-full group">
                   <div className="bg-white hover:bg-[#115E59] rounded-3xl border border-slate-200 hover:border-[#115E59] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(17,94,89,0.25)] transition-all duration-700 ease-out relative overflow-hidden flex flex-col h-full z-10">
                     
                     {/* Top Icon Area */}
@@ -36,13 +35,6 @@ export function ServicesPreview() {
                         <div className="transition-all duration-700 ease-out group-hover:scale-[1.2] group-hover:-translate-y-1 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
                           <Icon className="h-8 w-8 text-[#0f172a] group-hover:text-white transition-colors duration-700" strokeWidth={1.5} />
                         </div>
-                      </div>
-                      
-                      {/* Arrow indicator */}
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-700 group-hover:bg-white/10 opacity-0 group-hover:opacity-100 -translate-x-3 group-hover:translate-x-0">
-                        <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
                       </div>
                     </div>
                     
@@ -67,7 +59,7 @@ export function ServicesPreview() {
                     </ul>
 
                   </div>
-                </Link>
+                </div>
               </FadeIn>
             );
           })}

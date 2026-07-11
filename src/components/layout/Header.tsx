@@ -13,7 +13,7 @@ import ShinyText from "@/components/ui/ShinyText";
 
 const iconMap: Record<string, any> = { Shield: Icons.Shield, PiggyBank: Icons.PiggyBank, Coins: Icons.Coins, Users: Icons.Users, FileText: Icons.FileText };
 
-const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
+const HeaderMegaMenu = React.memo(({ link, isActive, setMobileOpen }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const serviceData = footerNavigation.services.find(s => s.label.toLowerCase() === link.name.toLowerCase()) as any;
   const [activeChild, setActiveChild] = useState<any>(serviceData?.children?.[0]);
@@ -50,7 +50,7 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[650px] z-[1000] max-lg:static max-lg:w-full max-lg:translate-x-0 max-lg:mt-0 max-lg:pt-0"
+            className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[650px] z-[60] max-lg:static max-lg:w-full max-lg:translate-x-0 max-lg:mt-0 max-lg:pt-0"
           >
             <div className="flex max-lg:hidden bg-white overflow-hidden rounded-2xl shadow-xl border border-slate-200">
               
@@ -192,9 +192,10 @@ const HeaderMegaMenu = ({ link, isActive, setMobileOpen }: any) => {
       </AnimatePresence>
     </div>
   );
-};
+});
+HeaderMegaMenu.displayName = "HeaderMegaMenu";
 
-const HeaderSimpleDropdown = ({ link, options, isActive, setMobileOpen }: any) => {
+const HeaderSimpleDropdown = React.memo(({ link, options, isActive, setMobileOpen }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -226,7 +227,7 @@ const HeaderSimpleDropdown = ({ link, options, isActive, setMobileOpen }: any) =
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[220px] z-[1000] max-lg:static max-lg:w-full max-lg:translate-x-0 max-lg:mt-0"
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[220px] z-[60] max-lg:static max-lg:w-full max-lg:translate-x-0 max-lg:mt-0"
           >
             <div className="flex flex-col bg-white text-slate-800 rounded-xl border border-slate-200 overflow-hidden shadow-2xl max-lg:shadow-none max-lg:border-none max-lg:bg-transparent max-lg:pl-8">
               {options.map((opt: any) => (
@@ -245,7 +246,8 @@ const HeaderSimpleDropdown = ({ link, options, isActive, setMobileOpen }: any) =
       </AnimatePresence>
     </div>
   );
-};
+});
+HeaderSimpleDropdown.displayName = "HeaderSimpleDropdown";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -284,14 +286,14 @@ export function Header() {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-[1000] transition-all duration-300 ${scrolled ? 'shadow-[0_4px_25px_rgba(0,0,0,0.06)] bg-white/95 backdrop-blur-md' : 'shadow-sm bg-white'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-[40] transition-all duration-300 ${scrolled ? 'shadow-[0_4px_25px_rgba(0,0,0,0.06)] bg-white/95 backdrop-blur-md' : 'shadow-sm bg-white'}`}>
       {/* Mobile Menu Backdrop */}
       <div 
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[990] lg:hidden transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[40] lg:hidden transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setMobileOpen(false)}
       />
 
-      <div className="mx-auto max-w-[1600px] relative z-[1000] flex justify-between items-center py-2 lg:py-3 px-6 xl:px-10">
+      <div className="mx-auto max-w-[1600px] relative z-[40] flex justify-between items-center py-2 lg:py-3 px-6 xl:px-10">
         <div className="flex-shrink-0 flex items-center">
           <Link href="/" className="flex items-center h-10 md:h-12 w-[180px] md:w-[260px] relative shrink-0 ml-0">
             <Image 
@@ -305,7 +307,7 @@ export function Header() {
           </Link>
         </div>
 
-        <div data-lenis-prevent="true" className={`relative z-10 flex-1 flex justify-center gap-4 xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[1010] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:pt-6 max-lg:h-[100dvh] max-lg:pb-28 max-lg:w-[85%] max-lg:sm:w-[360px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto max-lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
+        <div data-lenis-prevent="true" className={`relative z-10 flex-1 flex justify-center gap-4 xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[50] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:pt-6 max-lg:h-[100dvh] max-lg:pb-28 max-lg:w-[85%] max-lg:sm:w-[360px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto max-lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
           
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-4 pb-4 border-b border-slate-100">
@@ -351,11 +353,6 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4 xl:gap-6">
-          <Link href="/contact" className="max-lg:hidden whitespace-nowrap">
-            <Button className="bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold rounded-full px-7 py-5 border-none transition-colors">
-              Contact Us
-            </Button>
-          </Link>
           <button className="lg:hidden text-slate-600 p-2 hover:bg-slate-100 rounded-lg transition-colors" onClick={() => setMobileOpen(true)}>
             <Icons.Menu size={28} />
           </button>

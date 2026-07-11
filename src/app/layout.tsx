@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, DM_Sans } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -6,6 +6,12 @@ import { LenisProvider } from "@/components/providers/LenisProvider";
 import { ScrollTriggerProvider } from "@/components/providers/ScrollTriggerProvider";
 import { siteConfig } from "@/lib/content/company";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 const inter = Inter({
   subsets: ["latin"],

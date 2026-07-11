@@ -1,10 +1,13 @@
 import { Hero } from "@/components/sections/home/Hero";
-import { StatsBar } from "@/components/sections/home/StatsBar";
-import { ServicesPreview } from "@/components/sections/home/ServicesPreview";
-import { IndustriesPreview } from "@/components/sections/home/IndustriesPreview";
-import { WhyPreview } from "@/components/sections/home/WhyPreview";
-import { TrustMockupPreview } from "@/components/sections/home/TrustMockupPreview";
-import { CompanyLogosMarquee } from "@/components/sections/home/CompanyLogosMarquee";
+import dynamic from "next/dynamic";
+
+const StatsBar = dynamic(() => import("@/components/sections/home/StatsBar").then(mod => mod.StatsBar), { ssr: true });
+const ServicesPreview = dynamic(() => import("@/components/sections/home/ServicesPreview").then(mod => mod.ServicesPreview), { ssr: true });
+const RetailServicesPreview = dynamic(() => import("@/components/sections/home/RetailServicesPreview").then(mod => mod.RetailServicesPreview), { ssr: true });
+const IndustriesPreview = dynamic(() => import("@/components/sections/home/IndustriesPreview").then(mod => mod.IndustriesPreview), { ssr: true });
+const WhyPreview = dynamic(() => import("@/components/sections/home/WhyPreview").then(mod => mod.WhyPreview), { ssr: true });
+const TrustMockupPreview = dynamic(() => import("@/components/sections/home/TrustMockupPreview").then(mod => mod.TrustMockupPreview), { ssr: true });
+const CompanyLogosMarquee = dynamic(() => import("@/components/sections/home/CompanyLogosMarquee").then(mod => mod.CompanyLogosMarquee), { ssr: true });
 import { createPageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/content/company";
 
@@ -20,6 +23,7 @@ export default function HomePage() {
       <Hero />
       <StatsBar />
       <ServicesPreview />
+      <RetailServicesPreview />
       <IndustriesPreview />
       <WhyPreview />
       <TrustMockupPreview />

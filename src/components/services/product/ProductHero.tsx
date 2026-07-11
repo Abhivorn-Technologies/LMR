@@ -6,6 +6,7 @@ import * as Icons from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import * as z from "zod";
 
 interface ProductHeroProps {
@@ -35,6 +36,7 @@ export const ProductHero: React.FC<ProductHeroProps> = ({
   image,
   badges,
 }) => {
+  const router = useRouter();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   
@@ -86,8 +88,7 @@ export const ProductHero: React.FC<ProductHeroProps> = ({
       const result = await response.json();
       
       if (result.success) {
-        setStatus("success");
-        reset();
+        router.push(`/view-prices?reg=${data.identifier}&mobile=${data.mobile}`);
       } else {
         setStatus("error");
         setTimeout(() => setStatus("idle"), 5000);
@@ -244,6 +245,7 @@ export const ProductHero: React.FC<ProductHeroProps> = ({
                           <input 
                             type="text" 
                             placeholder="e.g. KA04DK8337"
+                            maxLength={15}
                             {...register("identifier")}
                             className={`w-full bg-slate-50 border ${errors.identifier ? 'border-red-400' : 'border-slate-200'} rounded-xl px-4 py-3.5 text-[#0F172A] focus:outline-none focus:border-blue-600 focus:bg-white transition-all font-bold uppercase placeholder:normal-case placeholder:font-medium placeholder:text-slate-400 text-[15px]`}
                           />
@@ -264,6 +266,7 @@ export const ProductHero: React.FC<ProductHeroProps> = ({
                             <input 
                               type="tel" 
                               placeholder="Enter Mobile Number" 
+                              maxLength={10}
                               {...register("mobile")}
                               className="w-full bg-transparent px-4 py-3.5 text-[#0F172A] focus:outline-none font-bold placeholder:font-medium placeholder:text-slate-400 text-[15px]"
                             />
@@ -277,7 +280,7 @@ export const ProductHero: React.FC<ProductHeroProps> = ({
                         <Button 
                           type="submit" 
                           disabled={status === "loading"}
-                          className="w-full py-4 text-[14px] uppercase tracking-widest font-extrabold rounded-xl bg-[#0F172A] hover:bg-slate-800 text-white border-none transition-colors flex items-center justify-center mt-2 shadow-sm"
+                          className="w-full py-4 text-[14px] uppercase tracking-widest font-extrabold rounded-xl bg-[#ffb800] hover:bg-[#F39C12] text-slate-900 border-none transition-colors flex items-center justify-center mt-2 shadow-sm"
                         >
                           {status === "loading" ? (
                             <><Icons.Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</>

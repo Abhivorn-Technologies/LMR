@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { industries } from "@/lib/content/industries";
@@ -20,7 +21,7 @@ export function IndustriesPreview() {
         </div>
           
         {/* Industry Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
           {industries.slice(0, 5).map((industry, i) => {
             const Icon = industry.icon;
             return (
@@ -40,6 +41,15 @@ export function IndustriesPreview() {
             );
           })}
         </div>
+
+        {/* View All Industries Button */}
+        <FadeIn delay={0.2}>
+          <div className="flex justify-center mb-16">
+            <Link href="/industries" className="inline-flex items-center gap-2 px-8 py-3.5 bg-white border-2 border-[#115E59] text-[#115E59] font-bold rounded-xl hover:bg-[#115E59] hover:text-white transition-all duration-300 shadow-sm">
+              View All Industries <ArrowRight size={18} />
+            </Link>
+          </div>
+        </FadeIn>
 
         {/* Bottom CTA Banner */}
         <FadeIn delay={0.4}>

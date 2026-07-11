@@ -56,11 +56,11 @@ export default function ContactPage() {
       <div className="pt-20">
         <ScrollReveal direction="up">
           <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 tracking-tight mb-6">
+            <h1 className="text-[40px] leading-[1.1] md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight mb-4 md:mb-6">
               <TextReveal delay={0.2}>Speak with our </TextReveal>
-              <span className="text-[#115E59] font-serif italic"><TextReveal delay={0.3}>advisory team.</TextReveal></span>
+              <span className="text-[#115E59] font-serif italic block md:inline"><TextReveal delay={0.3}>advisory team.</TextReveal></span>
             </h1>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-light leading-[1.6]">
               Submit an inquiry below and our expert team will respond promptly during business hours.
             </p>
           </div>

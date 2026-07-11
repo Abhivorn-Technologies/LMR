@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { SplitText } from "@/components/ui/SplitText";
 
 interface SectionHeadingProps {
   eyebrow?: string;
@@ -34,7 +35,13 @@ export function SectionHeading({
         </div>
       )}
       <h2 className="font-display text-3xl font-extrabold tracking-tight text-white md:text-4xl lg:text-5xl leading-tight">
-        {title}
+        <SplitText 
+          text={title} 
+          delay={30}
+          textAlign={align}
+          animationFrom={{ opacity: 0, transform: 'translate3d(0,30px,0)' }}
+          animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+        />
       </h2>
       {description && (
         <p className="mt-5 text-base leading-loose text-[#c4e0e6] md:text-lg">

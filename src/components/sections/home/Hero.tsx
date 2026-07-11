@@ -5,6 +5,8 @@ import Link from "next/link";
 import { CheckCircle2, Home, Heart, Shield, FileText, Target, Users, Loader2, AlertCircle, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { SplitText } from "@/components/ui/SplitText";
+import ShinyText from "@/components/ui/ShinyText";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -84,9 +86,9 @@ export function Hero() {
   };
 
   const tabs = [
-    { name: "General Insurance", icon: Home, href: "/services/general-insurance" },
-    { name: "Life Insurance", icon: Heart, href: "/services/life-insurance" },
-    { name: "Reinsurance", icon: Shield, href: "/services/reinsurance" },
+    { name: "General Insurance", icon: Home, href: "#general-insurance" },
+    { name: "Life Insurance", icon: Heart, href: "#general-insurance" },
+    { name: "Reinsurance", icon: Shield, href: "/reinsurance" },
     { name: "Claim Services", icon: FileText, href: "/services/claims" },
     { name: "Risk Management", icon: Target, href: "/services/risk-management" },
     { name: "Consulting", icon: Users, href: "/services/consulting" },
@@ -108,45 +110,45 @@ export function Hero() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="w-full"
             >
-              <motion.h1 
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  visible: { transition: { staggerChildren: 0.1 } }
-                }}
-                className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight mb-5 flex flex-wrap gap-x-3 gap-y-2 items-baseline"
-              >
-                {["Insurance", "advisory"].map((word, i) => (
-                  <motion.span key={i} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 15 } } }}>
-                    {word}
+              <div className="flex flex-col mb-5">
+                <SplitText 
+                  text="Insurance advisory"
+                  className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight pb-2"
+                  delay={50}
+                  animationFrom={{ opacity: 0, transform: 'translate3d(0,30px,0)' }}
+                  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                  textAlign="left"
+                />
+                <div className="flex flex-wrap items-baseline gap-x-3">
+                  <SplitText 
+                    text="built on"
+                    className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight"
+                    delay={50}
+                    animationFrom={{ opacity: 0, transform: 'translate3d(0,30px,0)' }}
+                    animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                    textAlign="left"
+                  />
+                  <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ type: "spring", damping: 15, delay: 0.8 }} className="relative inline-block text-[#0f172a] whitespace-nowrap text-4xl sm:text-5xl lg:text-[4rem] font-extrabold leading-[1.15] tracking-tight">
+                    trust<span className="text-[#ffb800]">.</span>
+                    <motion.svg 
+                      className="absolute -bottom-1 left-0 w-full h-[10px] overflow-visible" 
+                      viewBox="0 0 100 10" 
+                      preserveAspectRatio="none"
+                    >
+                      <motion.path 
+                        d="M 0 5 Q 50 10 100 2" 
+                        stroke="#ffb800" 
+                        strokeWidth="6" 
+                        strokeLinecap="round" 
+                        fill="none"
+                        initial={{ pathLength: 0, opacity: 0 }}
+                        animate={{ pathLength: 1, opacity: 1 }}
+                        transition={{ delay: 1.2, duration: 0.8, ease: "easeInOut" }}
+                      />
+                    </motion.svg>
                   </motion.span>
-                ))}
-                <div className="w-full h-0" /> {/* Line Break */}
-                {["built", "on"].map((word, i) => (
-                  <motion.span key={`b-${i}`} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 15 } } }}>
-                    {word}
-                  </motion.span>
-                ))}
-                <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 15 } } }} className="relative inline-block text-[#0f172a] whitespace-nowrap">
-                  trust<span className="text-[#ffb800]">.</span>
-                  <motion.svg 
-                    className="absolute -bottom-1 left-0 w-full h-[10px] overflow-visible" 
-                    viewBox="0 0 100 10" 
-                    preserveAspectRatio="none"
-                  >
-                    <motion.path 
-                      d="M 0 5 Q 50 10 100 2" 
-                      stroke="#ffb800" 
-                      strokeWidth="6" 
-                      strokeLinecap="round" 
-                      fill="none"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: 1, opacity: 1 }}
-                      transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
-                    />
-                  </motion.svg>
-                </motion.span>
-              </motion.h1>
+                </div>
+              </div>
               
               <div className="flex items-center text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#334155] mb-8 h-[48px] overflow-hidden">
                 <span>Securing your&nbsp;</span>
@@ -166,7 +168,7 @@ export function Hero() {
                 </div>
               </div>
               <p className="text-base md:text-lg text-[#64748b] font-medium leading-relaxed max-w-[550px] mb-8">
-                Insurance broking built on <strong className="text-[#10b981]">expertise, integrity, and client focus</strong> — IRDAI CoR No. 116, since 2002.
+                Insurance broking built on <ShinyText text="expertise, integrity, and client focus" color="#10b981" shineColor="#ffb800" className="font-bold" speed={4} /> — IRDAI CoR No. 116, since 2002.
               </p>
             </motion.div>
 
