@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const companies = [
+const defaultCompanies = [
   {
     name: "Hindustan Latex Limited",
     category: "Central PSU — Healthcare",
@@ -91,8 +91,19 @@ const companies = [
   },
 ];
 
-export function CompanyLogosMarquee() {
+export function CompanyLogosMarquee({ 
+  content,
+  isEditMode,
+  isActive,
+  onContentChange
+}: { 
+  content?: any;
+  isEditMode?: boolean;
+  isActive?: boolean;
+  onContentChange?: (content: any) => void;
+}) {
   const [isMounted, setIsMounted] = useState(false);
+  const companies = content?.logos || defaultCompanies;
 
   useEffect(() => {
     setIsMounted(true);
@@ -103,11 +114,21 @@ export function CompanyLogosMarquee() {
   return (
     <section id="clients" className="scroll-mt-24 py-16 overflow-hidden bg-[#f4f9f9] relative border-t border-b border-[#e5f0f0]">
       <div className="max-w-7xl mx-auto px-6 mb-12 flex flex-col items-center text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-[#0c494f] mb-4">
-          Our notable clients
+        <h2 
+          className={`text-3xl md:text-4xl font-extrabold text-[#0c494f] mb-4 ${isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-[#0c494f] cursor-text' : ''}`}
+          contentEditable={isEditMode}
+          suppressContentEditableWarning
+          onBlur={(e) => onContentChange?.({ ...content, title: e.currentTarget.textContent })}
+        >
+          {content?.title || "Our notable clients"}
         </h2>
-        <p className="text-slate-500 max-w-2xl font-medium">
-          Government departments, PSUs and public corporations we are proud to serve.
+        <p 
+          className={`text-slate-500 max-w-2xl font-medium ${isEditMode ? 'outline-none border border-dashed border-transparent hover:border-[#0c494f] p-1 -m-1 rounded cursor-text' : ''}`}
+          contentEditable={isEditMode}
+          suppressContentEditableWarning
+          onBlur={(e) => onContentChange?.({ ...content, description: e.currentTarget.textContent })}
+        >
+          {content?.description || "Government departments, PSUs and public corporations we are proud to serve."}
         </p>
       </div>
 

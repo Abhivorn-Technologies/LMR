@@ -1,52 +1,61 @@
 import Link from "next/link";
-import { 
-  Car, Bike, ShieldCheck, Truck, Bus, 
-  Stethoscope, Activity, HeartPulse, ShieldPlus, Repeat, Users, 
-  Briefcase, Building2, HardHat, UserCog, Ship, Factory, 
-  Plane, GraduationCap, Building, Home, Store, Flame 
-} from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { SplitText } from "@/components/ui/SplitText";
 
-const motorInsurance = [
-  { title: "Car", icon: Car, href: "/services/general-insurance/car", banner: "Pay as you Drive" },
-  { title: "Bike", icon: Bike, href: "/services/general-insurance/two-wheeler/bike", banner: "Starting ₹714" },
-  { title: "OD for Car", icon: ShieldCheck, href: "/services/general-insurance/car/own-damage", banner: "Standalone OD Cover" },
-  { title: "Rickshaw", icon: Truck, href: "/services/general-insurance/commercial/auto-rickshaw", banner: "Auto & e-Rickshaws" },
-  { title: "Taxi/Cab", icon: Bus, href: "/services/general-insurance/commercial/taxi", banner: "" },
-  { title: "Truck", icon: Truck, href: "/services/general-insurance/commercial/truck", banner: "" },
+const DynamicIcon = ({ name, className, strokeWidth }: { name: string, className?: string, strokeWidth?: number }) => {
+  // @ts-ignore
+  const IconComponent = LucideIcons[name] || LucideIcons.HelpCircle;
+  return <IconComponent className={className} strokeWidth={strokeWidth} />;
+};
+
+const defaultMotorInsurance = [
+  { title: "Car", icon: "Car", href: "/services/general-insurance/car", banner: "Pay as you Drive" },
+  { title: "Bike", icon: "Bike", href: "/services/general-insurance/two-wheeler/bike", banner: "Starting ₹714" },
+  { title: "OD for Car", icon: "ShieldCheck", href: "/services/general-insurance/car/own-damage", banner: "Standalone OD Cover" },
+  { title: "Rickshaw", icon: "Truck", href: "/services/general-insurance/commercial/auto-rickshaw", banner: "Auto & e-Rickshaws" },
+  { title: "Taxi/Cab", icon: "Bus", href: "/services/general-insurance/commercial/taxi", banner: "" },
+  { title: "Truck", icon: "Truck", href: "/services/general-insurance/commercial/truck", banner: "" },
 ];
 
-const healthInsurance = [
-  { title: "Health", icon: Stethoscope, href: "/services/general-insurance/health", banner: "Infinity Wallet" },
-  { title: "OPD Health Insurance", icon: Activity, href: "/services/general-insurance/health", banner: "" },
-  { title: "Super Top-up", icon: HeartPulse, href: "/services/general-insurance/health/super-top-up", banner: "" },
-  { title: "Arogya Sanjeevani Policy", icon: ShieldPlus, href: "/services/general-insurance/health", banner: "₹1 Cr SI starting ₹640/m" },
-  { title: "Port Health Policy", icon: Repeat, href: "/services/general-insurance/health/portability", banner: "Switch to Digit" },
-  { title: "Employee Health", icon: Users, href: "/services/general-insurance/health/group-medical", banner: "" },
+const defaultHealthInsurance = [
+  { title: "Health", icon: "Stethoscope", href: "/services/general-insurance/health", banner: "Infinity Wallet" },
+  { title: "OPD Health Insurance", icon: "Activity", href: "/services/general-insurance/health", banner: "" },
+  { title: "Super Top-up", icon: "HeartPulse", href: "/services/general-insurance/health/super-top-up", banner: "" },
+  { title: "Arogya Sanjeevani Policy", icon: "ShieldPlus", href: "/services/general-insurance/health", banner: "₹1 Cr SI starting ₹640/m" },
+  { title: "Port Health Policy", icon: "Repeat", href: "/services/general-insurance/health/portability", banner: "Switch to Digit" },
+  { title: "Employee Health", icon: "Users", href: "/services/general-insurance/health/group-medical", banner: "" },
 ];
 
-const businessInsurance = [
-  { title: "D&O Insurance", icon: Briefcase, href: "/services/general-insurance/business", banner: "" },
-  { title: "Erection All Risk Insurance", icon: Building2, href: "/services/general-insurance/business", banner: "" },
-  { title: "Contractors All Risk", icon: HardHat, href: "/services/general-insurance/business/contractors-all-risk", banner: "" },
-  { title: "Workmen Compensation", icon: UserCog, href: "/services/general-insurance/business/workmen-compensation", banner: "" },
-  { title: "Marine Cargo Insurance", icon: Ship, href: "/services/general-insurance/business", banner: "" },
-  { title: "CPM Insurance", icon: Factory, href: "/services/general-insurance/business/contractors-plant-machinery", banner: "" },
+const defaultBusinessInsurance = [
+  { title: "D&O Insurance", icon: "Briefcase", href: "/services/general-insurance/business", banner: "" },
+  { title: "Erection All Risk Insurance", icon: "Building2", href: "/services/general-insurance/business", banner: "" },
+  { title: "Contractors All Risk", icon: "HardHat", href: "/services/general-insurance/business/contractors-all-risk", banner: "" },
+  { title: "Workmen Compensation", icon: "UserCog", href: "/services/general-insurance/business/workmen-compensation", banner: "" },
+  { title: "Marine Cargo Insurance", icon: "Ship", href: "/services/general-insurance/business", banner: "" },
+  { title: "CPM Insurance", icon: "Factory", href: "/services/general-insurance/business/contractors-plant-machinery", banner: "" },
 ];
 
-const travelProperty = [
-  { title: "International Travel", icon: Plane, href: "/services/general-insurance/travel/international", banner: "Starting ₹225" },
-  { title: "Student Travel", icon: GraduationCap, href: "/services/general-insurance/travel", banner: "Up to $1M SI" },
-  { title: "Property", icon: Building, href: "/services/general-insurance/home/bharat-griha-raksha", banner: "" },
-  { title: "Home", icon: Home, href: "/services/general-insurance/home", banner: "Starting ₹150/year*" },
-  { title: "Shop", icon: Store, href: "/services/general-insurance/business", banner: "" },
-  { title: "Fire", icon: Flame, href: "/services/general-insurance/home/bharat-griha-raksha", banner: "" },
+const defaultTravelProperty = [
+  { title: "International Travel", icon: "Plane", href: "/services/general-insurance/travel/international", banner: "Starting ₹225" },
+  { title: "Student Travel", icon: "GraduationCap", href: "/services/general-insurance/travel", banner: "Up to $1M SI" },
+  { title: "Property", icon: "Building", href: "/services/general-insurance/home/bharat-griha-raksha", banner: "" },
+  { title: "Home", icon: "Home", href: "/services/general-insurance/home", banner: "Starting ₹150/year*" },
+  { title: "Shop", icon: "Store", href: "/services/general-insurance/business", banner: "" },
+  { title: "Fire", icon: "Flame", href: "/services/general-insurance/home/bharat-griha-raksha", banner: "" },
 ];
 
-const ServiceCategory = ({ title, items, delayOffset = 0 }: { title: string, items: any[], delayOffset?: number }) => (
+const ServiceCategory = ({ title, items, delayOffset = 0, isEditMode, onTitleChange }: { title: string, items: any[], delayOffset?: number, isEditMode?: boolean, onTitleChange?: (v: string) => void }) => (
   <div className="mb-12 flex flex-col items-center">
-    <h3 className="text-[18px] font-bold text-slate-800 mb-6 text-center">{title}</h3>
+    <h3 
+      key={`cat-${title}`}
+      className={`text-[18px] font-bold text-slate-800 mb-6 text-center ${isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-slate-800 cursor-text' : ''}`}
+      contentEditable={isEditMode}
+      suppressContentEditableWarning
+      onBlur={(e) => onTitleChange?.(e.currentTarget.textContent || title)}
+    >
+      {title}
+    </h3>
     <div className="flex flex-wrap justify-center gap-3 sm:gap-5 w-full max-w-5xl">
       {items.map((item, i) => (
         <FadeIn key={item.title} delay={delayOffset + (i * 0.05)} className="w-[calc(50%-0.375rem)] sm:w-auto">
@@ -55,15 +64,17 @@ const ServiceCategory = ({ title, items, delayOffset = 0 }: { title: string, ite
               
               {/* Icon Container */}
               <div className="relative mb-3 flex items-center justify-center h-12">
-                <item.icon 
+                <DynamicIcon 
+                  name={item.icon}
                   className="w-8 h-8 text-slate-700 group-hover:text-[#ffb800] transition-colors duration-300" 
                   strokeWidth={1.5}
                 />
               </div>
               
-              <span className="text-[13px] font-semibold text-slate-700 text-center px-2 leading-tight group-hover:text-[#ffb800] transition-colors">
-                {item.title}
-              </span>
+              <span 
+                className="text-[13px] font-semibold text-slate-700 text-center px-2 leading-tight group-hover:text-[#ffb800] transition-colors"
+                dangerouslySetInnerHTML={{ __html: item.title }}
+              />
 
               {item.banner && (
                 <div className="absolute bottom-0 left-0 w-full bg-[#fff4d1] py-1.5 text-center">
@@ -80,7 +91,17 @@ const ServiceCategory = ({ title, items, delayOffset = 0 }: { title: string, ite
   </div>
 );
 
-export function RetailServicesPreview() {
+export function RetailServicesPreview({ 
+  content,
+  isEditMode,
+  isActive,
+  onContentChange
+}: { 
+  content?: any;
+  isEditMode?: boolean;
+  isActive?: boolean;
+  onContentChange?: (content: any) => void;
+}) {
   return (
     <section id="general-insurance" className="relative py-20 bg-white border-t border-slate-100">
       <div className="mx-auto max-w-[1400px] px-6">
@@ -100,10 +121,34 @@ export function RetailServicesPreview() {
         </div>
 
         {/* Services Grid Categories */}
-        <ServiceCategory title="Motor Insurance" items={motorInsurance} delayOffset={0} />
-        <ServiceCategory title="Health Insurance" items={healthInsurance} delayOffset={0.2} />
-        <ServiceCategory title="Business Insurance" items={businessInsurance} delayOffset={0.4} />
-        <ServiceCategory title="Travel & Property" items={travelProperty} delayOffset={0.6} />
+        <ServiceCategory 
+          title={content?.cat1 || "Motor Insurance"} 
+          items={content?.motorInsurance || defaultMotorInsurance} 
+          delayOffset={0} 
+          isEditMode={isEditMode}
+          onTitleChange={(v) => onContentChange?.({ ...content, cat1: v })}
+        />
+        <ServiceCategory 
+          title={content?.cat2 || "Health Insurance"} 
+          items={content?.healthInsurance || defaultHealthInsurance} 
+          delayOffset={0.2} 
+          isEditMode={isEditMode}
+          onTitleChange={(v) => onContentChange?.({ ...content, cat2: v })}
+        />
+        <ServiceCategory 
+          title={content?.cat3 || "Business Insurance"} 
+          items={content?.businessInsurance || defaultBusinessInsurance} 
+          delayOffset={0.4} 
+          isEditMode={isEditMode}
+          onTitleChange={(v) => onContentChange?.({ ...content, cat3: v })}
+        />
+        <ServiceCategory 
+          title={content?.cat4 || "Travel & Property"} 
+          items={content?.travelProperty || defaultTravelProperty} 
+          delayOffset={0.6} 
+          isEditMode={isEditMode}
+          onTitleChange={(v) => onContentChange?.({ ...content, cat4: v })}
+        />
 
       </div>
     </section>

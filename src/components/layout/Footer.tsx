@@ -148,9 +148,16 @@ const FooterServiceDropdown = ({ link }: { link: any }) => {
   );
 };
 
+import { usePathname } from 'next/navigation';
+
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
+  const pathname = usePathname();
+
+  if (pathname.startsWith('/admin') || pathname.startsWith('/login') || pathname.startsWith('/register')) {
+    return null;
+  }
 
   return (
     <footer ref={footerRef} className="relative bg-background text-white pt-10 lg:pt-16 pb-8 border-t border-border">

@@ -6,16 +6,15 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import * as Icons from "lucide-react";
 import { siteConfig } from "@/lib/content/company";
-import { footerNavigation } from "@/lib/content/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import ShinyText from "@/components/ui/ShinyText";
 
 const iconMap: Record<string, any> = { Shield: Icons.Shield, PiggyBank: Icons.PiggyBank, Coins: Icons.Coins, Users: Icons.Users, FileText: Icons.FileText };
 
-const HeaderMegaMenu = React.memo(({ link, isActive, setMobileOpen }: any) => {
+const HeaderMegaMenu = React.memo(({ link, isActive, setMobileOpen, footerNav }: any) => {
   const [isOpen, setIsOpen] = useState(false);
-  const serviceData = footerNavigation.services.find(s => s.label.toLowerCase() === link.name.toLowerCase()) as any;
+  const serviceData = (footerNav?.services || []).find((s: any) => s.label.toLowerCase() === link.name.toLowerCase()) as any;
   const [activeChild, setActiveChild] = useState<any>(serviceData?.children?.[0]);
 
   return (
@@ -249,7 +248,7 @@ const HeaderSimpleDropdown = React.memo(({ link, options, isActive, setMobileOpe
 });
 HeaderSimpleDropdown.displayName = "HeaderSimpleDropdown";
 
-export function Header() {
+export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -273,7 +272,12 @@ export function Header() {
     };
   }, [mobileOpen]);
 
-  const navLinks = [
+  if (pathname.startsWith('/admin') || pathname.startsWith('/login') || pathname.startsWith('/register')) {
+    return null;
+  }
+
+  // Use CMS mainNav or fallback
+  const navLinks = mainNav || [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Life insurance", path: "/services/life-insurance" },
@@ -319,25 +323,29 @@ export function Header() {
             </button>
           </div>
 
-          {navLinks.map((link) => {
+          {navLinks.map((link: any) => {
             const isActive = pathname === link.path || (pathname.startsWith(link.path) && link.path !== "/");
             
-            if (link.name === "General insurance" || link.name === "Life insurance") {
-              return <HeaderMegaMenu key={link.path} link={link} isActive={isActive} setMobileOpen={setMobileOpen} />;
+            // Map mainNav label/path to standard name/path if they used label/href in CMS
+            const linkName = link.name || link.label;
+            const linkPath = link.path || link.href;
+
+            if (linkName === "General insurance" || linkName === "Life insurance") {
+              return <HeaderMegaMenu key={linkPath} link={{...link, name: linkName, path: linkPath}} isActive={isActive} setMobileOpen={setMobileOpen} footerNav={footerNav} />;
             }
 
-            if (link.name === "Claims Consultancy") {
+            if (linkName === "Claims Consultancy") {
               const options = [
                 { name: "Claim Services", path: "/services/claims" },
                 { name: "Consulting Services", path: "/services/consulting" }
               ];
-              return <HeaderSimpleDropdown key={link.name} link={link} options={options} isActive={isActive} setMobileOpen={setMobileOpen} />;
+              return <HeaderSimpleDropdown key={linkName} link={{...link, name: linkName, path: linkPath}} options={options} isActive={isActive} setMobileOpen={setMobileOpen} />;
             }
             
             return (
               <Link
-                key={link.path}
-                href={link.path}
+                key={linkPath}
+                href={linkPath}
                 className={`font-semibold whitespace-nowrap px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
                   isActive 
                     ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] lg:border-b-[3px] lg:border-[#ffb800]' 
@@ -345,7 +353,7 @@ export function Header() {
                 }`}
                 onClick={() => setMobileOpen(false)}
               >
-                {link.name}
+                {linkName}
               </Link>
             );
           })}

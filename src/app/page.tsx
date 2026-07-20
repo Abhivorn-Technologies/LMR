@@ -1,33 +1,46 @@
-import { Hero } from "@/components/sections/home/Hero";
-import dynamic from "next/dynamic";
-
-const StatsBar = dynamic(() => import("@/components/sections/home/StatsBar").then(mod => mod.StatsBar), { ssr: true });
-const ServicesPreview = dynamic(() => import("@/components/sections/home/ServicesPreview").then(mod => mod.ServicesPreview), { ssr: true });
-const RetailServicesPreview = dynamic(() => import("@/components/sections/home/RetailServicesPreview").then(mod => mod.RetailServicesPreview), { ssr: true });
-const IndustriesPreview = dynamic(() => import("@/components/sections/home/IndustriesPreview").then(mod => mod.IndustriesPreview), { ssr: true });
-const WhyPreview = dynamic(() => import("@/components/sections/home/WhyPreview").then(mod => mod.WhyPreview), { ssr: true });
-const TrustMockupPreview = dynamic(() => import("@/components/sections/home/TrustMockupPreview").then(mod => mod.TrustMockupPreview), { ssr: true });
-const CompanyLogosMarquee = dynamic(() => import("@/components/sections/home/CompanyLogosMarquee").then(mod => mod.CompanyLogosMarquee), { ssr: true });
+// Components are now dynamically loaded by BlockRenderer
 import { createPageMetadata } from "@/lib/metadata";
-import { siteConfig } from "@/lib/content/company";
+import { getContent } from "@/services/contentService";
 
-export const metadata = createPageMetadata({
-  title: "Home",
-  description: siteConfig.description,
-  path: "/",
-});
+export async function generateMetadata() {
+  const siteConfig = await getContent('company:siteConfig', require('@/lib/content/company').siteConfig);
+  return await createPageMetadata({
+    title: "Home",
+    description: siteConfig.description,
+    path: "/",
+  });
+}
 
-export default function HomePage() {
+import { homeHeroContent } from '@/lib/content/home';
+import { checkIsAdmin } from '@/lib/auth';
+import { AdminEditOverlay } from '@/components/admin/AdminEditOverlay';
+import { BlockRenderer, BlockData } from '@/components/cms/BlockRenderer';
+
+export const dynamic = 'force-dynamic';
+
+export default async function HomePage() {
+  const pageData = await getContent('home:hero', { content: homeHeroContent });
+  const isAdmin = await checkIsAdmin();
+
+  // Safely upgrade old database entries that only had 'Hero' data
+  let blocks: BlockData[] = pageData?.blocks;
+  if (!blocks || !Array.isArray(blocks)) {
+    blocks = [
+      { type: 'Hero', content: pageData?.content || pageData || homeHeroContent },
+      { type: 'StatsBar' },
+      { type: 'ServicesPreview' },
+      { type: 'RetailServicesPreview' },
+      { type: 'IndustriesPreview' },
+      { type: 'WhyPreview' },
+      { type: 'TrustMockupPreview' },
+      { type: 'CompanyLogosMarquee' }
+    ];
+  }
+
   return (
     <>
-      <Hero />
-      <StatsBar />
-      <ServicesPreview />
-      <RetailServicesPreview />
-      <IndustriesPreview />
-      <WhyPreview />
-      <TrustMockupPreview />
-      <CompanyLogosMarquee />
+      <BlockRenderer blocks={blocks} />
+      {isAdmin && <AdminEditOverlay pageKey="home:hero" />}
     </>
   );
 }

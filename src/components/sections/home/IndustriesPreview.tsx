@@ -3,7 +3,17 @@ import Link from "next/link";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { industries } from "@/lib/content/industries";
 
-export function IndustriesPreview() {
+export function IndustriesPreview({ 
+  content,
+  isEditMode,
+  isActive,
+  onContentChange
+}: { 
+  content?: any;
+  isEditMode?: boolean;
+  isActive?: boolean;
+  onContentChange?: (content: any) => void;
+}) {
   return (
     <section className="relative overflow-hidden bg-[#f4f9f9] pt-24 md:pt-32 pb-24">
       <div className="relative mx-auto max-w-[1400px] px-6">
@@ -11,11 +21,21 @@ export function IndustriesPreview() {
         {/* Header Section */}
         <div className="flex flex-col items-center text-center gap-6 mb-16">
           <FadeIn className="max-w-3xl flex flex-col items-center">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#0c494f] mb-6">
-              Specialized <span className="relative inline-block">sector expertise<div className="absolute bottom-2 left-0 w-full h-[6px] bg-[#115E59]/20 -z-10 rounded-full" /></span>
+            <h2 
+              className={`text-4xl md:text-5xl font-extrabold text-[#0c494f] mb-6 ${isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-[#0c494f] cursor-text' : ''}`}
+              contentEditable={isEditMode}
+              suppressContentEditableWarning
+              onBlur={(e) => onContentChange?.({ ...content, title: e.currentTarget.textContent })}
+            >
+              {content?.title || "Specialized sector expertise"}
             </h2>
-            <p className="text-lg md:text-xl text-slate-500 font-medium leading-relaxed max-w-3xl">
-              Insurance programs meticulously tailored to your industry's exposures, compliance mandates, and operational environments.
+            <p 
+              className={`text-lg md:text-xl text-slate-500 font-medium leading-relaxed max-w-3xl ${isEditMode ? 'outline-none border border-dashed border-transparent hover:border-slate-500 p-1 -m-1 rounded cursor-text' : ''}`}
+              contentEditable={isEditMode}
+              suppressContentEditableWarning
+              onBlur={(e) => onContentChange?.({ ...content, description: e.currentTarget.textContent })}
+            >
+              {content?.description || "Insurance programs meticulously tailored to your industry's exposures, compliance mandates, and operational environments."}
             </p>
           </FadeIn>
         </div>
@@ -54,11 +74,23 @@ export function IndustriesPreview() {
         {/* Bottom CTA Banner */}
         <FadeIn delay={0.4}>
           <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
-            <h4 className="text-lg md:text-xl font-bold text-[#0c494f] text-center sm:text-left">
-              Don't see your industry listed? We probably cover it too.
+            <h4 
+              className={`text-lg md:text-xl font-bold text-[#0c494f] text-center sm:text-left ${isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-[#0c494f] cursor-text' : ''}`}
+              contentEditable={isEditMode}
+              suppressContentEditableWarning
+              onBlur={(e) => onContentChange?.({ ...content, ctaText: e.currentTarget.textContent })}
+            >
+              {content?.ctaText || "Don't see your industry listed? We probably cover it too."}
             </h4>
             <Link href="/contact" className="shrink-0 bg-[#115E59] hover:bg-[#0c494f] text-white font-bold py-4 px-8 rounded-xl transition-colors shadow-lg shadow-[#115E59]/20 flex items-center justify-center">
-              Consult With Our Experts <span className="ml-2 font-normal">→</span>
+              <span
+                contentEditable={isEditMode}
+                suppressContentEditableWarning
+                className={isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-white cursor-text' : ''}
+                onBlur={(e) => onContentChange?.({ ...content, ctaButtonText: e.currentTarget.textContent })}
+              >
+                {content?.ctaButtonText || "Consult With Our Experts"}
+              </span> <span className="ml-2 font-normal">→</span>
             </Link>
           </div>
         </FadeIn>

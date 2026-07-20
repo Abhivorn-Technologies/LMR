@@ -140,13 +140,27 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  background-color: #cbd5e1;
+  border-radius: 20px;
+}
+
+/* React Quill Editor Overrides */
+.react-quill-container .ql-container {
+  height: 200px !important;
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+.react-quill-container .ql-editor {
+  min-height: 100%;
+}
+.react-quill-container .ql-toolbar {
+  background-color: #f8fafc;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {

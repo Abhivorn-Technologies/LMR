@@ -45,15 +45,21 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
+import { getContent } from "@/services/contentService";
+import { footerNavigation, mainNavigation } from "@/lib/content/navigation";
+
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const footerNavData = await getContent('nav:footer', footerNavigation);
+  const mainNavData = await getContent('nav:main', mainNavigation);
+
   return (
     <html lang="en" className={`${inter.variable} ${dmSans.variable} overflow-x-hidden`}>
       <body className="min-h-screen bg-background antialiased overflow-x-hidden">
         <LenisProvider>
           <ScrollTriggerProvider>
-            <Header />
+            <Header footerNav={footerNavData} mainNav={mainNavData} />
             <main>{children}</main>
             <Footer />
           </ScrollTriggerProvider>

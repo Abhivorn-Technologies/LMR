@@ -29,10 +29,22 @@ const inquiryOptions = [
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-export function Hero() {
+export function Hero({ 
+  content,
+  isEditMode,
+  isActive,
+  onContentChange
+}: { 
+  content?: any;
+  isEditMode?: boolean;
+  isActive?: boolean;
+  onContentChange?: (content: any) => void;
+}) {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [wordIndex, setWordIndex] = useState(0);
-  const words = ["tomorrow.", "today.", "future.", "business.", "legacy."];
+  
+  // Use CMS data or fallback to defaults if content is missing
+  const words = content?.subtitleWords || ["tomorrow.", "today.", "future.", "business.", "legacy."];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -111,25 +123,55 @@ export function Hero() {
               className="w-full"
             >
               <div className="flex flex-col mb-5">
-                <SplitText 
-                  text="Insurance advisory"
-                  className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight pb-2"
-                  delay={50}
-                  animationFrom={{ opacity: 0, transform: 'translate3d(0,30px,0)' }}
-                  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-                  textAlign="left"
-                />
-                <div className="flex flex-wrap items-baseline gap-x-3">
+                {isEditMode ? (
+                  <h1 
+                    className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight pb-2 outline-none border-b border-dashed border-transparent hover:border-[#0ea5e9] cursor-text"
+                    contentEditable
+                    suppressContentEditableWarning
+                    onBlur={(e) => onContentChange?.({ ...content, title: e.currentTarget.textContent })}
+                  >
+                    {content?.title || "Insurance advisory"}
+                  </h1>
+                ) : (
                   <SplitText 
-                    text="built on"
-                    className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight"
+                    text={content?.title || "Insurance advisory"}
+                    className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight pb-2"
                     delay={50}
                     animationFrom={{ opacity: 0, transform: 'translate3d(0,30px,0)' }}
                     animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
                     textAlign="left"
                   />
+                )}
+                <div className="flex flex-wrap items-baseline gap-x-3">
+                  {isEditMode ? (
+                    <span 
+                      className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight outline-none border-b border-dashed border-transparent hover:border-[#0ea5e9] cursor-text"
+                      contentEditable
+                      suppressContentEditableWarning
+                      onBlur={(e) => onContentChange?.({ ...content, titleHighlight: e.currentTarget.textContent })}
+                    >
+                      {content?.titleHighlight || "built on"}
+                    </span>
+                  ) : (
+                    <SplitText 
+                      text={content?.titleHighlight || "built on"}
+                      className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0f172a] leading-[1.15] tracking-tight"
+                      delay={50}
+                      animationFrom={{ opacity: 0, transform: 'translate3d(0,30px,0)' }}
+                      animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                      textAlign="left"
+                    />
+                  )}
                   <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ type: "spring", damping: 15, delay: 0.8 }} className="relative inline-block text-[#0f172a] whitespace-nowrap text-4xl sm:text-5xl lg:text-[4rem] font-extrabold leading-[1.15] tracking-tight">
-                    trust<span className="text-[#ffb800]">.</span>
+                    <span
+                      contentEditable={isEditMode}
+                      suppressContentEditableWarning
+                      className={isEditMode ? "outline-none border-b border-dashed border-transparent hover:border-[#ffb800] cursor-text" : ""}
+                      onBlur={(e) => onContentChange?.({ ...content, trustWord: e.currentTarget.textContent })}
+                    >
+                      {content?.trustWord || "trust"}
+                    </span>
+                    <span className="text-[#ffb800]">.</span>
                     <motion.svg 
                       className="absolute -bottom-1 left-0 w-full h-[10px] overflow-visible" 
                       viewBox="0 0 100 10" 
@@ -151,7 +193,14 @@ export function Hero() {
               </div>
               
               <div className="flex items-center text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#334155] mb-8 h-[48px] overflow-hidden">
-                <span>Securing your&nbsp;</span>
+                <span
+                  contentEditable={isEditMode}
+                  suppressContentEditableWarning
+                  className={isEditMode ? "outline-none border-b border-dashed border-transparent hover:border-[#334155] cursor-text" : ""}
+                  onBlur={(e) => onContentChange?.({ ...content, subtitleStart: e.currentTarget.textContent })}
+                >
+                  {content?.subtitleStart || "Securing your "}
+                </span>
                 <div className="relative inline-block h-[48px] w-[200px]">
                   <AnimatePresence mode="popLayout">
                     <motion.span
@@ -168,7 +217,12 @@ export function Hero() {
                 </div>
               </div>
               <p className="text-base md:text-lg text-[#64748b] font-medium leading-relaxed max-w-[550px] mb-8">
-                Insurance broking built on <ShinyText text="expertise, integrity, and client focus" color="#10b981" shineColor="#ffb800" className="font-bold" speed={4} /> — IRDAI CoR No. 116, since 2002.
+                {content?.description ? (
+                   // If CMS text contains highlighting syntax or we just render it plain
+                   <span>{content.description}</span>
+                ) : (
+                  <>Insurance broking built on <ShinyText text="expertise, integrity, and client focus" color="#10b981" shineColor="#ffb800" className="font-bold" speed={4} /> — IRDAI CoR No. 116, since 2002.</>
+                )}
               </p>
             </motion.div>
 
@@ -209,11 +263,11 @@ export function Hero() {
               }}
               className="space-y-3.5"
             >
-              {[
+              {(content?.checkmarks || [
                 "Composite broker — one advisory relationship for every line",
                 "Endorsements & new quotes handled with speed and efficiency",
                 "Domestic & international insurer and reinsurer market access"
-              ].map((item, idx) => (
+              ]).map((item: string, idx: number) => (
                 <motion.li 
                   key={idx} 
                   variants={{
@@ -307,8 +361,8 @@ export function Hero() {
                     exit={{ opacity: 0 }}
                     className="flex flex-col w-full h-full"
                   >
-                    <h3 className="text-[22px] font-extrabold text-[#0f172a] mb-1">Get General Insurance Advisory</h3>
-                    <p className="text-[13px] text-[#64748b] mb-5">Share your details — our broking expert will call you back.</p>
+                    <h3 className="text-[22px] font-extrabold text-[#0f172a] mb-1">{content?.contactFormHeadline || "Get General Insurance Advisory"}</h3>
+                    <p className="text-[13px] text-[#64748b] mb-5">{content?.contactFormSubheadline || "Share your details — our broking expert will call you back."}</p>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
                       <div>

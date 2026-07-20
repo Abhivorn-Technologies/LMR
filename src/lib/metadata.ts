@@ -1,5 +1,6 @@
 import { type Metadata } from "next";
-import { siteConfig } from "@/lib/content/company";
+import { getContent } from "@/services/contentService";
+import { siteConfig as defaultSiteConfig } from "@/lib/content/company";
 
 interface PageMetaOptions {
   title: string;
@@ -7,11 +8,12 @@ interface PageMetaOptions {
   path?: string;
 }
 
-export function createPageMetadata({
+export async function createPageMetadata({
   title,
   description,
   path = "",
-}: PageMetaOptions): Metadata {
+}: PageMetaOptions): Promise<Metadata> {
+  const siteConfig = await getContent('company:siteConfig', defaultSiteConfig);
   const url = `${siteConfig.url}${path}`;
 
   return {
