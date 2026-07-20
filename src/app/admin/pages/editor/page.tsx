@@ -312,7 +312,7 @@ function ContentEditorContent() {
             
             <iframe
               ref={iframeRef}
-              src={`http://localhost:3000${previewUrl}`}
+              src={previewUrl}
               className="w-full flex-1 border-0"
               title="Live Preview"
             />
