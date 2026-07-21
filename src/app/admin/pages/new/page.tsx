@@ -9,6 +9,26 @@ export default function NewPageCreator() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [title, setTitle] = useState('');
+  const [slug, setSlug] = useState('');
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value;
+    setTitle(newTitle);
+    
+    if (newTitle.trim() === '') {
+      setSlug('');
+      return;
+    }
+    
+    const generatedSlug = '/' + newTitle
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+      
+    setSlug(generatedSlug);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,6 +90,8 @@ export default function NewPageCreator() {
               name="title"
               type="text" 
               required
+              value={title}
+              onChange={handleTitleChange}
               placeholder="e.g. Our New Campaign"
               className="w-full px-4 py-3 text-gray-900 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#00A3A0]/20 focus:border-[#00A3A0] transition-colors"
             />
@@ -85,6 +107,8 @@ export default function NewPageCreator() {
                 name="slug"
                 type="text" 
                 required
+                value={slug}
+                onChange={(e) => setSlug(e.target.value)}
                 placeholder="/our-new-campaign"
                 className="flex-1 px-4 py-3 text-gray-900 rounded-r-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#00A3A0]/20 focus:border-[#00A3A0] transition-colors font-mono text-sm"
               />
