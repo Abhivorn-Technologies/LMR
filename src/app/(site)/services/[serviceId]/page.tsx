@@ -19,17 +19,34 @@ const getSubServiceImage = (id: string) => {
   }
 };
 
+const DEDICATED_ROUTES = [
+  "general-insurance", 
+  "life-insurance", 
+  "risk-management", 
+  "claims", 
+  "claim-services", 
+  "consulting", 
+  "reinsurance"
+];
+
 export async function generateStaticParams() {
-  return services.map((s) => ({
-    serviceId: s.id,
-  }));
+  return services
+    .filter((s) => !DEDICATED_ROUTES.includes(s.id))
+    .map((s) => ({
+      serviceId: s.id,
+    }));
 }
 
 export default async function ServiceDetail({ params }: { params: Promise<{ serviceId: string }> }) {
   const resolvedParams = await params;
+  
+  if (DEDICATED_ROUTES.includes(resolvedParams.serviceId)) {
+    notFound();
+  }
+
   const service = services.find((s) => s.id === resolvedParams.serviceId);
 
-  if (!service || resolvedParams.serviceId === "life-insurance" || resolvedParams.serviceId === "general-insurance") {
+  if (!service) {
     notFound();
   }
 
