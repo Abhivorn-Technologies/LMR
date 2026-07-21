@@ -331,25 +331,29 @@ export default function AdminDashboardHome() {
         </div>
 
         {/* Dynamic Pagination Footer */}
-        <div className="px-8 py-6 mt-2 border-t border-gray-100 bg-white flex flex-col items-center justify-center gap-3">
-          <div className="flex items-center gap-1">
+        <div className="px-8 py-5 mt-2 border-t border-gray-100 bg-white flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
+          <p className="text-sm font-medium text-gray-500">
+            Showing <span className="font-semibold text-gray-700">{currentSections.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</span> to <span className="font-semibold text-gray-700">{Math.min(currentPage * itemsPerPage, filteredSections.length)}</span> of <span className="font-semibold text-gray-700">{filteredSections.length}</span> records
+          </p>
+          
+          <div className="flex items-center gap-2">
             <button 
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={currentPage === 1 || totalPages === 0}
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
+              className="p-1.5 rounded-lg border border-gray-200 text-gray-500 hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             
-            <div className="flex items-center gap-1 px-1">
+            <div className="flex items-center gap-1.5 px-2">
               {getPaginationGroup().map((page, index) => (
                 <button
                   key={index}
                   onClick={() => typeof page === 'number' ? setCurrentPage(page) : null}
                   disabled={page === '...'}
-                  className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-all focus:outline-none focus:ring-0 ${
+                  className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-semibold transition-all focus:outline-none focus:ring-0 ${
                     page === currentPage 
-                      ? 'bg-[#0d9488] text-white' 
+                      ? 'bg-[#0d9488] text-white shadow-sm' 
                       : page === '...'
                         ? 'text-gray-400 cursor-default'
                         : 'text-gray-600 hover:bg-gray-100'
@@ -363,16 +367,11 @@ export default function AdminDashboardHome() {
             <button 
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages || totalPages === 0}
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
+              className="p-1.5 rounded-lg border border-gray-200 text-gray-500 hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
-          
-          <p className="text-sm font-medium text-gray-500">
-            Showing {currentSections.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-
-            {Math.min(currentPage * itemsPerPage, filteredSections.length)} of {filteredSections.length} records
-          </p>
         </div>
       </div>
     </div>
