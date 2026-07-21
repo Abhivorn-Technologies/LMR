@@ -51,16 +51,16 @@ export function WhyPreview({
         </div>
 
         {/* Illustrations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 text-center">
+        <div className="flex flex-wrap justify-center gap-12 md:gap-16 text-center">
           {points.map((point: any, i: number) => (
-            <FadeIn key={point.title} delay={i * 0.2}>
-              <div className="flex flex-col items-center">
+            <FadeIn key={point.title || i} delay={i * 0.2}>
+              <div className="flex flex-col items-center w-full sm:w-[320px]">
                 <div className="relative w-64 h-64 mb-6">
                   {/* Soft background shape */}
                   <div className="absolute inset-4 bg-slate-50 rounded-full scale-105" />
                   <Image 
                     src={point.image || defaultPoints[i]?.image || '/images/illustrations/rocket_claim.png'}
-                    alt={point.title}
+                    alt={point.title || "Illustration"}
                     fill
                     className="object-contain relative z-10"
                     sizes="(max-width: 768px) 100vw, 33vw"
