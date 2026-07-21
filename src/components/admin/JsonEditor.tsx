@@ -1,7 +1,5 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, ChevronDown, ChevronRight, ArrowLeft, Settings2, GripVertical } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronRight, ArrowLeft, Settings2, GripVertical, AlertTriangle } from 'lucide-react';
 import { ComponentPicker } from './ComponentPicker';
 import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
@@ -51,6 +49,14 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
   const [pickerOpen, setPickerOpen] = useState(false);
   const [activeBlockIndex, setActiveBlockIndex] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  } | null>(null);
+
   const type = Array.isArray(value) ? 'array' : typeof value;
 
   // Format label: camelCase to Title Case
@@ -96,6 +102,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
       if (!file) return;
 
       setIsUploading(true);
+      setUploadError(null);
       const formData = new FormData();
       formData.append('file', file);
 
@@ -105,11 +112,11 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
         if (json.success) {
           onChange(json.url);
         } else {
-          alert('Upload failed: ' + json.error);
+          setUploadError(json.error || 'Upload failed');
         }
       } catch (err) {
         console.error(err);
-        alert('Upload failed. Ensure the image is not too large.');
+        setUploadError('Upload failed. Ensure the image is not too large.');
       } finally {
         setIsUploading(false);
       }
@@ -363,11 +370,16 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
-                        if(confirm('Are you sure you want to delete this section?')) {
-                          const newArr = [...value];
-                          newArr.splice(index, 1);
-                          onChange(newArr);
-                        }
+                        setDeleteConfirm({
+                          isOpen: true,
+                          title: 'Delete Section?',
+                          message: `Are you sure you want to delete this ${item?.type || 'section'}?`,
+                          onConfirm: () => {
+                            const newArr = [...value];
+                            newArr.splice(index, 1);
+                            onChange(newArr);
+                          }
+                        });
                       }}
                       className="p-1.5 text-red-500 bg-red-50 hover:bg-red-100 rounded-md transition-colors"
                       title="Remove section"
@@ -380,9 +392,16 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                     <div className="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 z-10">
                       <button 
                         onClick={() => {
-                          const newArr = [...value];
-                          newArr.splice(index, 1);
-                          onChange(newArr);
+                          setDeleteConfirm({
+                            isOpen: true,
+                            title: 'Remove Item?',
+                            message: 'Are you sure you want to remove this item?',
+                            onConfirm: () => {
+                              const newArr = [...value];
+                              newArr.splice(index, 1);
+                              onChange(newArr);
+                            }
+                          });
                         }}
                         className="p-1.5 text-red-500 bg-white shadow hover:bg-red-50 rounded-md border border-gray-100"
                         title="Remove item"
@@ -446,6 +465,36 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                 }}
               />
             )}
+          </div>
+        )}
+
+        {/* Custom Confirmation Modal */}
+        {deleteConfirm?.isOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 border border-gray-100 transform transition-all scale-100 text-center" onClick={(e) => e.stopPropagation()}>
+              <div className="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-4 mx-auto">
+                <AlertTriangle size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">{deleteConfirm.title}</h3>
+              <p className="text-sm text-gray-500 mb-6">{deleteConfirm.message}</p>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setDeleteConfirm(null)}
+                  className="flex-1 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-xl transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    deleteConfirm.onConfirm();
+                    setDeleteConfirm(null);
+                  }}
+                  className="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl shadow-sm transition-colors"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
