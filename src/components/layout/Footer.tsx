@@ -277,12 +277,12 @@ export function Footer() {
             ].map((item, i) => (
               <li 
                 key={i} 
-                className="flex items-start gap-4 text-[#c4e0e6] p-2 -ml-2 rounded-lg cursor-default transition-colors duration-300 group hover:bg-white/5 hover:translate-x-1"
+                className="flex items-start gap-3.5 text-[#c4e0e6] p-2 -ml-2 rounded-lg cursor-default transition-colors duration-300 group hover:bg-white/5 hover:translate-x-1"
               >
-                <div className="w-8 h-8 rounded-full bg-[#00E5FF]/10 flex items-center justify-center text-[#00E5FF] group-hover:bg-[#00E5FF] group-hover:text-white transition-colors duration-300 shrink-0 mt-0.5">
-                  <item.icon size={14} className="group-hover:rotate-12 transition-transform duration-300" />
+                <div className="w-7 h-7 rounded-full bg-[#00E5FF]/10 flex items-center justify-center text-[#00E5FF] group-hover:bg-[#00E5FF] group-hover:text-white transition-colors duration-300 shrink-0">
+                  <item.icon size={13} className="group-hover:rotate-12 transition-transform duration-300" />
                 </div>
-                <span className="text-[0.85rem] md:text-[0.8rem] leading-tight">{item.text}</span>
+                <span className="text-[0.85rem] md:text-[0.8rem] leading-relaxed pt-0.5">{item.text}</span>
               </li>
             ))}
           </ul>
@@ -299,8 +299,11 @@ export function Footer() {
       >
         <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6 text-[0.85rem] text-slate-500">
           
-          <div>
+          <div className="flex items-center gap-2">
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+            <Link href="/login" className="ml-2 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
+              Admin
+            </Link>
           </div>
 
           <div className="flex items-center gap-1.5 flex-wrap">

@@ -9,8 +9,11 @@ import { getContent } from "@/services/contentService";
 import { BlockRenderer, BlockData } from "@/components/cms/BlockRenderer";
 
 // Catch-all dynamic route for any life-insurance product
-export default async function LifeInsuranceProductPage({ params }: { params: Promise<{ slug: string[] }> }) {
+export default async function LifeInsuranceProductPage({ params }: { params: Promise<{ slug?: string[] }> }) {
   const resolvedParams = await params;
+  if (!resolvedParams?.slug) {
+    notFound();
+  }
   const fullSlug = `life-insurance/${resolvedParams.slug.join("/")}`;
   
   // 1. Try to fetch from Visual Editor Database FIRST!

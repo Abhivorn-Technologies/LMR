@@ -2,6 +2,7 @@ import React from "react";
 import { createPageMetadata } from "@/lib/metadata";
 import { getContent } from "@/services/contentService";
 import { BlockRenderer } from "@/components/cms/BlockRenderer";
+import { aboutPageContent } from '@/lib/content/about';
 
 export const metadata = createPageMetadata({
   title: "About Us | LMB Insurance Brokers",
@@ -10,8 +11,6 @@ export const metadata = createPageMetadata({
 });
 
 export const dynamic = 'force-dynamic';
-
-import { aboutPageContent } from '@/lib/content/about';
 
 export default async function AboutPage() {
   const pageData = await getContent('/about');

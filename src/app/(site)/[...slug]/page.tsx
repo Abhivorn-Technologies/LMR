@@ -4,22 +4,23 @@ import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }) {
   const resolvedParams = await params;
+  if (!resolvedParams?.slug) {
+    return { title: 'LMB Insurance Brokers' };
+  }
   const decodedSlug = resolvedParams.slug.map(s => decodeURIComponent(s));
-  const fullPath = '/' + decodedSlug.join('/');
   
   return {
     title: `${decodedSlug[decodedSlug.length - 1] || 'Page'} | LMB Insurance Brokers`,
   };
-
-  return {
-    title: 'LMB Insurance Brokers',
-  };
 }
 
-export default async function DynamicCatchAllPage({ params }: { params: Promise<{ slug: string[] }> }) {
+export default async function DynamicCatchAllPage({ params }: { params: Promise<{ slug?: string[] }> }) {
   const resolvedParams = await params;
+  if (!resolvedParams?.slug) {
+    notFound();
+  }
   const decodedSlug = resolvedParams.slug.map(s => decodeURIComponent(s));
   const fullPath = '/' + decodedSlug.join('/');
   const key = `page:${decodedSlug.join(':')}`;

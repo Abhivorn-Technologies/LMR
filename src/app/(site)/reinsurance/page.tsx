@@ -2,6 +2,7 @@ import React from "react";
 import { createPageMetadata } from "@/lib/metadata";
 import { getContent } from "@/services/contentService";
 import { BlockRenderer } from "@/components/cms/BlockRenderer";
+import { reinsuranceContent } from '@/lib/content/pages';
 
 export const metadata = createPageMetadata({
   title: "Reinsurance",
@@ -11,8 +12,6 @@ export const metadata = createPageMetadata({
 });
 
 export const dynamic = 'force-dynamic';
-
-import { reinsuranceContent } from '@/lib/content/pages';
 
 export default async function ReinsurancePage() {
   const pageData = await getContent('/reinsurance');

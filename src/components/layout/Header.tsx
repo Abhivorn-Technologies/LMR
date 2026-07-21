@@ -24,10 +24,10 @@ const HeaderMegaMenu = React.memo(({ link, isActive, setMobileOpen, footerNav }:
       onMouseLeave={() => setIsOpen(false)}
     >
       <button
-        className={`font-semibold whitespace-nowrap flex items-center px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
+        className={`group font-semibold whitespace-nowrap flex items-center px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] 2xl:text-[15px] lg:px-1 xl:px-1 relative py-1 ${
           isActive 
-            ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] lg:border-b-[3px] lg:border-[#ffb800]' 
-            : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors lg:border-b-[3px] lg:border-transparent'
+            ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a]' 
+            : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors'
         }`}
         onClick={(e) => {
           e.preventDefault();
@@ -40,6 +40,11 @@ const HeaderMegaMenu = React.memo(({ link, isActive, setMobileOpen, footerNav }:
       >
         {link.name}
         <Icons.ChevronDown size={14} className={`ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        {isActive ? (
+          <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#ffb800] max-lg:hidden" />
+        ) : (
+          <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-[#ffb800] transition-all duration-300 group-hover:w-full group-hover:left-0 max-lg:hidden" />
+        )}
       </button>
 
       <AnimatePresence>
@@ -204,10 +209,10 @@ const HeaderSimpleDropdown = React.memo(({ link, options, isActive, setMobileOpe
       onMouseLeave={() => setIsOpen(false)}
     >
       <button
-        className={`font-semibold whitespace-nowrap flex items-center px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
+        className={`group font-semibold whitespace-nowrap flex items-center px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] 2xl:text-[15px] lg:px-1 xl:px-1 relative py-1 ${
           isActive 
-            ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] lg:border-b-[3px] lg:border-[#ffb800]' 
-            : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors lg:border-b-[3px] lg:border-transparent'
+            ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a]' 
+            : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors'
         }`}
         onClick={() => {
           if (window.innerWidth < 1024) {
@@ -217,6 +222,11 @@ const HeaderSimpleDropdown = React.memo(({ link, options, isActive, setMobileOpe
       >
         {link.name}
         <Icons.ChevronDown size={14} className={`ml-1 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        {isActive ? (
+          <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#ffb800] max-lg:hidden" />
+        ) : (
+          <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-[#ffb800] transition-all duration-300 group-hover:w-full group-hover:left-0 max-lg:hidden" />
+        )}
       </button>
 
       <AnimatePresence>
@@ -304,9 +314,9 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
         onClick={handleCloseMobile}
       />
 
-      <div className="mx-auto max-w-[1600px] relative z-[40] flex justify-between items-center py-2 lg:py-3 px-6 xl:px-10">
+      <div className="mx-auto max-w-[1600px] relative z-[40] flex justify-between items-center py-2 lg:py-3 px-4 xl:px-8 2xl:px-10">
         <div className="flex-shrink-0 flex items-center">
-          <Link href="/" className="flex items-center h-10 md:h-12 w-[180px] md:w-[260px] relative shrink-0 ml-0">
+          <Link href="/" className="flex items-center h-10 md:h-12 w-[180px] md:w-[260px] lg:w-[160px] xl:w-[220px] 2xl:w-[260px] relative shrink-0 ml-0">
             <Image 
               src={siteConfig.logo} 
               alt={siteConfig.name} 
@@ -318,7 +328,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
           </Link>
         </div>
 
-        <div data-lenis-prevent="true" className={`relative z-10 flex-1 flex justify-center gap-4 xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[50] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:pt-6 max-lg:h-[100dvh] max-lg:pb-28 max-lg:w-[85%] max-lg:sm:w-[360px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto max-lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
+        <div data-lenis-prevent="true" className={`relative z-10 flex justify-end lg:justify-center gap-1.5 lg:gap-1 xl:gap-2 2xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[50] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:pt-6 max-lg:h-[100dvh] max-lg:pb-28 max-lg:w-[85%] max-lg:sm:w-[360px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto max-lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
           
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-4 pb-4 border-b border-slate-100">
@@ -353,21 +363,33 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
               <Link
                 key={linkPath}
                 href={linkPath}
-                className={`font-semibold whitespace-nowrap px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] relative py-1 ${
+                className={`group font-semibold whitespace-nowrap px-1 max-lg:px-6 max-lg:py-4 max-lg:w-full max-lg:text-left max-lg:mb-2 max-lg:text-[15px] lg:text-[13px] xl:text-[14px] 2xl:text-[15px] lg:px-1 xl:px-1 relative py-1 ${
                   isActive 
-                    ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] lg:border-b-[3px] lg:border-[#ffb800]' 
-                    : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors lg:border-b-[3px] lg:border-transparent'
+                    ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a]' 
+                    : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors'
                 }`}
                 onClick={handleCloseMobile}
               >
                 {linkName}
+                {isActive ? (
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#ffb800] max-lg:hidden" />
+                ) : (
+                  <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-[#ffb800] transition-all duration-300 group-hover:w-full group-hover:left-0 max-lg:hidden" />
+                )}
               </Link>
             );
           })}
 
         </div>
 
-        <div className="flex items-center gap-4 xl:gap-6">
+        <div className="flex items-center justify-end gap-2 xl:gap-4 shrink-0">
+          <Link 
+            href="/login" 
+            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 text-[#64748b] text-xs font-semibold hover:bg-[#ffb800] hover:text-white transition-all duration-300 border border-slate-200 shadow-sm"
+          >
+            <Icons.User size={14} />
+            Admin
+          </Link>
           <button className="lg:hidden text-slate-600 p-2 hover:bg-slate-100 rounded-lg transition-colors" onClick={() => setMobileOpen(true)}>
             <Icons.Menu size={28} />
           </button>
