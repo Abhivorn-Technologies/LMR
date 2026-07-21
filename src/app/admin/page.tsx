@@ -336,7 +336,7 @@ export default function AdminDashboardHome() {
             <button 
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={currentPage === 1 || totalPages === 0}
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -347,7 +347,7 @@ export default function AdminDashboardHome() {
                   key={index}
                   onClick={() => typeof page === 'number' ? setCurrentPage(page) : null}
                   disabled={page === '...'}
-                  className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-all ${
+                  className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-all focus:outline-none focus:ring-0 ${
                     page === currentPage 
                       ? 'bg-[#0d9488] text-white' 
                       : page === '...'
@@ -363,7 +363,7 @@ export default function AdminDashboardHome() {
             <button 
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages || totalPages === 0}
-              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
