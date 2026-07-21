@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/db';
 import Content from '@/models/Content';
 
@@ -55,6 +56,17 @@ export async function POST(request: Request) {
       { data },
       { new: true, upsert: true } // Create if doesn't exist
     );
+
+    // Revalidate the cache for Vercel production
+    if (key.startsWith('/')) {
+      revalidatePath(key);
+      revalidatePath(key, 'page'); // Just to be thorough
+    } else if (key.startsWith('page:')) {
+      // Revalidate catch-all slugs if they use the "page:" prefix format
+      const slugPath = key.replace('page:', '/').replace(/:/g, '/');
+      revalidatePath(slugPath);
+      revalidatePath(slugPath, 'page');
+    }
 
     return NextResponse.json({ success: true, data: updatedContent });
   } catch (error: any) {
