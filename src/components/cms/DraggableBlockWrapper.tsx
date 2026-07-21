@@ -6,11 +6,13 @@ import { Rnd } from 'react-rnd';
 export function DraggableBlockWrapper({ 
   children, 
   blockIndex, 
-  layout 
+  layout,
+  type
 }: { 
   children: React.ReactNode, 
   blockIndex: number,
-  layout?: { x: number, y: number, width: string | number, height: string | number }
+  layout?: { x: number, y: number, width: string | number, height: string | number },
+  type?: string
 }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [localLayout, setLocalLayout] = useState(layout || { x: 0, y: blockIndex * 200, width: '100%', height: 'auto' });
