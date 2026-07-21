@@ -325,38 +325,38 @@ function ContentEditorContent() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-gray-50">
-      <div className="flex-none flex items-center justify-between bg-white px-6 py-3 border-b border-gray-200 shadow-sm z-10">
-        <div className="flex items-center gap-6">
-          <Link href="/admin" className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-md transition-colors">
-            <ArrowLeft size={16} /> Back to Dashboard
+      <div className="flex-none flex items-center justify-between bg-white px-6 h-[72px] border-b border-gray-200 z-10">
+        <div className="flex items-center gap-4">
+          <Link href="/admin/pages" className="flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors" title="Back to Pages">
+            <ArrowLeft size={20} />
           </Link>
-          <div className="h-6 w-px bg-gray-200 hidden md:block"></div>
+          <div className="h-8 w-px bg-gray-200 hidden md:block"></div>
           <div>
-            <h1 className="text-lg font-bold text-gray-900 leading-tight">Visual Editor</h1>
-            <p className="text-xs text-[#00A3A0] font-mono">{key}</p>
+            <h1 className="text-lg font-bold text-gray-900 tracking-tight">Visual Editor</h1>
+            <p className="text-sm text-gray-500">{key}</p>
           </div>
         </div>
         
-        <div className="flex items-center gap-2">
-          <div className="flex items-center bg-gray-100 rounded-lg p-1 mr-4">
-            <button onClick={() => setPreviewWidth('mobile')} className={`p-1.5 rounded-md text-sm ${previewWidth === 'mobile' ? 'bg-white shadow-sm font-bold text-gray-900' : 'text-gray-500'}`}>Mobile</button>
-            <button onClick={() => setPreviewWidth('tablet')} className={`p-1.5 rounded-md text-sm ${previewWidth === 'tablet' ? 'bg-white shadow-sm font-bold text-gray-900' : 'text-gray-500'}`}>Tablet</button>
-            <button onClick={() => setPreviewWidth('desktop')} className={`p-1.5 rounded-md text-sm ${previewWidth === 'desktop' ? 'bg-white shadow-sm font-bold text-gray-900' : 'text-gray-500'}`}>Desktop</button>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center bg-gray-100/80 rounded-lg p-1 border border-gray-200/50">
+            <button onClick={() => setPreviewWidth('mobile')} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${previewWidth === 'mobile' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>Mobile</button>
+            <button onClick={() => setPreviewWidth('tablet')} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${previewWidth === 'tablet' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>Tablet</button>
+            <button onClick={() => setPreviewWidth('desktop')} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${previewWidth === 'desktop' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>Desktop</button>
           </div>
 
           {status && (
-            <div className={`flex items-center gap-2 text-sm font-medium px-3 py-1.5 rounded-lg ${status.type === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
-              {status.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+            <div className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg ${status.type === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
+              {status.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
               {status.msg}
             </div>
           )}
           <button 
             onClick={handleSave}
             disabled={loading || saving}
-            className="flex items-center gap-2 px-6 py-2 bg-[#00A3A0] hover:bg-[#008f8c] text-white font-semibold rounded-lg shadow-sm transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-6 py-2.5 bg-[#0d9488] hover:bg-[#0f766e] text-white font-semibold rounded-lg shadow-sm transition-all disabled:opacity-50"
           >
-            {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
-            {saving ? 'Saving...' : 'Save to Live Site'}
+            {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+            {saving ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </div>
@@ -370,7 +370,7 @@ function ContentEditorContent() {
           <div className="p-5 pb-32">
             {loading ? (
               <div className="flex flex-col items-center justify-center h-40">
-                <Loader2 size={32} className="animate-spin text-[#00A3A0] mb-3" />
+                <Loader2 size={32} className="animate-spin text-[#0d9488] mb-3" />
                 <p className="text-gray-500 text-sm font-medium">Loading schema...</p>
               </div>
             ) : data?._error === 'not_found' ? (
@@ -378,7 +378,7 @@ function ContentEditorContent() {
                 <AlertCircle size={48} className="text-red-400 mb-4" />
                 <h3 className="text-lg font-bold text-gray-800 mb-2">Page Not Found</h3>
                 <p className="text-gray-500 text-sm">This page has not been created yet in the database. Please use the "New Page" creator first.</p>
-                <Link href="/admin/pages/new" className="mt-6 px-4 py-2 bg-[#00A3A0] text-white rounded-lg text-sm font-semibold hover:bg-[#008f8c]">
+                <Link href="/admin/pages/new" className="mt-6 px-4 py-2 bg-[#0d9488] text-white rounded-lg text-sm font-semibold hover:bg-[#0f766e]">
                   Go to New Page Creator
                 </Link>
               </div>
@@ -388,37 +388,18 @@ function ContentEditorContent() {
           </div>
         </div>
 
-        <div className="flex-1 bg-gray-100 overflow-hidden flex flex-col items-center justify-center p-4">
+        <div className="flex-1 bg-gray-100 overflow-hidden flex flex-col items-center p-4 sm:p-6 lg:p-8">
           <div 
-            className="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ease-in-out border border-gray-200 flex flex-col relative group"
+            className="bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-300 ease-in-out border border-gray-200 flex flex-col"
             style={{ 
               width: previewWidth === 'mobile' ? '375px' : previewWidth === 'tablet' ? '768px' : '100%',
               height: '100%'
             }}
           >
-            {/* Outline highlight indicating WYSIWYG Mode */}
-            <div className="absolute inset-0 border-4 border-[#00A3A0]/20 pointer-events-none z-50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-start justify-end p-2">
-               <span className="bg-[#00A3A0] text-white text-xs font-bold px-2 py-1 rounded shadow">WYSIWYG CANVAS ACTIVE</span>
-            </div>
-
-            <div className="h-10 bg-gray-100 border-b border-gray-200 flex items-center px-4 gap-2 flex-none">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-rose-400"></div>
-                <div className="w-3 h-3 rounded-full bg-amber-400"></div>
-                <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
-              </div>
-              <div className="mx-auto bg-white px-4 py-1 rounded text-xs text-gray-500 border border-gray-200 flex items-center gap-2">
-                <span className="opacity-50">https://lmb-insurance.com</span>{previewUrl}
-              </div>
-              <button onClick={() => { if(iframeRef.current) iframeRef.current.src = iframeRef.current.src; }} className="p-1 hover:bg-gray-200 rounded text-gray-500">
-                <RefreshCw size={14} />
-              </button>
-            </div>
-            
             <iframe
               ref={iframeRef}
               src={previewUrl}
-              className="w-full flex-1 border-0"
+              className="w-full flex-1 border-0 bg-white"
               title="Live Preview"
             />
           </div>
