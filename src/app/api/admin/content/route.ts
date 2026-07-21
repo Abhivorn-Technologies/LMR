@@ -58,14 +58,15 @@ export async function POST(request: Request) {
     );
 
     // Revalidate the cache for Vercel production
-    if (key.startsWith('/')) {
-      revalidatePath(key);
-      revalidatePath(key, 'page'); // Just to be thorough
-    } else if (key.startsWith('page:')) {
+    // Strip hash if it exists (e.g. "/#clients" -> "/")
+    const cleanKey = key.split('#')[0];
+    
+    if (cleanKey.startsWith('/')) {
+      revalidatePath(cleanKey);
+    } else if (cleanKey.startsWith('page:')) {
       // Revalidate catch-all slugs if they use the "page:" prefix format
-      const slugPath = key.replace('page:', '/').replace(/:/g, '/');
+      const slugPath = cleanKey.replace('page:', '/').replace(/:/g, '/');
       revalidatePath(slugPath);
-      revalidatePath(slugPath, 'page');
     }
 
     return NextResponse.json({ success: true, data: updatedContent });

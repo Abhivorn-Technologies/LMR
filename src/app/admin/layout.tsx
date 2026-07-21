@@ -42,8 +42,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
       toast.success('Logged out successfully');
-      router.push('/login');
-      router.refresh();
+      // Force a hard redirect to clear all router caches and prevent back-button caching
+      window.location.href = '/login';
     } catch (error) {
       toast.error('Logout failed');
       console.error('Logout failed', error);

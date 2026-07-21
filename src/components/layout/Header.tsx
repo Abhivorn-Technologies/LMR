@@ -383,13 +383,13 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
         </div>
 
         <div className="flex items-center justify-end gap-2 xl:gap-4 shrink-0">
-          <Link 
+          <a 
             href="/login" 
             className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 text-[#64748b] text-xs font-semibold hover:bg-[#ffb800] hover:text-white transition-all duration-300 border border-slate-200 shadow-sm"
           >
             <Icons.User size={14} />
             Admin
-          </Link>
+          </a>
           <button className="lg:hidden text-slate-600 p-2 hover:bg-slate-100 rounded-lg transition-colors" onClick={() => setMobileOpen(true)}>
             <Icons.Menu size={28} />
           </button>
