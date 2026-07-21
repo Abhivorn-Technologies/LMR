@@ -260,7 +260,7 @@ export default function AdminDashboardHome() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
-                            <span className="text-gray-300 font-bold text-sm w-4">{(currentPage - 1) * itemsPerPage + index + 1}</span>
+                            <span className="text-gray-500 font-bold text-sm w-4">{(currentPage - 1) * itemsPerPage + index + 1}</span>
                             <span className="font-bold text-gray-900 capitalize">{section.title}</span>
                           </div>
                         </td>
