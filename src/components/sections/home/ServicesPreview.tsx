@@ -90,9 +90,9 @@ export function ServicesPreview({
                     
                     {/* Top Icon Area */}
                     <div className="mb-6 flex justify-between items-start">
-                      <div className="w-16 h-16 rounded-2xl bg-[#f8fafc] group-hover:bg-gradient-to-br group-hover:from-white/10 group-hover:to-white/0 flex items-center justify-center border border-slate-100 group-hover:border-white/20 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] transition-all duration-700 ease-out">
-                        <div className="transition-all duration-700 ease-out group-hover:scale-[1.2] group-hover:-translate-y-1 group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
-                          <DynamicIcon name={service.icon} className="h-8 w-8 text-[#0f172a] group-hover:text-white transition-colors duration-700" strokeWidth={1.5} />
+                      <div className="w-16 h-16 rounded-2xl bg-[#f8fafc] group-hover:bg-white flex items-center justify-center border border-slate-100 group-hover:border-transparent group-hover:shadow-md transition-all duration-500 ease-out">
+                        <div className="transition-all duration-500 ease-out group-hover:scale-[1.1]">
+                          <DynamicIcon name={service.icon} className="h-8 w-8 text-[#0f172a] group-hover:text-[#115E59] transition-colors duration-500" strokeWidth={1.5} />
                         </div>
                       </div>
                     </div>
