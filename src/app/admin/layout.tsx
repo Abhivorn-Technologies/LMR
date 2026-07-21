@@ -15,10 +15,11 @@ import {
   Image as ImageIcon,
   Menu,
   X,
-  Bell,
   Search,
   ChevronDown,
-  Plus
+  Plus,
+  BarChart,
+  PieChart
 } from 'lucide-react';
 
 const navigation = [
@@ -26,6 +27,8 @@ const navigation = [
   { name: 'Site Sections', href: '/admin/pages', icon: FileText },
   { name: 'Collections', href: '/admin/collections', icon: Users },
   { name: 'Media', href: '/admin/media', icon: ImageIcon },
+  { name: 'Analytics', href: '#', icon: BarChart },
+  { name: 'Reports', href: '#', icon: PieChart },
   { name: 'Global Settings', href: '/admin/globals', icon: Settings },
   { name: 'Admins', href: '/admin/users', icon: Users },
 ];
@@ -94,9 +97,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Right Side: Actions */}
         <div className="flex flex-1 items-center justify-end space-x-5">
-          <button className="relative p-2.5 bg-white rounded-full text-gray-400 hover:text-gray-600 shadow-sm border border-gray-100 transition-colors">
-            <Bell className="w-[18px] h-[18px]" />
-          </button>
           <Link href="/admin/pages/new" className="hidden sm:flex items-center justify-center px-6 py-2.5 bg-[#00A3A0] hover:bg-[#008f8c] text-white font-semibold rounded-lg shadow-sm transition-colors group text-sm">
             <Plus className="w-4 h-4 mr-2" />
             New Page

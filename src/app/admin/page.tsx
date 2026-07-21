@@ -244,10 +244,6 @@ export default function AdminDashboardHome() {
                 <ChevronDown className="w-4 h-4" />
               </div>
             </div>
-            <button onClick={() => setIsModalOpen(true)} className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center px-4 py-2 bg-[#0d9488] text-white text-sm font-medium rounded-lg hover:bg-[#0f766e] transition-all duration-200 gap-2">
-              <Plus className="w-4 h-4" />
-              <span>New section</span>
-            </button>
           </div>
         </div>
 
@@ -335,60 +331,48 @@ export default function AdminDashboardHome() {
         </div>
 
         {/* Dynamic Pagination Footer */}
-        <div className="px-8 py-4 border-t border-gray-100 bg-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <select className="border border-[#d1d5db] rounded-lg text-sm font-medium text-gray-700 py-1.5 pl-3 pr-8 focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488] bg-white">
-              <option>Bulk action</option>
-              <option>Delete selected</option>
-            </select>
-            <button className="px-4 py-1.5 text-sm font-medium text-gray-700 border border-[#d1d5db] rounded-lg hover:bg-gray-50 transition-colors">
-              Apply
+        <div className="px-8 py-6 mt-2 border-t border-gray-100 bg-white flex flex-col items-center justify-center gap-3">
+          <div className="flex items-center gap-1">
+            <button 
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1 || totalPages === 0}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            
+            <div className="flex items-center gap-1 px-1">
+              {getPaginationGroup().map((page, index) => (
+                <button
+                  key={index}
+                  onClick={() => typeof page === 'number' ? setCurrentPage(page) : null}
+                  disabled={page === '...'}
+                  className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-all ${
+                    page === currentPage 
+                      ? 'bg-[#0d9488] text-white' 
+                      : page === '...'
+                        ? 'text-gray-400 cursor-default'
+                        : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+
+            <button 
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages || totalPages === 0}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
+            >
+              <ChevronRight className="w-5 h-5" />
             </button>
           </div>
           
-          <div className="flex items-center gap-6">
-            <p className="text-sm font-medium text-gray-500 hidden md:block">
-              Showing {currentSections.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-
-              {Math.min(currentPage * itemsPerPage, filteredSections.length)} of {filteredSections.length} records
-            </p>
-            
-            <div className="flex items-center gap-1">
-              <button 
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                disabled={currentPage === 1 || totalPages === 0}
-                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              
-              <div className="flex items-center gap-1 px-1">
-                {getPaginationGroup().map((page, index) => (
-                  <button
-                    key={index}
-                    onClick={() => typeof page === 'number' ? setCurrentPage(page) : null}
-                    disabled={page === '...'}
-                    className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-all ${
-                      page === currentPage 
-                        ? 'bg-[#0d9488] text-white' 
-                        : page === '...'
-                          ? 'text-gray-400 cursor-default'
-                          : 'text-gray-600 hover:bg-gray-100'
-                    }`}
-                  >
-                    {page}
-                  </button>
-                ))}
-              </div>
-
-              <button 
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages || totalPages === 0}
-                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
+          <p className="text-sm font-medium text-gray-500">
+            Showing {currentSections.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-
+            {Math.min(currentPage * itemsPerPage, filteredSections.length)} of {filteredSections.length} records
+          </p>
         </div>
       </div>
     </div>
