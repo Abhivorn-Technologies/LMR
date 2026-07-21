@@ -1,9 +1,10 @@
 'use client';
 
-import { ArrowUpRight, CheckCircle2, FileText, Settings, Grid, Edit, Trash2, Search, ChevronLeft, ChevronRight, ChevronDown, MoreHorizontal, Plus, X, Loader2 } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, FileText, Settings, Grid, Edit, Trash2, Search, ChevronLeft, ChevronRight, ChevronDown, MoreHorizontal, Plus, X, Loader2, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import useSWR from 'swr';
+import toast from 'react-hot-toast';
 
 // Icon mapper helper
 const getIcon = (iconName: string) => {
@@ -18,6 +19,7 @@ const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function AdminDashboardHome() {
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [sectionToDelete, setSectionToDelete] = useState<string | null>(null);
   
   // Search and Filter State
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,31 +63,38 @@ export default function AdminDashboardHome() {
         mutate({ success: true, data: [data.data, ...siteSections] }, false);
         setIsModalOpen(false);
         setNewSection({ title: '', category: 'Life Insurance', type: 'Page', key: '' });
+        toast.success('Section created successfully');
       } else {
-        alert(data.error || 'Failed to create section');
+        toast.error(data.error || 'Failed to create section');
       }
     } catch (err) {
-      alert('An error occurred');
+      toast.error('An error occurred');
     } finally {
       setIsSaving(false);
     }
   };
 
   // Handle Delete Section
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to permanently delete this page?')) return;
+  const confirmDelete = async () => {
+    if (!sectionToDelete) return;
     
-    setIsDeleting(id);
+    setIsDeleting(sectionToDelete);
+    const idToDelete = sectionToDelete;
+    setSectionToDelete(null); // Close modal immediately
+    
     try {
-      const res = await fetch(`/api/admin/pages/${id}`, {
+      const res = await fetch(`/api/admin/pages/${idToDelete}`, {
         method: 'DELETE'
       });
       const data = await res.json();
       if (data.success) {
-        mutate({ success: true, data: siteSections.filter((s: any) => s._id !== id) }, false);
+        mutate({ success: true, data: siteSections.filter((s: any) => s._id !== idToDelete) }, false);
+        toast.success('Section permanently deleted');
+      } else {
+        toast.error('Failed to delete section');
       }
     } catch (err) {
-      alert('Failed to delete');
+      toast.error('Failed to delete section');
     } finally {
       setIsDeleting(null);
     }
@@ -142,17 +151,17 @@ export default function AdminDashboardHome() {
             <form onSubmit={handleSaveNewSection} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                <input required type="text" value={newSection.title} onChange={e => setNewSection({...newSection, title: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-0 focus:border-[#0d9488]" placeholder="e.g. Pet Insurance" />
+                <input required type="text" value={newSection.title} onChange={e => setNewSection({...newSection, title: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. Pet Insurance" />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <input required type="text" value={newSection.category} onChange={e => setNewSection({...newSection, category: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-0 focus:border-[#0d9488]" placeholder="e.g. About Us, General Insurance, etc." />
+                <input required type="text" value={newSection.category} onChange={e => setNewSection({...newSection, category: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. About Us, General Insurance, etc." />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                <select required value={newSection.type} onChange={e => setNewSection({...newSection, type: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-0 focus:border-[#0d9488]">
+                <select required value={newSection.type} onChange={e => setNewSection({...newSection, type: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488]">
                   <option value="Page">Page</option>
                   <option value="Tool">Tool</option>
                   <option value="List">List</option>
@@ -161,7 +170,7 @@ export default function AdminDashboardHome() {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Unique Key</label>
-                <input required type="text" value={newSection.key} onChange={e => setNewSection({...newSection, key: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-0 focus:border-[#0d9488]" placeholder="e.g. page:gen:pet" />
+                <input required type="text" value={newSection.key} onChange={e => setNewSection({...newSection, key: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. page:gen:pet" />
                 <p className="text-xs text-gray-500 mt-1">This connects the metadata to the actual JSON content.</p>
               </div>
 
@@ -177,8 +186,29 @@ export default function AdminDashboardHome() {
         </div>
       )}
 
+      {/* Delete Confirmation Modal */}
+      {sectionToDelete && (
+        <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative text-center">
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+              <AlertTriangle className="h-6 w-6 text-red-600" />
+            </div>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">Delete Section?</h3>
+            <p className="text-sm text-gray-500 mb-6">Are you sure you want to permanently delete this page? This action cannot be undone.</p>
+            <div className="flex justify-center gap-3 w-full">
+              <button onClick={() => setSectionToDelete(null)} className="flex-1 px-4 py-2.5 text-gray-700 font-semibold hover:bg-gray-100 rounded-xl transition-colors border border-gray-200">
+                Cancel
+              </button>
+              <button onClick={confirmDelete} className="flex-1 px-4 py-2.5 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-colors">
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Content Area */}
-      <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col min-h-[600px]">
+      <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
         {/* Header with integrated Search */}
         <div className="px-8 py-6 border-b border-gray-100 flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white sticky top-0 z-10">
           <div>
@@ -195,7 +225,7 @@ export default function AdminDashboardHome() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-[#d1d5db] rounded-lg leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-[#0d9488] sm:text-sm transition-all text-gray-900"
+                className="block w-full pl-10 pr-3 py-2 border border-[#d1d5db] rounded-lg leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488] sm:text-sm transition-all text-gray-900"
                 placeholder="Search database..."
               />
             </div>
@@ -203,7 +233,7 @@ export default function AdminDashboardHome() {
               <select 
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="appearance-none block w-full pl-3 pr-8 py-2 text-sm border border-[#d1d5db] focus:outline-none focus:ring-0 focus:border-[#0d9488] rounded-lg bg-gray-50 text-gray-700 cursor-pointer hover:bg-white transition-colors"
+                className="appearance-none block w-full pl-3 pr-8 py-2 text-sm border border-[#d1d5db] focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488] rounded-lg bg-gray-50 text-gray-700 cursor-pointer hover:bg-white transition-colors"
               >
                 <option value="All Categories">All Categories</option>
                 {Array.from(new Set(siteSections.map((s: any) => s.category))).sort().map((cat: any) => (
@@ -286,7 +316,7 @@ export default function AdminDashboardHome() {
                               </button>
                             </Link>
                             <button 
-                              onClick={() => handleDelete(section._id)}
+                              onClick={() => setSectionToDelete(section._id)}
                               disabled={isDeleting === section._id}
                               className="text-[#6b7280] hover:text-[#ef4444] transition-colors p-1 disabled:opacity-50" 
                               title="Delete"
@@ -307,7 +337,7 @@ export default function AdminDashboardHome() {
         {/* Dynamic Pagination Footer */}
         <div className="px-8 py-4 border-t border-gray-100 bg-white flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <select className="border border-[#d1d5db] rounded-lg text-sm font-medium text-gray-700 py-1.5 pl-3 pr-8 focus:ring-[#0d9488] focus:border-[#0d9488] bg-white">
+            <select className="border border-[#d1d5db] rounded-lg text-sm font-medium text-gray-700 py-1.5 pl-3 pr-8 focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488] bg-white">
               <option>Bulk action</option>
               <option>Delete selected</option>
             </select>
