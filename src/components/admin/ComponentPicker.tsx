@@ -20,10 +20,83 @@ export type BlockTemplate = {
 };
 
 export const CATEGORIES = [
-  'Basic', 'Media', 'Layout', 'Marketing', 'Forms', 'Navigation', 'Content', 'Advanced'
+  'Basic', 'Media', 'Layout', 'Marketing', 'Forms', 'Navigation', 'Content', 'Advanced', 'Products'
 ];
 
 export const AVAILABLE_BLOCKS: BlockTemplate[] = [
+  {
+    type: 'PremiumProductLayoutBlock', category: 'Products', label: 'Premium Product', description: 'The complete layout for insurance products including Hero, features, and FAQs.', icon: <LayoutTemplate size={28} className="text-emerald-500" />,
+    template: { 
+      type: 'PremiumProductLayoutBlock', 
+      content: { 
+        title: 'New Product', 
+        subtitle: 'Comprehensive Coverage', 
+        description: 'Get the best policy online.', 
+        image: '/assets/image3.jpeg',
+        badges: ['Premium Plan', 'Instant Policy'],
+        featuresTitle: 'Key Features',
+        featuresSubtitle: 'Our policies provide complete protection.',
+        features: [
+          { title: 'Feature 1', description: 'Description 1', iconName: 'ShieldCheck' }
+        ],
+        stepsTitle: 'How it works',
+        stepsSubtitle: 'A simple process.',
+        steps: [
+          { title: 'Step 1', description: 'Description 1' }
+        ],
+        inclusions: [],
+        exclusions: [],
+        faqs: []
+      } 
+    }
+  },
+  {
+    type: 'ContactBlock', category: 'Products', label: 'Contact Details', description: 'Contact details section with key contacts layout.', icon: <LayoutTemplate size={28} className="text-blue-500" />,
+    template: { 
+      type: 'ContactBlock', 
+      content: { 
+        title: 'Speak with our',
+        highlightTitle: 'advisory team.',
+        subtitle: 'Submit an inquiry below and our expert team will respond promptly during business hours.',
+        contactsTitle: 'Key Contacts',
+        contacts: [
+          { name: 'John Doe', title: 'Director', phone: '+91 9999999999', email: 'john@example.com' }
+        ]
+      } 
+    }
+  },
+  {
+    type: 'AboutBlock', category: 'Content', label: 'About Us Section', description: 'About us page content layout.', icon: <LayoutTemplate size={28} className="text-emerald-500" />,
+    template: { 
+      type: 'AboutBlock', 
+      content: { 
+        hero: {
+          tagline: 'Legacy of Trust',
+          titleLine1: 'Advising clients for ',
+          titleHighlight: 'over 2 decades.',
+          titleLine2: 'Your trusted partner in ',
+          titleLine3: 'insurance broking.',
+          description: 'LMB Insurance Brokers brings unparalleled expertise to risk management...',
+          image: '/assets/about/about-hero-image.png'
+        }
+      } 
+    }
+  },
+  {
+    type: 'ReinsuranceBlock', category: 'Products', label: 'Reinsurance Page', description: 'Reinsurance page layout with bento grid and timeline.', icon: <LayoutTemplate size={28} className="text-cyan-500" />,
+    template: { 
+      type: 'ReinsuranceBlock', 
+      content: { 
+        headline: "Global Treaty & Facultative Solutions",
+        subheadline: "Empowering businesses with optimized risk transfer strategies and deep market capacity.",
+        expertise: [
+          { title: "Treaty Reinsurance", description: "Proportional and non-proportional treaty structures optimized for capital relief and volatility management." }
+        ],
+        process: ["Risk Assessment", "Market Selection", "Placement"],
+        benefits: ["Enhanced Capacity", "Capital Relief"]
+      } 
+    }
+  },
   // === BASIC ===
   {
     type: 'HeadingBlock', category: 'Basic', label: 'Heading', description: 'H1-H6 heading with custom styling.', icon: <Type size={28} className="text-gray-500" />,
@@ -57,7 +130,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'ImageGalleryBlock', category: 'Media', label: 'Gallery', description: 'Grid or masonry image gallery.', icon: <ImagePlus size={28} className="text-emerald-500" />,
-    template: { type: 'ImageGalleryBlock', content: { style: 'grid', images: [] } }
+    template: { type: 'GalleryBlock', content: { style: 'grid', images: [{ url: '/assets/image1.jpeg', caption: 'Image 1' }] } }
   },
   {
     type: 'VideoBlock', category: 'Media', label: 'Video', description: 'Embed YouTube, Vimeo or MP4.', icon: <FileVideo size={28} className="text-emerald-500" />,
@@ -65,7 +138,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'LogoSliderBlock', category: 'Media', label: 'Logo Slider', description: 'Infinite scrolling client logos.', icon: <PlaySquare size={28} className="text-emerald-500" />,
-    template: { type: 'LogoSliderBlock', content: { speed: 'normal', logos: [] } }
+    template: { type: 'LogoMarquee', content: { speed: 'normal', logos: [{ url: '', alt: 'Logo 1' }] } }
   },
 
   // === LAYOUT ===
@@ -103,11 +176,11 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'PricingBlock', category: 'Marketing', label: 'Pricing', description: 'Pricing tiers and plans.', icon: <CreditCard size={28} className="text-purple-500" />,
-    template: { type: 'PricingBlock', content: { plans: [] } }
+    template: { type: 'PricingBlock', content: { plans: [{ name: 'Basic', price: '$9', features: ['Feature 1'], buttonText: 'Buy' }] } }
   },
   {
     type: 'TestimonialsBlock', category: 'Marketing', label: 'Testimonials', description: 'Customer reviews and ratings.', icon: <Quote size={28} className="text-purple-500" />,
-    template: { type: 'TestimonialsBlock', content: { title: 'What clients say', reviews: [] } }
+    template: { type: 'TestimonialsBlock', content: { title: 'What clients say', reviews: [{ author: 'John Doe', text: 'Great service!', rating: 5 }] } }
   },
   {
     type: 'CallToActionBlock', category: 'Marketing', label: 'Call to Action', description: 'A highlighted banner with a button.', icon: <MousePointerClick size={28} className="text-purple-500" />,
@@ -115,7 +188,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'StatsBar', category: 'Marketing', label: 'Stats Bar', description: 'Animated number counters.', icon: <BarChart size={28} className="text-purple-500" />,
-    template: { type: 'StatsBar', content: { stats: [] } }
+    template: { type: 'StatsBar', content: { stats: [{ value: '200+', label: 'Years of experience' }] } }
   },
   {
     type: 'TrustMockupPreview', category: 'Marketing', label: 'Trust Section', description: 'Two decades of excellence block.', icon: <Shield size={28} className="text-purple-500" />,
@@ -136,7 +209,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
     template: { type: 'CompanyLogosMarquee', content: { 
       title: 'Our notable clients', 
       description: 'Government departments, PSUs and public corporations we are proud to serve.',
-      logos: []
+      logos: defaultCompanies
     } }
   },
   {
@@ -232,7 +305,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
     type: 'WhyPreview', category: 'Marketing', label: 'Why Choose Us', description: 'Three reasons why block.', icon: <Star size={28} className="text-purple-500" />,
     template: { type: 'WhyPreview', content: { 
       title: 'Why Choose Us?', 
-      points: []
+      points: [{ title: 'Expertise', description: 'Years of experience in the industry.' }]
     } }
   },
   {
@@ -271,7 +344,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'TeamBlock', category: 'Content', label: 'Team', description: 'Team member profiles.', icon: <Users size={28} className="text-[#00A3A0]" />,
-    template: { type: 'TeamBlock', content: { members: [] } }
+    template: { type: 'TeamBlock', content: { members: [{ name: 'John Doe', role: 'CEO', image: '' }] } }
   },
 
   // === ADVANCED ===
@@ -298,6 +371,8 @@ type ComponentPickerProps = {
   onClose: () => void;
   onSelect: (template: any) => void;
 };
+
+import { defaultCompanies } from '@/components/sections/home/CompanyLogosMarquee';
 
 export function ComponentPicker({ open, onClose, onSelect }: ComponentPickerProps) {
   const [activeCategory, setActiveCategory] = useState<string>('All');

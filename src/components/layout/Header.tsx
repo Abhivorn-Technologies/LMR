@@ -276,25 +276,32 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
     return null;
   }
 
-  // Use CMS mainNav or fallback
-  const navLinks = mainNav || [
-    { name: "Home", path: "/" },
-    { name: "About Us", path: "/about" },
-    { name: "Life insurance", path: "/services/life-insurance" },
-    { name: "General insurance", path: "/services/general-insurance" },
-    { name: "Risk Management", path: "/services/risk-management" },
-    { name: "Claims Consultancy", path: "/services/claims" },
-    { name: "Reinsurance", path: "/reinsurance" },
-    { name: "Clients", path: "/clients" },
-    { name: "Contact Us", path: "/contact" },
-  ];
+  // Memoize handlers to prevent re-rendering
+  const handleCloseMobile = React.useCallback(() => {
+    setMobileOpen(false);
+  }, []);
+
+  // Use CMS mainNav or fallback, memoized to prevent recalculation on scroll
+  const navLinks = React.useMemo(() => {
+    return mainNav || [
+      { name: "Home", path: "/" },
+      { name: "About Us", path: "/about" },
+      { name: "Life insurance", path: "/services/life-insurance" },
+      { name: "General insurance", path: "/services/general-insurance" },
+      { name: "Risk Management", path: "/services/risk-management" },
+      { name: "Claims Consultancy", path: "/services/claims" },
+      { name: "Reinsurance", path: "/reinsurance" },
+      { name: "Clients", path: "/clients" },
+      { name: "Contact Us", path: "/contact" },
+    ];
+  }, [mainNav]);
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-[40] transition-all duration-300 ${scrolled ? 'shadow-[0_4px_25px_rgba(0,0,0,0.06)] bg-white/95 backdrop-blur-md' : 'shadow-sm bg-white'}`}>
       {/* Mobile Menu Backdrop */}
       <div 
         className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[40] lg:hidden transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setMobileOpen(false)}
+        onClick={handleCloseMobile}
       />
 
       <div className="mx-auto max-w-[1600px] relative z-[40] flex justify-between items-center py-2 lg:py-3 px-6 xl:px-10">
@@ -318,7 +325,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
             <div className="relative h-10 w-[180px] -ml-2">
               <Image src={siteConfig.logo} alt={siteConfig.name} fill priority sizes="150px" className="object-contain object-left scale-[2] origin-left pointer-events-none" />
             </div>
-            <button className="text-slate-400 hover:text-slate-700 p-2.5 bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors" onClick={() => setMobileOpen(false)}>
+            <button className="text-slate-400 hover:text-slate-700 p-2.5 bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors" onClick={handleCloseMobile}>
               <Icons.X size={20} />
             </button>
           </div>
@@ -351,7 +358,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
                     ? 'max-lg:bg-slate-50 max-lg:text-[#0f172a] max-lg:rounded-xl text-[#0f172a] lg:border-b-[3px] lg:border-[#ffb800]' 
                     : 'text-[#64748b] hover:text-[#0f172a] max-lg:hover:bg-slate-50 max-lg:rounded-xl transition-colors lg:border-b-[3px] lg:border-transparent'
                 }`}
-                onClick={() => setMobileOpen(false)}
+                onClick={handleCloseMobile}
               >
                 {linkName}
               </Link>

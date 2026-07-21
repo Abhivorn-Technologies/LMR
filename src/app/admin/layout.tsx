@@ -1,5 +1,6 @@
 'use client'; // Force recompile
 
+import '@/app/globals.css';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -29,6 +30,9 @@ const navigation = [
   { name: 'Admins', href: '/admin/users', icon: Users },
 ];
 
+import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -37,9 +41,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
+      toast.success('Logged out successfully');
       router.push('/login');
       router.refresh();
     } catch (error) {
+      toast.error('Logout failed');
       console.error('Logout failed', error);
     }
   };
@@ -48,14 +54,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (isEditor) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] font-sans">
-        {children}
-      </div>
+      <html lang="en">
+        <body>
+          <div className="min-h-screen bg-[#f8fafc] font-sans">
+            {children}
+          </div>
+        </body>
+      </html>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#f8fafc]">
+    <html lang="en">
+      <body>
+        <div className="h-screen overflow-hidden flex flex-col font-sans bg-[#f8fafc]">
+      <Toaster position="top-center" />
       {/* Top Navbar Full Width (BharatJobs exact layout structure) */}
       <header className="h-[76px] bg-white border-b border-gray-100 flex items-center justify-between px-6 shrink-0 z-50">
         {/* Left Side: Logo Area */}
@@ -111,20 +124,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   key={item.name}
                   href={item.href}
                   className={`
-                    flex items-center px-4 py-3 rounded-xl transition-all duration-200 group font-medium text-sm mb-1.5
+                    flex items-center px-3 py-3 rounded-xl transition-all duration-200 group font-medium text-[13px] mb-2
                     ${isActive
                       ? 'bg-[#00A3A0]/10 text-[#00A3A0]'
                       : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}
                   `}
                 >
-                  <item.icon className={`w-[18px] h-[18px] mr-3 transition-colors ${isActive ? 'text-[#00A3A0]' : 'text-gray-400 group-hover:text-gray-500'}`} />
+                  <item.icon className={`w-[16px] h-[16px] mr-3 transition-colors ${isActive ? 'text-[#00A3A0]' : 'text-gray-400 group-hover:text-gray-500'}`} />
                   <span>{item.name}</span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Footer Area - User Profile (Fixed to bottom with mt-auto) */}
+          {/* Footer Area - User Profile (Moved to absolute bottom) */}
           <div className="p-4 mt-auto">
             <div className="flex items-center justify-between bg-white rounded-xl p-3 shadow-sm border border-gray-100/50">
               <div className="flex items-center space-x-3">
@@ -149,5 +162,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </main>
       </div>
     </div>
+    </body>
+    </html>
   );
 }

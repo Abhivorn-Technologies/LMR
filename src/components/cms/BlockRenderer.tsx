@@ -29,29 +29,59 @@ import { FreeformCanvasBlock } from './blocks/FreeformCanvasBlock';
 // Placeholder Engine
 import { PlaceholderBlock } from './blocks/PlaceholderBlock';
 
+import { PremiumProductLayoutBlock } from './blocks/PremiumProductLayoutBlock';
+import { ContactBlock } from './blocks/ContactBlock';
+import { AboutBlock } from './blocks/AboutBlock';
+import { ReinsuranceBlock } from './blocks/ReinsuranceBlock';
+
 // A registry mapping string types from JSON to actual React components
 const ComponentRegistry: Record<string, React.ComponentType<any>> = {
   Hero,
+  heroBlock: Hero,
   StatsBar,
+  statsBarBlock: StatsBar,
   ServicesPreview,
+  servicesPreviewBlock: ServicesPreview,
   RetailServicesPreview,
+  retailServicesPreviewBlock: RetailServicesPreview,
   IndustriesPreview,
+  industriesPreviewBlock: IndustriesPreview,
   WhyPreview,
+  whyPreviewBlock: WhyPreview,
   TrustMockupPreview,
+  trustMockupPreviewBlock: TrustMockupPreview,
   CompanyLogosMarquee,
+  companyLogosMarqueeBlock: CompanyLogosMarquee,
+  PremiumProductLayoutBlock,
+  premiumProductLayoutBlock: PremiumProductLayoutBlock,
   
   // Generic Blocks
   RichTextBlock,
+  richTextBlock: RichTextBlock,
   ImageBlock,
+  imageBlock: ImageBlock,
   GenericCardGrid,
+  genericCardGrid: GenericCardGrid,
   CallToActionBlock,
+  callToActionBlock: CallToActionBlock,
   
   // New Functional Blocks
   HeadingBlock,
+  headingBlock: HeadingBlock,
   DividerBlock,
+  dividerBlock: DividerBlock,
   SpacerBlock,
+  spacerBlock: SpacerBlock,
   FAQAccordionBlock,
-  FreeformCanvasBlock
+  faqAccordionBlock: FAQAccordionBlock,
+  FreeformCanvasBlock,
+  freeformCanvasBlock: FreeformCanvasBlock,
+  ContactBlock,
+  contactBlock: ContactBlock,
+  AboutBlock,
+  aboutBlock: AboutBlock,
+  ReinsuranceBlock,
+  reinsuranceBlock: ReinsuranceBlock
 };
 
 // Types that are in the ComponentPicker but not yet built
@@ -70,19 +100,42 @@ export type BlockData = {
   content?: any;
 };
 
-export function BlockRenderer({ blocks }: { blocks: BlockData[] }) {
-  if (!blocks || !Array.isArray(blocks)) return null;
+export function BlockRenderer({ blocks: initialBlocks }: { blocks: any[] }) {
+  const [blocks, setBlocks] = React.useState(initialBlocks);
+
+  React.useEffect(() => {
+    // Keep in sync with server props if they change
+    setBlocks(initialBlocks);
+  }, [initialBlocks]);
+
+  React.useEffect(() => {
+    // Listen for live preview updates from the CMS visual editor
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'PREVIEW_UPDATE' && event.data?.data?.blocks) {
+        setBlocks(event.data.data.blocks);
+      }
+    };
+    
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
+  if (!blocks || !Array.isArray(blocks) || blocks.length === 0) return null;
 
   return (
-    <div className="w-full min-h-[1200px] relative overflow-hidden bg-white">
+    <div className="w-full min-h-[800px] relative overflow-hidden bg-white">
       {blocks.map((block, index) => {
-        const Component = ComponentRegistry[block.type];
+        // Support both MongoDB (block.type) and Sanity (block._type) structures
+        const typeName = block._type || block.type;
+        const Component = ComponentRegistry[typeName];
+        const blockContent = block.content || block; // Use root block for Sanity
+        const layout = block.content?.layout || block.layout;
         
         if (!Component) {
-          if (PLANNED_BLOCKS.includes(block.type)) {
+          if (PLANNED_BLOCKS.includes(typeName)) {
             return (
-              <DraggableBlockWrapper key={index} blockIndex={index} layout={block.content?.layout}>
-                <PlaceholderBlock type={block.type} content={block.content} />
+              <DraggableBlockWrapper key={index} blockIndex={index} layout={layout}>
+                <PlaceholderBlock type={typeName} content={blockContent} />
               </DraggableBlockWrapper>
             );
           }
@@ -94,7 +147,7 @@ export function BlockRenderer({ blocks }: { blocks: BlockData[] }) {
                 Invalid Block Type
               </h3>
               <p className="text-red-700 mt-2">
-                You entered <code className="bg-red-100 px-2 py-0.5 rounded text-red-900 font-mono">"{block.type}"</code>, which is not a recognized block.
+                You entered <code className="bg-red-100 px-2 py-0.5 rounded text-red-900 font-mono">"{typeName}"</code>, which is not a recognized block.
               </p>
               <p className="text-red-600 text-sm mt-2 font-medium">Valid blocks: {Object.keys(ComponentRegistry).join(', ')}</p>
             </div>
@@ -103,8 +156,8 @@ export function BlockRenderer({ blocks }: { blocks: BlockData[] }) {
 
         // Wrap every component in the Draggable Canvas layer
         return (
-          <DraggableBlockWrapper key={`${block.type}-${index}`} blockIndex={index} layout={block.content?.layout}>
-            <Component content={block.content} blockIndex={index} />
+          <DraggableBlockWrapper key={`${typeName}-${index}`} blockIndex={index} layout={layout}>
+            <Component content={blockContent} blockIndex={index} />
           </DraggableBlockWrapper>
         );
       })}

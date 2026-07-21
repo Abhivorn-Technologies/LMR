@@ -1,16 +1,31 @@
 import Link from 'next/link';
 import { Plus, Edit, Trash2, CheckCircle, FileText, Grid, Image as ImageIcon, Settings, ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
+import { productDatabase } from '@/lib/content/products';
+
 export default function SiteSectionsPage() {
   const siteSections = [
-    { id: 1, title: 'Home Page Hero', type: 'Page Section', icon: FileText, category: 'Home', status: 'Active', key: 'home:hero' },
-    { id: 2, title: 'Footer Navigation', type: 'Global', icon: Settings, category: 'Layout', status: 'Active', key: 'nav:footer' },
-    { id: 3, title: 'Main Navigation', type: 'Global', icon: Settings, category: 'Layout', status: 'Active', key: 'nav:main' },
-    { id: 4, title: 'Reinsurance Page', type: 'Page', icon: FileText, category: 'Services', status: 'Active', key: 'page:reinsurance' },
-    { id: 5, title: 'Our Process', type: 'List', icon: Grid, category: 'Components', status: 'Active', key: 'list:process' },
-    { id: 6, title: 'Why Choose LMB', type: 'List', icon: Grid, category: 'Components', status: 'Active', key: 'list:why' },
-    { id: 7, title: 'FAQ Items', type: 'List', icon: Grid, category: 'Components', status: 'Active', key: 'list:faq' },
+    { id: 1, title: 'Home Page', type: 'Page', icon: FileText, category: 'Main', status: 'Active', key: '/' },
+    { id: 2, title: 'About Us', type: 'Page', icon: FileText, category: 'Main', status: 'Active', key: '/about' },
+    { id: 3, title: 'Reinsurance', type: 'Page', icon: FileText, category: 'Services', status: 'Active', key: '/reinsurance' },
+    { id: 4, title: 'Main Navigation', type: 'Global', icon: Settings, category: 'Layout', status: 'Active', key: 'nav:main' },
+    { id: 5, title: 'Footer Navigation', type: 'Global', icon: Settings, category: 'Layout', status: 'Active', key: 'nav:footer' },
   ];
+
+  let idCounter = 6;
+  Object.keys(productDatabase).forEach((productKey) => {
+    const product = productDatabase[productKey];
+    const category = productKey.startsWith('general-insurance') ? 'General Insurance' : 'Life Insurance';
+    siteSections.push({
+      id: idCounter++,
+      title: product.title || productKey,
+      type: 'Product Page',
+      icon: FileText,
+      category,
+      status: 'Active',
+      key: `/services/${productKey}`
+    });
+  });
 
   return (
     <div className="space-y-6">

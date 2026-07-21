@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const defaultCompanies = [
+export const defaultCompanies = [
   {
     name: "Hindustan Latex Limited",
     category: "Central PSU — Healthcare",
@@ -103,7 +103,16 @@ export function CompanyLogosMarquee({
   onContentChange?: (content: any) => void;
 }) {
   const [isMounted, setIsMounted] = useState(false);
-  const companies = content?.logos || defaultCompanies;
+  const activeCompanies = content?.logos?.length > 0 ? content.logos : defaultCompanies;
+
+  // Split into two rows
+  const half = Math.ceil(activeCompanies.length / 2);
+  const row1 = activeCompanies.slice(0, half);
+  const row2 = activeCompanies.slice(half);
+
+  // If there are very few companies, we might just duplicate them so the marquee still works
+  const displayRow1 = row1.length > 0 ? [...row1, ...row1, ...row1, ...row1, ...row1, ...row1] : [];
+  const displayRow2 = row2.length > 0 ? [...row2, ...row2, ...row2, ...row2, ...row2, ...row2] : displayRow1;
 
   useEffect(() => {
     setIsMounted(true);
@@ -132,35 +141,69 @@ export function CompanyLogosMarquee({
         </p>
       </div>
 
-      <div className="flex w-full overflow-hidden relative">
-        <div className="flex animate-marquee whitespace-nowrap gap-4 pl-4 w-max">
-          {[...companies, ...companies, ...companies, ...companies].map((company, i) => (
+      <div className="flex flex-col gap-6 w-full overflow-hidden relative">
+        <div className="flex animate-marquee whitespace-nowrap gap-6 pl-6 w-max">
+          {displayRow1.map((company, i) => (
             <div
-              key={i}
-              className="flex items-center gap-4 bg-white rounded-xl p-3 shadow-sm min-w-[300px] border border-[#e8f1f5]"
+              key={`r1-${i}`}
+              className="flex items-center gap-4 bg-white rounded-xl p-3 shadow-sm min-w-[320px] max-w-[350px] border border-[#e8f1f5]"
             >
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 overflow-hidden bg-white relative">
-                {company.logo ? (
+              <div className="w-14 h-14 rounded-lg flex items-center justify-center shrink-0 overflow-hidden bg-white relative">
+                {(company.logo || company.src) ? (
                   <Image
-                    src={company.logo}
-                    alt={company.name}
+                    src={company.logo || company.src}
+                    alt={company.name || company.alt || "Logo"}
                     fill
                     className="object-contain p-0.5"
                   />
                 ) : (
                   <div className="w-full h-full bg-[#0c494f] flex items-center justify-center">
                     <span className="text-white font-bold text-sm">
-                      {company.initials}
+                      {company.initials || (company.name || company.alt || "LG").substring(0,2).toUpperCase()}
                     </span>
                   </div>
                 )}
               </div>
               <div className="flex flex-col overflow-hidden">
-                <span className="text-[#0c494f] font-bold text-[13px] truncate w-[220px] tracking-tight">
-                  {company.name}
+                <span className="text-[#0c494f] font-bold text-[14px] truncate w-[230px] tracking-tight">
+                  {company.name || company.alt || "Client Logo"}
                 </span>
-                <span className="text-[#64748b] text-[11px] mt-0.5 truncate w-full">
-                  {company.category}
+                <span className="text-[#64748b] text-[12px] mt-0.5 truncate w-full">
+                  {company.category || "Client"}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="flex animate-marquee-reverse whitespace-nowrap gap-6 pl-6 w-max -ml-[300px]">
+          {displayRow2.map((company, i) => (
+            <div
+              key={`r2-${i}`}
+              className="flex items-center gap-4 bg-white rounded-xl p-3 shadow-sm min-w-[320px] max-w-[350px] border border-[#e8f1f5]"
+            >
+              <div className="w-14 h-14 rounded-lg flex items-center justify-center shrink-0 overflow-hidden bg-white relative">
+                {(company.logo || company.src) ? (
+                  <Image
+                    src={company.logo || company.src}
+                    alt={company.name || company.alt || "Logo"}
+                    fill
+                    className="object-contain p-0.5"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#0c494f] flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">
+                      {company.initials || (company.name || company.alt || "LG").substring(0,2).toUpperCase()}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col overflow-hidden">
+                <span className="text-[#0c494f] font-bold text-[14px] truncate w-[230px] tracking-tight">
+                  {company.name || company.alt || "Client Logo"}
+                </span>
+                <span className="text-[#64748b] text-[12px] mt-0.5 truncate w-full">
+                  {company.category || "Client"}
                 </span>
               </div>
             </div>
@@ -177,10 +220,21 @@ export function CompanyLogosMarquee({
             transform: translateX(-50%);
           }
         }
+        @keyframes marquee-reverse {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0%);
+          }
+        }
         .animate-marquee {
           animation: marquee 60s linear infinite;
         }
-        .animate-marquee:hover {
+        .animate-marquee-reverse {
+          animation: marquee-reverse 60s linear infinite;
+        }
+        .animate-marquee:hover, .animate-marquee-reverse:hover {
           animation-play-state: paused;
         }
       `}</style>

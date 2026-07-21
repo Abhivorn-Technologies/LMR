@@ -15,7 +15,7 @@ export async function GET(request: Request) {
       let data = content?.data || null;
       
       // Auto-migrate old flat home schema to new Block Builder schema
-      if (key === 'home:hero' && data && !data.blocks) {
+      if (key === '/' && data && !data.blocks) {
         data = {
           blocks: [
             { type: 'Hero', content: data },

@@ -1,10 +1,10 @@
 import dbConnect from '@/lib/db';
 import Content from '@/models/Content';
 
-export async function getContent(key: string, defaultValue: any = null) {
+export const getContent = async (key: string, defaultValue: any = null) => {
   try {
     await dbConnect();
-    const content = await Content.findOne({ key });
+    const content = await Content.findOne({ key }).lean();
     
     if (content && content.data) {
       return content.data;
@@ -15,4 +15,4 @@ export async function getContent(key: string, defaultValue: any = null) {
     console.error(`Failed to fetch content for key: ${key}`, error);
     return defaultValue;
   }
-}
+};

@@ -5,7 +5,7 @@ import Content from '@/models/Content';
  * Fetches dynamic content from the database for Server Components.
  * If no content exists for the given key, it gracefully falls back to the defaultData.
  */
-export async function getPageContent<T>(key: string, defaultData: T): Promise<T> {
+export const getPageContent = async <T>(key: string, defaultData: T): Promise<T> => {
   try {
     await dbConnect();
     const result = await Content.findOne({ key }).lean();
@@ -22,4 +22,4 @@ export async function getPageContent<T>(key: string, defaultData: T): Promise<T>
   
   // Fallback to default
   return defaultData;
-}
+};

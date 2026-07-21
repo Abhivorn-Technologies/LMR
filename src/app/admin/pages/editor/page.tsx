@@ -14,7 +14,7 @@ import { aboutPageContent } from '@/lib/content/about';
 import { AVAILABLE_BLOCKS } from '@/components/admin/ComponentPicker';
 
 const DEFAULTS: Record<string, any> = {
-  'home:hero': {
+  '/': {
     blocks: [
       { type: 'Hero', content: homeHeroContent },
       { type: 'StatsBar' },
@@ -28,8 +28,43 @@ const DEFAULTS: Record<string, any> = {
   },
   'nav:footer': footerNavigation,
   'nav:main': mainNavigation,
-  'page:reinsurance': reinsuranceContent,
-  'page:about': aboutPageContent,
+  '/reinsurance': {
+    blocks: [
+      {
+        type: 'ReinsuranceBlock',
+        content: reinsuranceContent
+      }
+    ]
+  },
+  '/about': {
+    blocks: [
+      {
+        type: 'AboutBlock',
+        content: aboutPageContent
+      }
+    ]
+  },
+  '/contact': {
+    blocks: [
+      {
+        type: 'ContactBlock',
+        content: {
+          title: "Speak with our",
+          highlightTitle: "advisory team.",
+          subtitle: "Submit an inquiry below and our expert team will respond promptly during business hours.",
+          contactsTitle: "Key Contacts",
+          contacts: [
+            { name: "Sreevallabhan S", title: "Chairman and Managing Director", phone: "+91 9847424144", email: "cmd@lmbinsurancebroker.com" },
+            { name: "Jayasree S", title: "Principal Officer", phone: "+91 9744341440", email: "jayasree@lmbinsurancebroker.com" },
+            { name: "Viswanathan Krishnan", title: "Executive Director (Reinsurance)", phone: "+91 9820317748", email: "viswanathan@lmbinsurancebroker.com" },
+            { name: "K. B. Vijayasherakan Nair", title: "Executive Director (Underwriting)", phone: "+91 9447731159", email: "kbv@lmbinsurancebroker.com" },
+            { name: "Vijayakumar T", title: "Executive Director (Claims)", phone: "+91 9447552135", email: "vijayakumar@lmbinsurancebroker.com" },
+            { name: "Thangaraj Koilpillai", title: "Executive Director (Reinsurance)", phone: "+91 9969341529", email: "thangaraj@lmbinsurancebroker.com" }
+          ]
+        }
+      }
+    ]
+  },
   'list:process': processSteps,
   'list:why': whyLmbPoints,
   'list:faq': faqItems
@@ -37,14 +72,17 @@ const DEFAULTS: Record<string, any> = {
 
 // Map keys to their preview URLs
 const PREVIEW_URLS: Record<string, string> = {
-  'home:hero': '/',
+  '/': '/',
   'nav:footer': '/',
   'nav:main': '/',
-  'page:reinsurance': '/reinsurance',
+  '/reinsurance': '/reinsurance',
+  '/about': '/about',
   'list:process': '/',
   'list:why': '/',
   'list:faq': '/'
 };
+
+import { productDatabase } from '@/lib/content/products';
 
 function ContentEditorContent() {
   const searchParams = useSearchParams();
@@ -82,6 +120,40 @@ function ContentEditorContent() {
       };
     };
 
+    const getDynamicDefault = (pageKey: string) => {
+      // Key might be like "/services/general-insurance/car"
+      // Remove leading slash for productDatabase lookup
+      const slug = pageKey.startsWith('/') ? pageKey.slice(1) : pageKey;
+      
+      if (slug.startsWith('services/general-insurance/') || slug.startsWith('services/life-insurance/')) {
+        // Find matching product in database
+        const dbSlug = slug.replace('services/', '');
+        const productData = (productDatabase as any)[dbSlug];
+        
+        if (productData) {
+          return {
+            blocks: [
+              {
+                type: 'PremiumProductLayoutBlock',
+                content: { ...productData }
+              }
+            ]
+          };
+        }
+        
+        // Generic fallback for unknown product pages
+        return {
+          blocks: [
+            {
+              type: 'PremiumProductLayoutBlock',
+              content: { title: slug.split('/').pop()?.replace(/-/g, ' ').toUpperCase() + ' Insurance' }
+            }
+          ]
+        };
+      }
+      return null;
+    };
+
     fetch(`/api/admin/content?key=${key}`)
       .then(res => res.json())
       .then(res => {
@@ -90,12 +162,37 @@ function ContentEditorContent() {
         } else if (DEFAULTS[key]) {
           setData(mergeDefaults(DEFAULTS[key]));
         } else {
-          setData({ _error: 'not_found' });
+          const dynamicDefault = getDynamicDefault(key);
+          if (dynamicDefault) {
+             setData(mergeDefaults(dynamicDefault));
+          } else {
+             // Generic fallback to allow building ANY page from scratch!
+             setData(mergeDefaults({
+               blocks: [
+                 { 
+                   type: 'HeadingBlock', 
+                   content: { 
+                     title: key === '/' ? 'Home' : (key.split('/').pop()?.replace(/-/g, ' ').toUpperCase() || 'New Page'), 
+                     subtitle: 'Start building your page here.' 
+                   } 
+                 }
+               ]
+             }));
+          }
         }
       })
       .catch(err => {
         console.error(err);
-        setData(mergeDefaults(DEFAULTS[key]) || { _error: 'not_found' });
+        const dynamicDefault = getDynamicDefault(key);
+        if (DEFAULTS[key]) {
+          setData(mergeDefaults(DEFAULTS[key]));
+        } else if (dynamicDefault) {
+          setData(mergeDefaults(dynamicDefault));
+        } else {
+          setData(mergeDefaults({
+            blocks: [{ type: 'HeadingBlock', content: { title: 'New Page' } }]
+          }));
+        }
       })
       .finally(() => setLoading(false));
 
@@ -144,7 +241,11 @@ function ContentEditorContent() {
 
       if (event.data?.type === 'FOCUS_BLOCK') {
         const index = event.data.blockIndex;
-        setFocusedBlockIndex(index);
+        // Briefly reset to null to force a state change even if clicking the same block
+        setFocusedBlockIndex(null);
+        setTimeout(() => {
+          setFocusedBlockIndex(index);
+        }, 10);
         
         // Broadcast back to the iframe to update all wrapper UI states
         if (iframeRef.current?.contentWindow) {
@@ -195,6 +296,10 @@ function ContentEditorContent() {
   const getPreviewUrl = (k: string) => {
     if (!k) return '/';
     if (PREVIEW_URLS[k]) return PREVIEW_URLS[k];
+    
+    // If the key is a direct route path (like /contact), use it as the preview URL!
+    if (k.startsWith('/')) return k;
+
     if (k.startsWith('page:')) {
       const parts = k.replace('page:', '').split(':');
       if (parts.length === 1) return `/${parts[0]}`; 

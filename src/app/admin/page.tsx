@@ -1,8 +1,9 @@
 'use client';
 
-import { ArrowUpRight, CheckCircle2, FileText, Settings, Grid, Edit, Trash2, Search, ChevronLeft, ChevronRight, MoreHorizontal, Plus, X, Loader2 } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, FileText, Settings, Grid, Edit, Trash2, Search, ChevronLeft, ChevronRight, ChevronDown, MoreHorizontal, Plus, X, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import useSWR from 'swr';
 
 // Icon mapper helper
 const getIcon = (iconName: string) => {
@@ -13,9 +14,9 @@ const getIcon = (iconName: string) => {
   }
 };
 
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+
 export default function AdminDashboardHome() {
-  const [siteSections, setSiteSections] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
   
   // Search and Filter State
@@ -33,25 +34,12 @@ export default function AdminDashboardHome() {
     title: '', category: 'Life Insurance', type: 'Page', key: ''
   });
 
-  // Fetch real data from MongoDB
-  const fetchPages = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch('/api/admin/pages');
-      const data = await res.json();
-      if (data.success) {
-        setSiteSections(data.data);
-      }
-    } catch (err) {
-      console.error('Failed to fetch pages:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchPages();
-  }, [fetchPages]);
+  // Fetch using SWR for memoization and caching
+  const { data, error, isLoading, mutate } = useSWR('/api/admin/pages', fetcher, {
+    revalidateOnFocus: false
+  });
+  
+  const siteSections = data?.success && data?.data ? data.data : [];
 
   // Reset to page 1 whenever search or category changes
   useEffect(() => {
@@ -70,7 +58,7 @@ export default function AdminDashboardHome() {
       });
       const data = await res.json();
       if (data.success) {
-        setSiteSections([data.data, ...siteSections]);
+        mutate({ success: true, data: [data.data, ...siteSections] }, false);
         setIsModalOpen(false);
         setNewSection({ title: '', category: 'Life Insurance', type: 'Page', key: '' });
       } else {
@@ -94,7 +82,7 @@ export default function AdminDashboardHome() {
       });
       const data = await res.json();
       if (data.success) {
-        setSiteSections(siteSections.filter(s => s._id !== id));
+        mutate({ success: true, data: siteSections.filter((s: any) => s._id !== id) }, false);
       }
     } catch (err) {
       alert('Failed to delete');
@@ -105,7 +93,7 @@ export default function AdminDashboardHome() {
 
   // Memoized Filter logic
   const filteredSections = useMemo(() => {
-    return siteSections.filter((section) => {
+    return siteSections.filter((section: any) => {
       const matchesSearch = section.title.toLowerCase().includes(searchQuery.toLowerCase()) || section.type.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'All Categories' || section.category === selectedCategory;
       return matchesSearch && matchesCategory;
@@ -159,13 +147,7 @@ export default function AdminDashboardHome() {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <select required value={newSection.category} onChange={e => setNewSection({...newSection, category: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#00A3A0] focus:border-[#00A3A0]">
-                  <option value="Life Insurance">Life Insurance</option>
-                  <option value="General Insurance">General Insurance</option>
-                  <option value="Claims Consultancy">Claims Consultancy</option>
-                  <option value="Home">Home</option>
-                  <option value="Services">Services</option>
-                </select>
+                <input required type="text" value={newSection.category} onChange={e => setNewSection({...newSection, category: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#00A3A0] focus:border-[#00A3A0]" placeholder="e.g. About Us, General Insurance, etc." />
               </div>
 
               <div>
@@ -209,29 +191,20 @@ export default function AdminDashboardHome() {
             placeholder="Search through live MongoDB database..."
           />
         </div>
-        <div className="flex items-center space-x-3 w-full md:w-auto">
+        <div className="relative w-full md:w-[240px]">
           <select 
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="block w-full md:w-auto pl-4 pr-10 py-3.5 text-sm font-medium border-gray-200 focus:outline-none focus:ring-4 focus:ring-[#00A3A0]/10 focus:border-[#00A3A0] rounded-2xl border bg-white text-gray-700 shadow-sm cursor-pointer hover:bg-gray-50 transition-colors"
+            className="appearance-none block w-full pl-4 pr-10 py-3.5 text-sm font-semibold border-2 border-gray-100 focus:outline-none focus:ring-4 focus:ring-[#00A3A0]/10 focus:border-[#00A3A0] rounded-2xl bg-gray-50/50 text-gray-700 cursor-pointer hover:bg-white transition-colors"
           >
             <option value="All Categories">All Categories</option>
-            <option value="Life Insurance">Life Insurance</option>
-            <option value="General Insurance">General Insurance</option>
-            <option value="Claims Consultancy">Claims Consultancy</option>
-            <option value="Home">Home</option>
-            <option value="Layout">Layout</option>
-            <option value="Services">Services</option>
+            {Array.from(new Set(siteSections.map((s: any) => s.category))).sort().map((cat: any) => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
-          <button 
-            onClick={() => {
-              setSearchQuery('');
-              setSelectedCategory('All Categories');
-            }}
-            className="px-4 py-3.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-2xl transition-colors whitespace-nowrap"
-          >
-            Clear Filters
-          </button>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400">
+            <ChevronDown className="w-4 h-4" />
+          </div>
         </div>
       </div>
 
@@ -278,7 +251,7 @@ export default function AdminDashboardHome() {
                     </td>
                   </tr>
                 ) : (
-                  currentSections.map((section, index) => {
+                  currentSections.map((section: any, index: number) => {
                     const Icon = getIcon(section.icon);
                     return (
                       <tr key={section._id} className="hover:bg-gray-50/80 transition-colors group">
@@ -308,7 +281,7 @@ export default function AdminDashboardHome() {
                           </div>
                         </td>
                         <td className="px-8 py-5 text-right">
-                          <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="flex items-center justify-end gap-2 transition-opacity">
                             <Link href={`/admin/pages/editor?key=${section.key}`}>
                               <button className="p-2 text-[#00A3A0] hover:bg-[#00A3A0]/10 rounded-lg transition-colors" title="Edit">
                                 <Edit className="w-4 h-4" />

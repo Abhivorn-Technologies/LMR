@@ -39,13 +39,14 @@ export default function JsonEditor({ data, onChange, focusedBlockIndex }: JsonEd
             const newData = { ...data, [key]: newValue };
             onChange(newData);
           }} 
+          focusedBlockIndex={focusedBlockIndex}
         />
       ))}
     </div>
   );
 }
 
-function FieldEditor({ label, value, onChange }: { label: string, value: any, onChange: (v: any) => void }) {
+function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: string, value: any, onChange: (v: any) => void, focusedBlockIndex?: number | null }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [activeBlockIndex, setActiveBlockIndex] = useState<number | null>(null);
@@ -54,6 +55,14 @@ function FieldEditor({ label, value, onChange }: { label: string, value: any, on
 
   // Format label: camelCase to Title Case
   const formattedLabel = label.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+  
+  const isMainBlocksArray = label.toLowerCase().endsWith('blocks');
+
+  useEffect(() => {
+    if (isMainBlocksArray && focusedBlockIndex !== null && focusedBlockIndex !== undefined) {
+      setActiveBlockIndex(focusedBlockIndex);
+    }
+  }, [focusedBlockIndex, isMainBlocksArray]);
 
   if (type === 'string') {
     // If we are inside an array item, text inputs are often too narrow, so prefer textarea
@@ -220,7 +229,7 @@ function FieldEditor({ label, value, onChange }: { label: string, value: any, on
   }
 
   if (type === 'array') {
-    const isMainBlocksArray = label === 'blocks';
+    const isMainBlocksArray = label.toLowerCase().endsWith('blocks');
 
     const handleDragStart = (e: React.DragEvent, index: number) => {
       e.dataTransfer.setData('text/plain', index.toString());
