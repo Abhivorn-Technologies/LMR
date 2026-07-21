@@ -1,22 +1,32 @@
-import Image from "next/image";
 import { FadeIn } from "@/components/motion/FadeIn";
-import { SplitText } from "@/components/ui/SplitText";
+import * as LucideIcons from "lucide-react";
+
+const DynamicIcon = ({ name, className, strokeWidth }: { name: string, className?: string, strokeWidth?: number }) => {
+  // @ts-ignore
+  const IconComponent = LucideIcons[name] || LucideIcons.HelpCircle;
+  return <IconComponent className={className} strokeWidth={strokeWidth} />;
+};
 
 const defaultPoints = [
     {
-      title: "Super-Simple Claims",
-      description: "Smartphone enabled Self Inspection done in minutes!",
-      image: "/images/illustrations/rocket_claim.png",
+      title: "Composite Broker",
+      description: "Single advisory relationship across general insurance, reinsurance, life insurance, and risk management.",
+      icon: "Shield",
     },
     {
-      title: "Simple Documents",
-      description: "We are trusted by leading enterprises and corporate clients.",
-      image: "/images/illustrations/thumbs_up_man.png",
+      title: "Licensed Operations",
+      description: "Regulated insurance broking practice operating within applicable IRDAI licensing requirements.",
+      icon: "FileText",
     },
     {
-      title: "Totally Paperless",
-      description: "Digital and real-time processes with zero paper work.",
-      image: "/images/illustrations/paperless_tablet.png",
+      title: "Dedicated Advisory",
+      description: "Account-focused engagement — structured communication, documented recommendations, responsive service.",
+      icon: "Target",
+    },
+    {
+      title: "Market Access",
+      description: "Relationships with domestic and international insurers and reinsurers to secure competitive capacity.",
+      icon: "Globe",
     },
 ];
 
@@ -34,40 +44,44 @@ export function WhyPreview({
   const points = content?.points?.length > 0 ? content.points : defaultPoints;
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      <div className="mx-auto max-w-[1200px] px-6">
+    <section className="py-24 bg-[#fafcff] relative overflow-hidden">
+      <div className="mx-auto max-w-[1400px] px-6">
         
         {/* Header Section */}
-        <div className="text-center mb-20 relative">
-          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#ffb800]/20 -z-10 -translate-y-1/2" />
+        <div className="text-center mb-16 flex flex-col items-center">
           <h2 
-            className={`inline-block bg-white px-8 text-4xl md:text-5xl font-extrabold text-slate-900 ${isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-slate-900 cursor-text' : ''}`}
+            className={`text-4xl md:text-5xl font-extrabold text-[#0c494f] mb-4 relative inline-block ${isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-[#0c494f] cursor-text' : ''}`}
             contentEditable={isEditMode}
             suppressContentEditableWarning
             onBlur={(e) => onContentChange?.({ ...content, title: e.currentTarget.textContent })}
           >
-            {content?.title || "Why Choose Us?"}
+            {content?.title || "Why choose LMB?"}
+            {!isEditMode && (
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-3 bg-[#ffb800] rounded-full -z-10 opacity-80" style={{ marginLeft: '100px' }} />
+            )}
           </h2>
+          <p 
+            className={`text-[16px] text-slate-500 font-medium max-w-2xl mx-auto mt-2 ${isEditMode ? 'outline-none border border-dashed border-transparent hover:border-slate-500 p-1 -m-1 rounded cursor-text' : ''}`}
+            contentEditable={isEditMode}
+            suppressContentEditableWarning
+            onBlur={(e) => onContentChange?.({ ...content, description: e.currentTarget.textContent })}
+          >
+            {content?.description || "A composite broker's duty of care runs to you, the client — that changes everything."}
+          </p>
         </div>
 
-        {/* Illustrations Grid */}
-        <div className="flex flex-wrap justify-center gap-12 md:gap-16 text-center">
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {points.map((point: any, i: number) => (
-            <FadeIn key={point.title || i} delay={i * 0.2}>
-              <div className="flex flex-col items-center w-full sm:w-[320px]">
-                <div className="relative w-64 h-64 mb-6">
-                  {/* Soft background shape */}
-                  <div className="absolute inset-4 bg-slate-50 rounded-full scale-105" />
-                  <Image 
-                    src={point.image || defaultPoints[i]?.image || '/images/illustrations/rocket_claim.png'}
-                    alt={point.title || "Illustration"}
-                    fill
-                    className="object-contain relative z-10"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
+            <FadeIn key={point.title || i} delay={i * 0.1} className="h-full">
+              <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col items-center text-center h-full group">
+                
+                <div className="w-16 h-16 rounded-full bg-[#fff8e7] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <DynamicIcon name={point.icon || "Shield"} className="w-7 h-7 text-[#0c494f]" strokeWidth={2} />
                 </div>
+                
                 <h3 
-                  className={`text-[22px] font-bold text-slate-900 mb-3 tracking-tight ${isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-slate-900 cursor-text' : ''}`}
+                  className={`text-[18px] font-bold text-[#0c494f] mb-3 tracking-tight ${isEditMode ? 'outline-none border-b border-dashed border-transparent hover:border-[#0c494f] cursor-text' : ''}`}
                   contentEditable={isEditMode}
                   suppressContentEditableWarning
                   onBlur={(e) => {
@@ -80,8 +94,9 @@ export function WhyPreview({
                 >
                   {point.title}
                 </h3>
+                
                 <p 
-                  className={`text-[15px] text-slate-500 font-medium max-w-[280px] ${isEditMode ? 'outline-none border border-dashed border-transparent hover:border-slate-500 p-1 -m-1 rounded cursor-text' : ''}`}
+                  className={`text-[13px] text-slate-500 font-medium leading-relaxed flex-grow ${isEditMode ? 'outline-none border border-dashed border-transparent hover:border-slate-500 p-1 -m-1 rounded cursor-text' : ''}`}
                   contentEditable={isEditMode}
                   suppressContentEditableWarning
                   onBlur={(e) => {
@@ -94,6 +109,7 @@ export function WhyPreview({
                 >
                   {point.description}
                 </p>
+
               </div>
             </FadeIn>
           ))}
