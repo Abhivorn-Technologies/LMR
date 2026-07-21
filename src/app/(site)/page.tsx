@@ -17,7 +17,7 @@ import { BlockRenderer, BlockData } from '@/components/cms/BlockRenderer';
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const pageData = await getContent('home:hero', { content: homeHeroContent });
+  const pageData = await getContent('/', { content: homeHeroContent });
 
   // Safely upgrade old database entries that only had 'Hero' data
   let blocks: BlockData[] = pageData?.blocks;

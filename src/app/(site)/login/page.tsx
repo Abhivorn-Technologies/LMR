@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function LoginPage() {
@@ -78,6 +78,12 @@ export default function LoginPage() {
       
       <div className="w-full max-w-5xl bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-100 flex overflow-hidden relative z-10 h-[560px]">
         
+        {/* Back to Home Button */}
+        <Link href="/" className="absolute top-4 left-4 md:top-6 md:left-6 z-20 flex items-center gap-1.5 text-slate-600 hover:text-teal-700 bg-white/80 hover:bg-white px-3 py-1.5 rounded-full shadow-sm border border-slate-200 backdrop-blur-sm transition-all duration-300">
+          <ArrowLeft size={16} />
+          <span className="text-[12px] font-bold">Back to Home</span>
+        </Link>
+
         {/* Left Side - Clean Illustration */}
         <div className="hidden md:flex w-1/2 bg-teal-50/40 p-8 flex-col items-center justify-center relative border-r border-slate-100">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-teal-100/40 via-transparent to-transparent"></div>

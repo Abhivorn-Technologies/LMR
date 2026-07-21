@@ -59,7 +59,7 @@ export function WhyPreview({
                   {/* Soft background shape */}
                   <div className="absolute inset-4 bg-slate-50 rounded-full scale-105" />
                   <Image 
-                    src={point.image}
+                    src={point.image || defaultPoints[i]?.image || '/images/illustrations/rocket_claim.png'}
                     alt={point.title}
                     fill
                     className="object-contain relative z-10"

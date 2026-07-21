@@ -33,7 +33,7 @@ const siteSections = [
     { title: 'Consulting Services', type: 'Page', icon: 'FileText', category: 'Claims Consultancy', status: 'Active', key: 'page:claims:consulting' },
 
     // Other Core Pages
-    { title: 'Home Page Hero', type: 'Page Section', icon: 'FileText', category: 'Home', status: 'Active', key: 'home:hero' },
+    { title: 'Home Page Hero', type: 'Page Section', icon: 'FileText', category: 'Home', status: 'Active', key: '/' },
     { title: 'Footer Navigation', type: 'Global', icon: 'Settings', category: 'Layout', status: 'Active', key: 'nav:footer' },
     { title: 'Main Navigation', type: 'Global', icon: 'Settings', category: 'Layout', status: 'Active', key: 'nav:main' },
     { title: 'Reinsurance Page', type: 'Page', icon: 'FileText', category: 'Services', status: 'Active', key: 'page:reinsurance' },
