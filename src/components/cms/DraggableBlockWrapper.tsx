@@ -68,13 +68,13 @@ export function DraggableBlockWrapper({
     // PUBLIC LIVE SITE: Render statically based on layout
     return (
       <div 
-        style={{ 
-          position: layout ? 'absolute' : 'relative',
-          top: layout?.y || 'auto',
-          left: layout?.x || 'auto',
-          width: layout?.width || '100%',
-          height: layout?.height || 'auto'
-        }}
+        style={layout ? { 
+          position: 'absolute',
+          top: layout.y,
+          left: layout.x,
+          width: layout.width,
+          height: layout.height
+        } : undefined}
         className={layout ? '' : 'w-full'}
       >
         {children}
@@ -82,7 +82,45 @@ export function DraggableBlockWrapper({
     );
   }
 
-  // EDIT MODE: Return interactive RND Canvas Element
+  // EDIT MODE: Return interactive Canvas Element ONLY if layout exists (Freeform)
+  // Otherwise return standard block layout wrapper
+  if (!layout) {
+    return (
+      <div 
+        ref={divRef}
+        onClick={handleSelect}
+        className={`w-full relative border-2 my-2 transition-colors cursor-pointer group hover:shadow-xl rounded-lg overflow-hidden bg-white/30 backdrop-blur-[2px] ${isActive ? 'border-[#00A3A0] shadow-2xl ring-4 ring-[#00A3A0]/20' : 'border-transparent hover:border-[#00A3A0]/50'}`}
+      >
+        {/* Visual Selected Badge */}
+        {isActive && (
+          <div className="absolute top-0 left-0 bg-[#00A3A0] text-white px-4 py-1.5 text-xs font-bold rounded-br-lg flex gap-3 z-50 shadow-md">
+            <span>EDITING IN SIDEBAR</span>
+          </div>
+        )}
+        
+        {/* The actual block component */}
+        <div className={`w-full h-full ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+          {React.isValidElement(children) 
+            ? React.cloneElement(children as React.ReactElement<any>, {
+                isEditMode,
+                isActive,
+                onContentChange: (newContent: any) => {
+                  if (isEditMode) {
+                    window.parent.postMessage({
+                      type: 'UPDATE_BLOCK_CONTENT',
+                      blockIndex,
+                      content: newContent
+                    }, '*');
+                  }
+                }
+              }) 
+            : children}
+        </div>
+      </div>
+    );
+  }
+
+  // Freeform layout (RND)
   return (
     <Rnd
       size={{ width: localLayout.width, height: localLayout.height }}

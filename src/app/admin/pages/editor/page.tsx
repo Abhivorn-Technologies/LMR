@@ -16,14 +16,19 @@ import { AVAILABLE_BLOCKS } from '@/components/admin/ComponentPicker';
 const DEFAULTS: Record<string, any> = {
   '/': {
     blocks: [
-      { type: 'Hero', content: homeHeroContent },
-      { type: 'StatsBar' },
-      { type: 'ServicesPreview' },
-      { type: 'RetailServicesPreview' },
-      { type: 'IndustriesPreview' },
-      { type: 'WhyPreview' },
-      { type: 'TrustMockupPreview' },
-      { type: 'CompanyLogosMarquee' }
+      { 
+        type: 'HomeBlock', 
+        content: {
+          hero: homeHeroContent,
+          stats: {},
+          services: {},
+          retailServices: {},
+          industries: {},
+          why: {},
+          trust: {},
+          logos: {}
+        }
+      }
     ]
   },
   'nav:footer': footerNavigation,
@@ -166,34 +171,26 @@ function ContentEditorContent() {
           if (dynamicDefault) {
              setData(mergeDefaults(dynamicDefault));
           } else {
-             // Generic fallback to allow building ANY page from scratch!
-             setData(mergeDefaults({
-               blocks: [
-                 { 
-                   type: 'HeadingBlock', 
-                   content: { 
-                     title: key === '/' ? 'Home' : (key.split('/').pop()?.replace(/-/g, ' ').toUpperCase() || 'New Page'), 
-                     subtitle: 'Start building your page here.' 
-                   } 
-                 }
-               ]
-             }));
+              // Generic fallback to allow building ANY page from scratch!
+              setData(mergeDefaults({
+                blocks: []
+              }));
+            }
           }
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        const dynamicDefault = getDynamicDefault(key);
-        if (DEFAULTS[key]) {
-          setData(mergeDefaults(DEFAULTS[key]));
-        } else if (dynamicDefault) {
-          setData(mergeDefaults(dynamicDefault));
-        } else {
-          setData(mergeDefaults({
-            blocks: [{ type: 'HeadingBlock', content: { title: 'New Page' } }]
-          }));
-        }
-      })
+        })
+        .catch(err => {
+          console.error(err);
+          const dynamicDefault = getDynamicDefault(key);
+          if (DEFAULTS[key]) {
+            setData(mergeDefaults(DEFAULTS[key]));
+          } else if (dynamicDefault) {
+            setData(mergeDefaults(dynamicDefault));
+          } else {
+            setData(mergeDefaults({
+              blocks: []
+            }));
+          }
+        })
       .finally(() => setLoading(false));
 
     // Listen for live canvas updates from the iframe

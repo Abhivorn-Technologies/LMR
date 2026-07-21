@@ -33,6 +33,7 @@ import { PremiumProductLayoutBlock } from './blocks/PremiumProductLayoutBlock';
 import { ContactBlock } from './blocks/ContactBlock';
 import { AboutBlock } from './blocks/AboutBlock';
 import { ReinsuranceBlock } from './blocks/ReinsuranceBlock';
+import { HomeBlock } from './blocks/HomeBlock';
 
 // A registry mapping string types from JSON to actual React components
 const ComponentRegistry: Record<string, React.ComponentType<any>> = {
@@ -54,6 +55,8 @@ const ComponentRegistry: Record<string, React.ComponentType<any>> = {
   companyLogosMarqueeBlock: CompanyLogosMarquee,
   PremiumProductLayoutBlock,
   premiumProductLayoutBlock: PremiumProductLayoutBlock,
+  HomeBlock,
+  homeBlock: HomeBlock,
   
   // Generic Blocks
   RichTextBlock,
@@ -123,7 +126,7 @@ export function BlockRenderer({ blocks: initialBlocks }: { blocks: any[] }) {
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) return null;
 
   return (
-    <div className="w-full min-h-[800px] relative overflow-hidden bg-white">
+    <div className="w-full min-h-screen relative bg-white">
       {blocks.map((block, index) => {
         // Support both MongoDB (block.type) and Sanity (block._type) structures
         const typeName = block._type || block.type;
@@ -134,7 +137,7 @@ export function BlockRenderer({ blocks: initialBlocks }: { blocks: any[] }) {
         if (!Component) {
           if (PLANNED_BLOCKS.includes(typeName)) {
             return (
-              <DraggableBlockWrapper key={index} blockIndex={index} layout={layout}>
+              <DraggableBlockWrapper key={index} blockIndex={index} layout={layout} type={typeName}>
                 <PlaceholderBlock type={typeName} content={blockContent} />
               </DraggableBlockWrapper>
             );
@@ -156,7 +159,7 @@ export function BlockRenderer({ blocks: initialBlocks }: { blocks: any[] }) {
 
         // Wrap every component in the Draggable Canvas layer
         return (
-          <DraggableBlockWrapper key={`${typeName}-${index}`} blockIndex={index} layout={layout}>
+          <DraggableBlockWrapper key={`${typeName}-${index}`} blockIndex={index} layout={layout} type={typeName}>
             <Component content={blockContent} blockIndex={index} />
           </DraggableBlockWrapper>
         );
