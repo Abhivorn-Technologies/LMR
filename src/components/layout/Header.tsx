@@ -261,7 +261,20 @@ HeaderSimpleDropdown.displayName = "HeaderSimpleDropdown";
 export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [currentHash, setCurrentHash] = useState("");
   const pathname = usePathname();
+
+  useEffect(() => {
+    // Update hash on load and when it changes
+    setCurrentHash(window.location.hash);
+    
+    const handleHashChange = () => {
+      setCurrentHash(window.location.hash);
+    };
+    
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [pathname]); // Re-run when pathname changes to grab new hash
 
   useEffect(() => {
     const handleScroll = () => {
@@ -345,7 +358,18 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
             const linkName = link.name || link.label;
             const linkPath = link.path || link.href;
             
-            const isActive = pathname === linkPath || (linkPath !== "/" && pathname.startsWith(linkPath));
+            let isActive = false;
+            const isHashLink = linkPath.includes('#');
+            
+            if (isHashLink) {
+              isActive = (pathname + currentHash) === linkPath;
+            } else {
+              if (linkPath === "/") {
+                isActive = pathname === "/" && !currentHash;
+              } else {
+                isActive = pathname === linkPath || (linkPath !== "/" && pathname.startsWith(linkPath));
+              }
+            }
 
 
             if (linkName === "General insurance" || linkName === "Life insurance") {
