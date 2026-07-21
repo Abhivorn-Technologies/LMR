@@ -31,7 +31,10 @@ const DEDICATED_ROUTES = [
 
 export async function generateStaticParams() {
   return services
-    .filter((s) => !DEDICATED_ROUTES.includes(s.id))
+    .filter((s) => {
+      const hrefSlug = s.href ? s.href.replace(/^\/services\//, '') : '';
+      return !DEDICATED_ROUTES.includes(s.id) && !DEDICATED_ROUTES.includes(hrefSlug);
+    })
     .map((s) => ({
       serviceId: s.id,
     }));
