@@ -115,6 +115,22 @@ export function WhyPreview({
           ))}
         </div>
 
+        {/* Quote Box */}
+        <FadeIn delay={0.5}>
+          <div className="mt-12 bg-[#0c3c52] rounded-2xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-start gap-6 shadow-[0_20px_40px_rgba(12,60,82,0.15)]">
+            <div className="text-[#ffb800] text-5xl font-serif font-bold leading-none shrink-0 pt-1">
+              "
+            </div>
+            <div 
+              className={`text-white text-[17px] font-medium leading-[1.8] max-w-5xl ${isEditMode ? 'outline-none border border-dashed border-transparent hover:border-white/50 p-2 -m-2 rounded cursor-text' : ''}`}
+              contentEditable={isEditMode}
+              suppressContentEditableWarning
+              onBlur={(e) => onContentChange?.({ ...content, quote: e.currentTarget.innerHTML })}
+              dangerouslySetInnerHTML={{ __html: content?.quote || 'With us by your side, you can rest assured that all of your insurance needs will be met with <strong>speed and efficiency</strong>. Be it endorsements or new quotes for your company, we have you covered. As a Reinsurance Broker, we are constantly striving to not only excel in what we do best, but also to venture into <strong>exciting, uncharted territories within the Reinsurance Market.</strong>' }}
+            />
+          </div>
+        </FadeIn>
+
       </div>
     </section>
   );
