@@ -134,8 +134,18 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
           <div className="border border-gray-200 rounded-lg overflow-hidden bg-white react-quill-container">
             <ReactQuill 
               theme="snow"
-              value={value} 
-              onChange={onChange}
+              value={value || ''} 
+              onChange={(content, delta, source, editor) => {
+                // Prevent infinite loops caused by Quill's automatic formatting/sanitization on mount
+                if (content !== value && content !== '<p><br></p>') {
+                  // Only update if it's a genuine change
+                  onChange(content);
+                } else if (content === '<p><br></p>' && (value === '' || value === undefined)) {
+                  // Ignore initial empty state formatting
+                } else if (content !== value) {
+                  onChange(content);
+                }
+              }}
               modules={modules}
               className="h-[250px] pb-10" // Padding bottom because quill toolbar/content height issues
             />
