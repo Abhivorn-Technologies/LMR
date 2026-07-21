@@ -142,17 +142,17 @@ export default function AdminDashboardHome() {
             <form onSubmit={handleSaveNewSection} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                <input required type="text" value={newSection.title} onChange={e => setNewSection({...newSection, title: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. Pet Insurance" />
+                <input required type="text" value={newSection.title} onChange={e => setNewSection({...newSection, title: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-0 focus:border-[#0d9488]" placeholder="e.g. Pet Insurance" />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <input required type="text" value={newSection.category} onChange={e => setNewSection({...newSection, category: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. About Us, General Insurance, etc." />
+                <input required type="text" value={newSection.category} onChange={e => setNewSection({...newSection, category: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-0 focus:border-[#0d9488]" placeholder="e.g. About Us, General Insurance, etc." />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                <select required value={newSection.type} onChange={e => setNewSection({...newSection, type: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#0d9488] focus:border-[#0d9488]">
+                <select required value={newSection.type} onChange={e => setNewSection({...newSection, type: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-0 focus:border-[#0d9488]">
                   <option value="Page">Page</option>
                   <option value="Tool">Tool</option>
                   <option value="List">List</option>
@@ -161,7 +161,7 @@ export default function AdminDashboardHome() {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Unique Key</label>
-                <input required type="text" value={newSection.key} onChange={e => setNewSection({...newSection, key: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. page:gen:pet" />
+                <input required type="text" value={newSection.key} onChange={e => setNewSection({...newSection, key: e.target.value})} className="w-full px-4 py-2 border border-[#d1d5db] rounded-xl focus:outline-none focus:ring-0 focus:border-[#0d9488]" placeholder="e.g. page:gen:pet" />
                 <p className="text-xs text-gray-500 mt-1">This connects the metadata to the actual JSON content.</p>
               </div>
 
@@ -195,7 +195,7 @@ export default function AdminDashboardHome() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#0d9488] focus:ring-1 focus:ring-[#0d9488] sm:text-sm transition-all text-gray-900"
+                className="block w-full pl-10 pr-3 py-2 border border-[#d1d5db] rounded-lg leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-[#0d9488] sm:text-sm transition-all text-gray-900"
                 placeholder="Search database..."
               />
             </div>
@@ -203,7 +203,7 @@ export default function AdminDashboardHome() {
               <select 
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="appearance-none block w-full pl-3 pr-8 py-2 text-sm border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488] rounded-lg bg-gray-50 text-gray-700 cursor-pointer hover:bg-white transition-colors"
+                className="appearance-none block w-full pl-3 pr-8 py-2 text-sm border border-[#d1d5db] focus:outline-none focus:ring-0 focus:border-[#0d9488] rounded-lg bg-gray-50 text-gray-700 cursor-pointer hover:bg-white transition-colors"
               >
                 <option value="All Categories">All Categories</option>
                 {Array.from(new Set(siteSections.map((s: any) => s.category))).sort().map((cat: any) => (
@@ -232,10 +232,7 @@ export default function AdminDashboardHome() {
             <table className="w-full text-left border-collapse min-w-[800px]">
               <thead>
                 <tr className="bg-[#f8f9fa] border-b border-gray-100">
-                  <th className="px-8 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] w-[40px]">
-                    <input type="checkbox" className="rounded text-[#0d9488] focus:ring-[#0d9488] border-gray-300 w-4 h-4" />
-                  </th>
-                  <th className="px-6 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px]">Section Title</th>
+                  <th className="px-8 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px]">Section Title</th>
                   <th className="px-6 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] text-center">Section Type</th>
                   <th className="px-6 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] text-center">Categories</th>
                   <th className="px-6 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] text-center">Status</th>
@@ -245,7 +242,7 @@ export default function AdminDashboardHome() {
               <tbody className="divide-y divide-gray-50">
                 {currentSections.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-8 py-16 text-center text-gray-500 font-medium">
+                    <td colSpan={5} className="px-8 py-16 text-center text-gray-500 font-medium">
                       No matching pages found in the database.
                     </td>
                   </tr>
@@ -255,10 +252,7 @@ export default function AdminDashboardHome() {
                     const isNoneCategory = !section.category || section.category === 'None';
                     return (
                       <tr key={section._id} className="hover:bg-gray-50/80 transition-colors group">
-                        <td className="px-8 py-4 w-[40px]">
-                          <input type="checkbox" className="rounded text-[#0d9488] focus:ring-[#0d9488] border-gray-300 w-4 h-4" />
-                        </td>
-                        <td className="px-6 py-4">
+                        <td className="px-8 py-4">
                           <div className="flex items-center gap-3">
                             <span className="text-gray-500 font-bold text-sm w-4">{(currentPage - 1) * itemsPerPage + index + 1}</span>
                             <span className="font-bold text-gray-900 capitalize">{section.title}</span>
