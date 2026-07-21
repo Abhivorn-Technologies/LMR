@@ -142,17 +142,17 @@ export default function AdminDashboardHome() {
             <form onSubmit={handleSaveNewSection} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                <input required type="text" value={newSection.title} onChange={e => setNewSection({...newSection, title: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#00A3A0] focus:border-[#00A3A0]" placeholder="e.g. Pet Insurance" />
+                <input required type="text" value={newSection.title} onChange={e => setNewSection({...newSection, title: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. Pet Insurance" />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <input required type="text" value={newSection.category} onChange={e => setNewSection({...newSection, category: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#00A3A0] focus:border-[#00A3A0]" placeholder="e.g. About Us, General Insurance, etc." />
+                <input required type="text" value={newSection.category} onChange={e => setNewSection({...newSection, category: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. About Us, General Insurance, etc." />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                <select required value={newSection.type} onChange={e => setNewSection({...newSection, type: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#00A3A0] focus:border-[#00A3A0]">
+                <select required value={newSection.type} onChange={e => setNewSection({...newSection, type: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#0d9488] focus:border-[#0d9488]">
                   <option value="Page">Page</option>
                   <option value="Tool">Tool</option>
                   <option value="List">List</option>
@@ -161,13 +161,13 @@ export default function AdminDashboardHome() {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Unique Key</label>
-                <input required type="text" value={newSection.key} onChange={e => setNewSection({...newSection, key: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#00A3A0] focus:border-[#00A3A0]" placeholder="e.g. page:gen:pet" />
+                <input required type="text" value={newSection.key} onChange={e => setNewSection({...newSection, key: e.target.value})} className="w-full px-4 py-2 border rounded-xl focus:ring-[#0d9488] focus:border-[#0d9488]" placeholder="e.g. page:gen:pet" />
                 <p className="text-xs text-gray-500 mt-1">This connects the metadata to the actual JSON content.</p>
               </div>
 
               <div className="pt-4 flex justify-end gap-3">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-xl transition-colors">Cancel</button>
-                <button type="submit" disabled={isSaving} className="px-5 py-2 bg-[#00A3A0] text-white font-medium rounded-xl hover:bg-[#008f8c] transition-colors flex items-center gap-2">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition-colors">Cancel</button>
+                <button type="submit" disabled={isSaving} className="px-5 py-2 bg-[#0d9488] text-white font-medium rounded-lg hover:bg-[#0f766e] transition-colors flex items-center gap-2">
                   {isSaving && <Loader2 className="w-4 h-4 animate-spin" />}
                   {isSaving ? 'Saving...' : 'Create Section'}
                 </button>
@@ -177,70 +177,69 @@ export default function AdminDashboardHome() {
         </div>
       )}
 
-      {/* Search & Filter Area */}
-      <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="relative w-full max-w-2xl">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-[#00A3A0]" />
-          </div>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-100 rounded-2xl leading-5 bg-gray-50/50 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#00A3A0] focus:ring-4 focus:ring-[#00A3A0]/10 sm:text-sm transition-all text-gray-900 font-medium"
-            placeholder="Search through live MongoDB database..."
-          />
-        </div>
-        <div className="relative w-full md:w-[240px]">
-          <select 
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="appearance-none block w-full pl-4 pr-10 py-3.5 text-sm font-semibold border-2 border-gray-100 focus:outline-none focus:ring-4 focus:ring-[#00A3A0]/10 focus:border-[#00A3A0] rounded-2xl bg-gray-50/50 text-gray-700 cursor-pointer hover:bg-white transition-colors"
-          >
-            <option value="All Categories">All Categories</option>
-            {Array.from(new Set(siteSections.map((s: any) => s.category))).sort().map((cat: any) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400">
-            <ChevronDown className="w-4 h-4" />
-          </div>
-        </div>
-      </div>
-
       {/* Main Content Area */}
       <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col min-h-[600px]">
-        {/* Header */}
-        <div className="px-8 py-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white sticky top-0 z-10">
+        {/* Header with integrated Search */}
+        <div className="px-8 py-6 border-b border-gray-100 flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white sticky top-0 z-10">
           <div>
             <h2 className="text-xl font-bold text-gray-900 tracking-tight">Manage Content</h2>
             <p className="text-sm text-gray-500 mt-1 font-medium">Select a section to edit its content.</p>
           </div>
-          <button onClick={() => setIsModalOpen(true)} className="inline-flex items-center justify-center px-5 py-2.5 bg-[#00A3A0] text-white text-sm font-semibold rounded-xl hover:bg-[#008f8c] hover:shadow-md hover:shadow-[#00A3A0]/20 transition-all duration-200 gap-2">
-            <Plus className="w-4 h-4" />
-            <span>New section</span>
-          </button>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+            <div className="relative w-full sm:w-64">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-[#0d9488]" />
+              </div>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#0d9488] focus:ring-1 focus:ring-[#0d9488] sm:text-sm transition-all text-gray-900"
+                placeholder="Search database..."
+              />
+            </div>
+            <div className="relative w-full sm:w-48 shrink-0">
+              <select 
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="appearance-none block w-full pl-3 pr-8 py-2 text-sm border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#0d9488] focus:border-[#0d9488] rounded-lg bg-gray-50 text-gray-700 cursor-pointer hover:bg-white transition-colors"
+              >
+                <option value="All Categories">All Categories</option>
+                {Array.from(new Set(siteSections.map((s: any) => s.category))).sort().map((cat: any) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
+                <ChevronDown className="w-4 h-4" />
+              </div>
+            </div>
+            <button onClick={() => setIsModalOpen(true)} className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center px-4 py-2 bg-[#0d9488] text-white text-sm font-medium rounded-lg hover:bg-[#0f766e] transition-all duration-200 gap-2">
+              <Plus className="w-4 h-4" />
+              <span>New section</span>
+            </button>
+          </div>
         </div>
 
         {/* Table */}
         <div className="flex-1 overflow-x-auto custom-scrollbar">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center h-64 gap-3">
-              <Loader2 className="w-8 h-8 text-[#00A3A0] animate-spin" />
+              <Loader2 className="w-8 h-8 text-[#0d9488] animate-spin" />
               <p className="text-gray-500 font-medium">Loading live database...</p>
             </div>
           ) : (
             <table className="w-full text-left border-collapse min-w-[800px]">
               <thead>
-                <tr className="bg-gray-50/80 border-b border-gray-100">
-                  <th className="px-8 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider w-12">
-                    <input type="checkbox" className="rounded text-[#00A3A0] focus:ring-[#00A3A0] border-gray-300 w-4 h-4" />
+                <tr className="bg-[#f8f9fa] border-b border-gray-100">
+                  <th className="px-8 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] w-[40px]">
+                    <input type="checkbox" className="rounded text-[#0d9488] focus:ring-[#0d9488] border-gray-300 w-4 h-4" />
                   </th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Section Title</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Section Type</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Categories</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Status</th>
-                  <th className="px-8 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Options</th>
+                  <th className="px-6 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px]">Section Title</th>
+                  <th className="px-6 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] text-center">Section Type</th>
+                  <th className="px-6 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] text-center">Categories</th>
+                  <th className="px-6 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] text-center">Status</th>
+                  <th className="px-8 py-4 text-[12px] font-[600] text-[#6b7280] uppercase tracking-[0.5px] text-right">Options</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -253,47 +252,52 @@ export default function AdminDashboardHome() {
                 ) : (
                   currentSections.map((section: any, index: number) => {
                     const Icon = getIcon(section.icon);
+                    const isNoneCategory = !section.category || section.category === 'None';
                     return (
                       <tr key={section._id} className="hover:bg-gray-50/80 transition-colors group">
-                        <td className="px-8 py-5">
-                          <input type="checkbox" className="rounded text-[#00A3A0] focus:ring-[#00A3A0] border-gray-300 w-4 h-4" />
+                        <td className="px-8 py-4 w-[40px]">
+                          <input type="checkbox" className="rounded text-[#0d9488] focus:ring-[#0d9488] border-gray-300 w-4 h-4" />
                         </td>
-                        <td className="px-6 py-5">
+                        <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <span className="text-gray-300 font-bold text-sm w-4">{(currentPage - 1) * itemsPerPage + index + 1}</span>
-                            <span className="font-bold text-gray-900">{section.title}</span>
+                            <span className="font-bold text-gray-900 capitalize">{section.title}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-5">
+                        <td className="px-6 py-4">
                           <div className="flex justify-center">
-                            <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-[#00A3A0]/10 text-[#00A3A0] gap-1.5 border border-[#00A3A0]/20">
+                            <span className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-[#0d9488]/10 text-[#0d9488] gap-1.5 border border-[#0d9488]/20">
                               <Icon className="w-3.5 h-3.5" />
                               {section.type}
                             </span>
                           </div>
                         </td>
-                        <td className="px-6 py-5 text-center">
-                          <span className="text-sm font-medium text-gray-500">{section.category}</span>
+                        <td className="px-6 py-4 text-center">
+                          <span className={`text-sm font-medium ${isNoneCategory ? 'text-[#9ca3af]' : 'text-gray-500'}`}>
+                            {section.category || 'None'}
+                          </span>
                         </td>
-                        <td className="px-6 py-5">
+                        <td className="px-6 py-4">
                           <div className="flex justify-center">
-                            <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                            <div className="flex items-center justify-center bg-[#d1fae5] text-[#10b981] p-1 rounded-full">
+                              <CheckCircle2 className="w-4 h-4" />
+                            </div>
                           </div>
                         </td>
-                        <td className="px-8 py-5 text-right">
+                        <td className="px-8 py-4 text-right">
                           <div className="flex items-center justify-end gap-2 transition-opacity">
                             <Link href={`/admin/pages/editor?key=${section.key}`}>
-                              <button className="p-2 text-[#00A3A0] hover:bg-[#00A3A0]/10 rounded-lg transition-colors" title="Edit">
-                                <Edit className="w-4 h-4" />
+                              <button className="text-[#6b7280] hover:text-[#0d9488] transition-colors p-1" title="Edit">
+                                <Edit size={20} />
                               </button>
                             </Link>
                             <button 
                               onClick={() => handleDelete(section._id)}
                               disabled={isDeleting === section._id}
-                              className="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-50" 
+                              className="text-[#6b7280] hover:text-[#ef4444] transition-colors p-1 disabled:opacity-50" 
                               title="Delete"
                             >
-                              {isDeleting === section._id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                              {isDeleting === section._id ? <Loader2 size={20} className="animate-spin" /> : <Trash2 size={20} />}
                             </button>
                           </div>
                         </td>
@@ -307,44 +311,44 @@ export default function AdminDashboardHome() {
         </div>
 
         {/* Dynamic Pagination Footer */}
-        <div className="px-8 py-5 border-t border-gray-100 bg-white flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <select className="border-gray-200 rounded-xl text-sm font-medium text-gray-700 py-2 pl-3 pr-8 focus:ring-[#00A3A0] focus:border-[#00A3A0]">
+        <div className="px-8 py-4 border-t border-gray-100 bg-white flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <select className="border border-[#d1d5db] rounded-lg text-sm font-medium text-gray-700 py-1.5 pl-3 pr-8 focus:ring-[#0d9488] focus:border-[#0d9488] bg-white">
               <option>Bulk action</option>
               <option>Delete selected</option>
             </select>
-            <button className="px-4 py-2 text-sm font-bold text-gray-700 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+            <button className="px-4 py-1.5 text-sm font-medium text-gray-700 border border-[#d1d5db] rounded-lg hover:bg-gray-50 transition-colors">
               Apply
             </button>
           </div>
           
           <div className="flex items-center gap-6">
-            <p className="text-sm font-medium text-gray-500">
+            <p className="text-sm font-medium text-gray-500 hidden md:block">
               Showing {currentSections.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-
               {Math.min(currentPage * itemsPerPage, filteredSections.length)} of {filteredSections.length} records
             </p>
             
-            <div className="flex items-center gap-1.5 bg-gray-50 p-1 rounded-2xl border border-gray-100">
+            <div className="flex items-center gap-1">
               <button 
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1 || totalPages === 0}
-                className="p-2 rounded-xl text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-sm disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:shadow-none transition-all"
+                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-5 h-5" />
               </button>
               
-              <div className="flex items-center gap-1 px-2">
+              <div className="flex items-center gap-1 px-1">
                 {getPaginationGroup().map((page, index) => (
                   <button
                     key={index}
                     onClick={() => typeof page === 'number' ? setCurrentPage(page) : null}
                     disabled={page === '...'}
-                    className={`w-9 h-9 flex items-center justify-center rounded-xl text-sm font-bold transition-all ${
+                    className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-all ${
                       page === currentPage 
-                        ? 'bg-[#00A3A0] text-white shadow-md shadow-[#00A3A0]/20' 
+                        ? 'bg-[#0d9488] text-white' 
                         : page === '...'
                           ? 'text-gray-400 cursor-default'
-                          : 'text-gray-600 hover:bg-white hover:shadow-sm'
+                          : 'text-gray-600 hover:bg-gray-100'
                     }`}
                   >
                     {page}
@@ -355,9 +359,9 @@ export default function AdminDashboardHome() {
               <button 
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages || totalPages === 0}
-                className="p-2 rounded-xl text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-sm disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:shadow-none transition-all"
+                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-all"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>

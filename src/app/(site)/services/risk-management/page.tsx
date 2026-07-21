@@ -74,9 +74,6 @@ function HeroSection() {
           </motion.p>
           
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
-            {/* <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 bg-[#19C8D6] hover:bg-[#15a8b5] text-slate-900 font-bold rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(25,200,214,0.3)] hover:shadow-[0_0_30px_rgba(25,200,214,0.5)] hover:-translate-y-1">
-              Schedule Consultation
-            </Link> */}
             <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl backdrop-blur-md border border-white/10 transition-all duration-300 hover:-translate-y-1">
               Contact Experts
             </Link>
