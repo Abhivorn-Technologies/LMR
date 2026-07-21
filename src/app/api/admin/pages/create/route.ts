@@ -34,15 +34,7 @@ export async function POST(request: Request) {
 
     // 2. Create initial blank Blocks Content
     const initialContent = {
-      blocks: [
-        { 
-          type: 'Hero', 
-          content: { 
-            title: title, 
-            description: 'Start building your new page here!' 
-          } 
-        }
-      ]
+      blocks: []
     };
 
     await Content.create({
