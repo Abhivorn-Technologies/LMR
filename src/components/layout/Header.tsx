@@ -341,11 +341,12 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
           </div>
 
           {navLinks.map((link: any) => {
-            const isActive = pathname === link.path || (pathname.startsWith(link.path) && link.path !== "/");
-            
             // Map mainNav label/path to standard name/path if they used label/href in CMS
             const linkName = link.name || link.label;
             const linkPath = link.path || link.href;
+            
+            const isActive = pathname === linkPath || (linkPath !== "/" && pathname.startsWith(linkPath));
+
 
             if (linkName === "General insurance" || linkName === "Life insurance") {
               return <HeaderMegaMenu key={linkPath} link={{...link, name: linkName, path: linkPath}} isActive={isActive} setMobileOpen={setMobileOpen} footerNav={footerNav} />;
