@@ -258,6 +258,42 @@ function ContentEditorContent() {
     return () => window.removeEventListener('message', handleMessage);
   }, [key]);
 
+  // 1. Instantly update live iframe preview whenever data changes (including block deletion)
+  useEffect(() => {
+    if (data && iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage({
+        type: 'PREVIEW_UPDATE',
+        data: data
+      }, '*');
+    }
+  }, [data]);
+
+  // 2. Debounced Auto-save to persist changes to DB so refreshing won't restore deleted items
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (loading || !data || !key) return;
+    
+    // Skip initial load auto-save
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        await fetch('/api/admin/content', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key, data })
+        });
+      } catch (err) {
+        console.error('Auto-save error:', err);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [data, key, loading]);
+
   const handleSave = async () => {
     if (!key || !data) return;
     
