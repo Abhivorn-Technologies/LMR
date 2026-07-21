@@ -301,7 +301,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
       { name: "Risk Management", path: "/services/risk-management" },
       { name: "Claims Consultancy", path: "/services/claims" },
       { name: "Reinsurance", path: "/reinsurance" },
-      { name: "Clients", path: "/clients" },
+      { name: "Clients", path: "/#clients" },
       { name: "Contact Us", path: "/contact" },
     ];
   }, [mainNav]);
