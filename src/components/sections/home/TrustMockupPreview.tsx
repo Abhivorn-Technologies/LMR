@@ -117,21 +117,20 @@ export function TrustMockupPreview({
         </div>
       </div>
 
-      {/* Right Image Area (Smaller boxed image) */}
-      <div className="w-full lg:w-1/2 relative bg-[#F8FBFC] flex items-center justify-center p-8 lg:p-12">
+      {/* Right Image Area (100% Full View) */}
+      <div className="w-full lg:w-1/2 relative bg-[#F8FBFC] p-4 lg:p-8 flex items-stretch">
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9, rotateY: 10, y: 30 }} 
-          whileInView={{ opacity: 1, scale: 1, rotateY: 0, y: 0 }} 
+          initial={{ opacity: 0, scale: 0.95, y: 20 }} 
+          whileInView={{ opacity: 1, scale: 1, y: 0 }} 
           viewport={{ once: true }} 
-          transition={{ duration: 1, type: "spring", bounce: 0.4 }}
-          whileHover={{ scale: 1.03, y: -10, rotateY: 0 }}
-          className="relative w-full max-w-lg aspect-square rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_rgba(14,109,115,0.15)] border-4 border-white cursor-pointer"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative w-full min-h-[400px] lg:min-h-[600px] h-full rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_rgba(14,109,115,0.15)] border-[8px] border-white group"
         >
           <Image 
             src={content?.imageSrc || "/assets/minimal_corporate_architecture_1783160853048.png"}
             alt="LMB Insurance Brokers Legacy"
             fill
-            className="object-cover object-center transition-transform duration-1000 hover:scale-110"
+            className="object-cover object-center transition-transform duration-[1.5s] group-hover:scale-105"
           />
         </motion.div>
       </div>
