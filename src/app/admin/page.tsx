@@ -349,13 +349,22 @@ export default function AdminDashboardHome() {
               {getPaginationGroup().map((page, index) => (
                 <button
                   key={index}
-                  onClick={() => typeof page === 'number' ? setCurrentPage(page) : null}
-                  disabled={page === '...'}
+                  onClick={() => {
+                    if (typeof page === 'number') {
+                      setCurrentPage(page);
+                    } else if (page === '...') {
+                      if (index === 1) {
+                        setCurrentPage(p => Math.max(1, p - 3));
+                      } else {
+                        setCurrentPage(p => Math.min(totalPages, p + 3));
+                      }
+                    }
+                  }}
                   className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-semibold transition-all focus:outline-none focus:ring-0 ${
                     page === currentPage 
                       ? 'bg-[#0d9488] text-white shadow-sm' 
                       : page === '...'
-                        ? 'text-gray-400 cursor-default'
+                        ? 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
                         : 'text-gray-600 hover:bg-gray-100'
                   }`}
                 >
