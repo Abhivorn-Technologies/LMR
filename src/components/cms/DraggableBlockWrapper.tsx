@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 export function DraggableBlockWrapper({ 
   children, 
@@ -17,6 +19,22 @@ export function DraggableBlockWrapper({
   const [isActive, setIsActive] = useState(false);
   const divRef = React.useRef<HTMLDivElement>(null);
 
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: String(blockIndex) });
+
+  const dndStyle = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 50 : 10,
+    position: 'relative' as const,
+  };
+
   useEffect(() => {
     // Check if we are inside the CMS editor iframe
     if (typeof window !== 'undefined' && window.parent !== window) {
@@ -27,7 +45,7 @@ export function DraggableBlockWrapper({
           const isNowActive = e.data.blockIndex === blockIndex;
           setIsActive(isNowActive);
           
-          if (isNowActive && divRef.current) {
+          if (isNowActive && divRef.current && !isDragging) {
              divRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
         }
@@ -35,7 +53,7 @@ export function DraggableBlockWrapper({
       window.addEventListener('message', handleMessage);
       return () => window.removeEventListener('message', handleMessage);
     }
-  }, [blockIndex]);
+  }, [blockIndex, isDragging]);
 
   // Keep local state in sync if parent JSON editor changes it manually
   useEffect(() => {
@@ -84,17 +102,40 @@ export function DraggableBlockWrapper({
 
   if (!layout) {
     // Standard Document Flow Block
+    
+    // Check if it's an Image or Video block that should be resizable in native flow
+    const childElement = children as React.ReactElement<any>;
+    const childType = childElement?.type?.name;
+    const isResizableMedia = childType === 'ImageBlock' || childType === 'VideoBlock';
+
     return (
       <div 
-        ref={divRef}
+        ref={(node) => {
+          setNodeRef(node);
+          if (node) {
+            (divRef as any).current = node;
+          }
+        }}
+        style={dndStyle}
         onClick={handleSelect}
-        className={`w-full relative transition-colors cursor-pointer group-hover:shadow-xl group z-10 hover:z-40 ${isActive ? 'shadow-2xl z-50 ring-2 ring-[#00A3A0]' : 'ring-1 ring-transparent hover:ring-[#00A3A0]/30'}`}
+        className={`w-full transition-colors group ${isActive ? 'z-50' : 'z-10 hover:z-40'}`}
       >
-        {isActive && (
-          <div className="absolute top-0 right-0 bg-[#00A3A0] text-white px-3 py-1 text-[10px] font-bold shadow-md z-50 rounded-bl-lg">
-            EDITING IN SIDEBAR
-          </div>
-        )}
+        <div className={`w-full relative ${isResizableMedia ? 'resize-y overflow-hidden pb-4' : ''} ${isActive ? 'shadow-2xl ring-2 ring-[#00A3A0]' : 'ring-1 ring-transparent hover:ring-[#00A3A0]/30 cursor-pointer group-hover:shadow-xl'}`}>
+          {isActive && (
+            <div 
+              {...attributes}
+              {...listeners}
+              className="absolute top-0 right-0 bg-[#00A3A0] text-white px-3 py-1 text-[10px] font-bold shadow-md z-50 rounded-bl-lg flex items-center gap-2 cursor-grab active:cursor-grabbing hover:bg-[#008f8c]"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg>
+              DRAG TO REORDER | EDITING IN SIDEBAR
+            </div>
+          )}
+          {isActive && isResizableMedia && (
+            <div className="absolute bottom-0 right-0 w-4 h-4 bg-[#00A3A0] cursor-ns-resize pointer-events-none z-50 rounded-tl-sm flex items-center justify-center">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M21 15l-6 6M21 8l-13 13"/></svg>
+            </div>
+          )}
         <div className={`w-full ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}>
           {React.isValidElement(children) 
             ? React.cloneElement(children as React.ReactElement<any>, {
@@ -113,7 +154,8 @@ export function DraggableBlockWrapper({
             : children}
         </div>
       </div>
-    );
+    </div>
+  );
   }
 
   // EDIT MODE: Return interactive RND Canvas Element for absolutely positioned blocks

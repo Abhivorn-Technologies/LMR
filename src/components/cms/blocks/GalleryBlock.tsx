@@ -58,7 +58,7 @@ export function GalleryBlock({
               className="relative w-full aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group bg-gray-100"
             >
               <img
-                src={img.src || 'https://via.placeholder.com/800'}
+                src={img.src || 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800'}
                 alt={img.alt || `Gallery Image ${idx + 1}`}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />

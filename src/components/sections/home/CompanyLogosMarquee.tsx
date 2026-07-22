@@ -102,7 +102,6 @@ export function CompanyLogosMarquee({
   isActive?: boolean;
   onContentChange?: (content: any) => void;
 }) {
-  const [isMounted, setIsMounted] = useState(false);
   const activeCompanies = content?.logos?.length > 0 ? content.logos : defaultCompanies;
 
   // Split into two rows
@@ -113,12 +112,6 @@ export function CompanyLogosMarquee({
   // If there are very few companies, we might just duplicate them so the marquee still works
   const displayRow1 = row1.length > 0 ? [...row1, ...row1, ...row1, ...row1, ...row1, ...row1] : [];
   const displayRow2 = row2.length > 0 ? [...row2, ...row2, ...row2, ...row2, ...row2, ...row2] : displayRow1;
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return null;
 
   return (
     <section id="clients" className="scroll-mt-24 py-16 overflow-hidden bg-[#f4f9f9] relative border-t border-b border-[#e5f0f0]">
@@ -149,9 +142,9 @@ export function CompanyLogosMarquee({
               className="flex items-center gap-4 bg-white rounded-xl p-3 shadow-sm min-w-[320px] max-w-[350px] border border-[#e8f1f5]"
             >
               <div className="w-14 h-14 rounded-lg flex items-center justify-center shrink-0 overflow-hidden bg-white relative">
-                {(company.logo || company.src) ? (
+                {(company.logo || company.src || company.url) ? (
                   <Image
-                    src={company.logo || company.src}
+                    src={company.logo || company.src || company.url}
                     alt={company.name || company.alt || "Logo"}
                     fill
                     className="object-contain p-0.5"
@@ -183,9 +176,9 @@ export function CompanyLogosMarquee({
               className="flex items-center gap-4 bg-white rounded-xl p-3 shadow-sm min-w-[320px] max-w-[350px] border border-[#e8f1f5]"
             >
               <div className="w-14 h-14 rounded-lg flex items-center justify-center shrink-0 overflow-hidden bg-white relative">
-                {(company.logo || company.src) ? (
+                {(company.logo || company.src || company.url) ? (
                   <Image
-                    src={company.logo || company.src}
+                    src={company.logo || company.src || company.url}
                     alt={company.name || company.alt || "Logo"}
                     fill
                     className="object-contain p-0.5"

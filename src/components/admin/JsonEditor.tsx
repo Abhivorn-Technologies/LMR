@@ -100,14 +100,21 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
       const file = e.target.files?.[0];
       if (!file) return;
 
-      // Strict Validation
-      if (isVideo && !file.type.startsWith('video/')) {
-        alert('Invalid file format. Please upload a valid video file.');
+      // Strict Validation with Extension Fallback for OS inconsistencies
+      const ext = file.name.split('.').pop()?.toLowerCase() || '';
+      const videoExts = ['mp4', 'webm', 'ogg', 'mov', 'mkv', 'avi', 'wmv', 'm4v'];
+      const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'avif'];
+      
+      const isActualVideo = file.type.startsWith('video/') || videoExts.includes(ext);
+      const isActualImage = file.type.startsWith('image/') || imageExts.includes(ext);
+
+      if (isVideo && !isActualVideo) {
+        alert('Invalid file format. Please upload a valid video file (mp4, webm, mov, etc).');
         e.target.value = ''; // clear input
         return;
       }
-      if (isImageSpecific && !file.type.startsWith('image/')) {
-        alert('Invalid file format. Please upload a valid image file.');
+      if (isImageSpecific && !isActualImage) {
+        alert('Invalid file format. Please upload a valid image file (jpg, png, webp, etc).');
         e.target.value = '';
         return;
       }
@@ -199,16 +206,24 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                 placeholder="Or type URL manually..."
               />
             </div>
-            {value && value.startsWith('/') && (
-              <img 
-                src={value} 
-                alt="Preview" 
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                  (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<div class="w-full p-4 border border-dashed border-red-300 bg-red-50 text-red-500 rounded text-sm text-center">Image not found on server.</div>');
-                }}
-                className="w-full max-h-32 object-contain rounded border border-gray-200 mt-2 bg-gray-50" 
-              />
+            {value && (value.startsWith('/') || value.startsWith('http')) && (
+              isVideo || value.match(/\.(mp4|webm|ogg)$/i) ? (
+                <video 
+                  src={value} 
+                  controls 
+                  className="w-full max-h-32 object-contain rounded border border-gray-200 mt-2 bg-gray-900" 
+                />
+              ) : (
+                <img 
+                  src={value} 
+                  alt="Preview" 
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<div class="w-full p-4 border border-dashed border-red-300 bg-red-50 text-red-500 rounded text-sm text-center">Media preview failed to load.</div>');
+                  }}
+                  className="w-full max-h-32 object-contain rounded border border-gray-200 mt-2 bg-gray-50" 
+                />
+              )
             )}
           </div>
         ) : (
@@ -335,7 +350,15 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
         
         {isExpanded && (
           <div className="p-4 space-y-3 bg-gray-50/50">
-            {value.map((item: any, index: number) => (
+            {value.map((item: any, index: number) => {
+              const is2DStringArray = Array.isArray(value) && value.every(row => Array.isArray(row) && row.every(cell => typeof cell === 'string'));
+              
+              if (is2DStringArray) {
+                // If it's a 2D array, don't map here, render the grid below
+                return null;
+              }
+
+              return (
               <div 
                 id={isMainBlocksArray ? `block-editor-${index}` : undefined}
                 key={index} 
@@ -430,17 +453,111 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                   </div>
                 )}
               </div>
-            ))}
+            )})}
             
-            <button 
+            {/* 2D Array Table Editor UI */}
+            {Array.isArray(value) && value.every(row => Array.isArray(row) && row.every(cell => typeof cell === 'string')) && (
+              <div className="overflow-x-auto w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+                <table className="w-full text-sm divide-y divide-gray-300">
+                  <tbody className="divide-y divide-gray-200">
+                    {value.map((row: string[], rIndex: number) => (
+                      <tr key={rIndex} className="divide-x divide-gray-200">
+                        {row.map((cell: string, cIndex: number) => (
+                          <td key={cIndex} className="p-0">
+                            <input
+                              type="text"
+                              value={cell}
+                              onChange={(e) => {
+                                const newArr = [...value];
+                                const newRow = [...newArr[rIndex]];
+                                newRow[cIndex] = e.target.value;
+                                newArr[rIndex] = newRow;
+                                onChange(newArr);
+                              }}
+                              className={`w-full border-0 p-2.5 focus:ring-2 focus:ring-inset focus:ring-[#00A3A0] focus:outline-none transition-shadow ${rIndex === 0 ? 'bg-gray-50 font-semibold' : 'bg-white'}`}
+                              placeholder={`Cell`}
+                            />
+                          </td>
+                        ))}
+                        <td className="w-10 p-0 text-center bg-gray-50">
+                          <button
+                            onClick={() => {
+                              if(value.length <= 1) return; // don't delete last row
+                              const newArr = [...value];
+                              newArr.splice(rIndex, 1);
+                              onChange(newArr);
+                            }}
+                            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors"
+                            title="Delete Row"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="flex gap-2 p-3 bg-gray-50 border-t border-gray-300">
+                  <button
+                    onClick={() => {
+                      const newArr = [...value];
+                      // copy cols count of first row
+                      const cols = newArr[0].length;
+                      newArr.push(new Array(cols).fill(''));
+                      onChange(newArr);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#00A3A0] bg-[#00A3A0]/10 rounded-md hover:bg-[#00A3A0]/20 transition-colors"
+                  >
+                    <Plus size={14} /> Add Row
+                  </button>
+                  <button
+                    onClick={() => {
+                      const newArr = value.map(row => [...row, '']);
+                      onChange(newArr);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors"
+                  >
+                    <Plus size={14} /> Add Column
+                  </button>
+                  <button
+                    onClick={() => {
+                      if(value[0].length <= 1) return; // don't delete last col
+                      const newArr = value.map(row => {
+                        const newRow = [...row];
+                        newRow.pop();
+                        return newRow;
+                      });
+                      onChange(newArr);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 rounded-md hover:bg-red-100 transition-colors ml-auto"
+                  >
+                    <Trash2 size={14} /> Delete Last Col
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {!isMainBlocksArray && !(Array.isArray(value) && value.every(row => Array.isArray(row) && row.every(cell => typeof cell === 'string'))) && (
+              <button 
               onClick={() => {
                 if (isMainBlocksArray) {
                   setPickerOpen(true);
                 } else {
                   // Determine template for new item based on first item
-                  const template = value.length > 0 
-                    ? (typeof value[0] === 'object' ? Object.keys(value[0]).reduce((acc:any, k) => ({...acc, [k]: ''}), {}) : '')
-                    : '';
+                  const createTemplate = (base: any): any => {
+                    if (Array.isArray(base)) return base.map(item => createTemplate(item));
+                    if (typeof base === 'object' && base !== null) {
+                      return Object.keys(base).reduce((acc: any, k) => {
+                        const val = base[k];
+                        return {
+                          ...acc,
+                          [k]: createTemplate(val)
+                        };
+                      }, {});
+                    }
+                    return typeof base === 'boolean' ? false : typeof base === 'number' ? 0 : '';
+                  };
+                  const template = value.length > 0 ? createTemplate(value[0]) : '';
                   onChange([...value, template]);
                 }
               }}
@@ -448,6 +565,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
             >
               <Plus size={18} /> {isMainBlocksArray ? 'Add New Block' : `Add New ${formattedLabel.replace(/s$/, '')}`}
             </button>
+            )}
             
             {isMainBlocksArray && (
               <ComponentPicker 

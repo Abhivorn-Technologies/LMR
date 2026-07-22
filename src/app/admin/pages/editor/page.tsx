@@ -239,6 +239,17 @@ function ContentEditorContent() {
         });
       }
 
+      if (event.data?.type === 'REORDER_BLOCKS') {
+        const { oldIndex, newIndex } = event.data;
+        setData((prev: any) => {
+          if (!prev || !prev.blocks) return prev;
+          const newBlocks = [...prev.blocks];
+          const [movedBlock] = newBlocks.splice(oldIndex, 1);
+          newBlocks.splice(newIndex, 0, movedBlock);
+          return { ...prev, blocks: newBlocks };
+        });
+      }
+
       if (event.data?.type === 'FOCUS_BLOCK') {
         const index = event.data.blockIndex;
         // Briefly reset to null to force a state change even if clicking the same block
