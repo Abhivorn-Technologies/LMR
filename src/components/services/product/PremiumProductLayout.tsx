@@ -53,16 +53,16 @@ export function PremiumProductLayout({ data, images }: PremiumProductLayoutProps
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={slideInLeft}
-            className="flex justify-center relative"
+            className="flex justify-center relative w-full"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-yellow-100 to-yellow-50 rounded-[3rem] transform -rotate-3 scale-105 -z-10"></div>
-            <div className="rounded-[2.5rem] overflow-hidden shadow-2xl w-full flex items-center justify-center p-8 bg-white/50 backdrop-blur-sm">
+            <div className="rounded-[2.5rem] overflow-hidden shadow-2xl w-full max-w-[500px] aspect-square flex items-center justify-center p-4 md:p-8 bg-white/50 backdrop-blur-sm relative">
               <motion.img 
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.7 }}
                 src={images.hero} 
                 alt={`What is ${data.title}`} 
-                className="w-full h-auto object-contain drop-shadow-xl" 
+                className="w-full h-full object-contain drop-shadow-xl max-h-[250px] md:max-h-[400px]" 
                 onError={(e) => { e.currentTarget.src = "/assets/image3.jpeg"; }}
               />
             </div>
