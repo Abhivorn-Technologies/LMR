@@ -66,7 +66,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (isEditor) {
     return (
       <html lang="en">
-        <body>
+        <body suppressHydrationWarning>
           <div className="min-h-screen bg-[#f8fafc] font-sans">
             {children}
           </div>

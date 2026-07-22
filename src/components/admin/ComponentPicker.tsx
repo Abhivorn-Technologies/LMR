@@ -130,11 +130,11 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'ImageGalleryBlock', category: 'Media', label: 'Gallery', description: 'Grid or masonry image gallery.', icon: <ImagePlus size={28} className="text-emerald-500" />,
-    template: { type: 'GalleryBlock', content: { style: 'grid', images: [{ url: '/assets/image1.jpeg', caption: 'Image 1' }] } }
+    template: { type: 'GalleryBlock', content: { style: 'grid', columns: 3, images: [{ src: '/assets/image1.jpeg', alt: 'Image 1' }] } }
   },
   {
     type: 'VideoBlock', category: 'Media', label: 'Video', description: 'Embed YouTube, Vimeo or MP4.', icon: <FileVideo size={28} className="text-emerald-500" />,
-    template: { type: 'VideoBlock', content: { url: '', autoplay: false, loop: false } }
+    template: { type: 'VideoBlock', content: { videoUrl: '', autoplay: false, loop: false } }
   },
   {
     type: 'LogoSliderBlock', category: 'Media', label: 'Logo Slider', description: 'Infinite scrolling client logos.', icon: <PlaySquare size={28} className="text-emerald-500" />,

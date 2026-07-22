@@ -82,7 +82,41 @@ export function DraggableBlockWrapper({
     );
   }
 
-  // EDIT MODE: Return interactive RND Canvas Element
+  if (!layout) {
+    // Standard Document Flow Block
+    return (
+      <div 
+        ref={divRef}
+        onClick={handleSelect}
+        className={`w-full relative transition-colors cursor-pointer group-hover:shadow-xl group z-10 hover:z-40 ${isActive ? 'shadow-2xl z-50 ring-2 ring-[#00A3A0]' : 'ring-1 ring-transparent hover:ring-[#00A3A0]/30'}`}
+      >
+        {isActive && (
+          <div className="absolute top-0 right-0 bg-[#00A3A0] text-white px-3 py-1 text-[10px] font-bold shadow-md z-50 rounded-bl-lg">
+            EDITING IN SIDEBAR
+          </div>
+        )}
+        <div className={`w-full ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+          {React.isValidElement(children) 
+            ? React.cloneElement(children as React.ReactElement<any>, {
+                isEditMode,
+                isActive,
+                onContentChange: (newContent: any) => {
+                  if (isEditMode) {
+                    window.parent.postMessage({
+                      type: 'UPDATE_BLOCK_CONTENT',
+                      blockIndex,
+                      content: newContent
+                    }, '*');
+                  }
+                }
+              }) 
+            : children}
+        </div>
+      </div>
+    );
+  }
+
+  // EDIT MODE: Return interactive RND Canvas Element for absolutely positioned blocks
   return (
     <Rnd
       size={{ width: localLayout.width, height: localLayout.height }}

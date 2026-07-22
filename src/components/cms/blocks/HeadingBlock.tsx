@@ -15,7 +15,8 @@ export function HeadingBlock({
 }) {
   const { text = '', level = 'h2', alignment = 'left', color = '#111827' } = content || {};
   
-  const Tag = level as any;
+  const validLevel = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(level) ? level : 'h2';
+  const Tag = validLevel as any;
   
   const baseClasses = "font-bold mb-6";
   const sizeMap: Record<string, string> = {
@@ -34,14 +35,22 @@ export function HeadingBlock({
     right: "text-right"
   }[alignment as string] || "text-left";
 
+  const [isEditing, setIsEditing] = React.useState(false);
+
   return (
-    <div className="w-full max-w-7xl mx-auto px-6 py-4">
+    <div 
+      className="w-full max-w-7xl mx-auto px-6 py-4"
+      onDoubleClick={() => {
+        if (isEditMode) setIsEditing(true);
+      }}
+    >
       <Tag 
-        className={`${baseClasses} ${sizeClasses} ${alignClasses} ${isEditMode ? 'outline-none cursor-text transition-colors' : ''} ${isActive ? 'border-b-2 border-dashed border-[#00A3A0]/50 hover:border-[#00A3A0]' : ''}`} 
+        className={`${baseClasses} ${sizeClasses} ${alignClasses} ${isEditMode ? 'outline-none transition-colors' : ''} ${isEditing ? 'cursor-text ring-2 ring-[#00A3A0]/50 rounded' : isEditMode ? 'cursor-pointer' : ''} ${isActive && !isEditing ? 'border-b-2 border-dashed border-[#00A3A0]/50 hover:border-[#00A3A0]' : ''}`} 
         style={{ color }}
-        contentEditable={isEditMode}
+        contentEditable={isEditMode && isEditing}
         suppressContentEditableWarning={true}
         onBlur={(e: React.FocusEvent<HTMLElement>) => {
+          setIsEditing(false);
           if (onContentChange && e.currentTarget.textContent !== text) {
             onContentChange({ text: e.currentTarget.textContent });
           }

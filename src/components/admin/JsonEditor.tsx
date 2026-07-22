@@ -65,15 +65,17 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
   }, [focusedBlockIndex, isMainBlocksArray]);
 
   if (type === 'string') {
+    const isSystemField = label.toLowerCase() === 'type' || label.toLowerCase() === 'id';
+    
     // If we are inside an array item, text inputs are often too narrow, so prefer textarea
     const isInsideArray = label.includes('Item');
-    const isLongText = isInsideArray || value.length > 60 || value.includes('\n') || value.includes('<p>');
+    const isLongText = !isSystemField && (isInsideArray || value.length > 60 || value.includes('\n') || value.includes('<p>'));
     
     // Check if it looks like Rich Text
-    const isRichText = value.includes('<') && value.includes('>');
+    const isRichText = !isSystemField && value.includes('<') && value.includes('>');
     const [forceRichText, setForceRichText] = useState(false);
     
-    const showRichText = isRichText || forceRichText;
+    const showRichText = !isSystemField && (isRichText || forceRichText);
 
     const modules = {
       toolbar: [
@@ -88,12 +90,27 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
     // Check if it's a color field
     const isColor = label.toLowerCase().includes('color');
     
-    // Check if it's an image field
-    const isImage = label.toLowerCase().includes('image') || label.toLowerCase().includes('src') || label.toLowerCase().includes('logo') || label.toLowerCase().includes('avatar') || label.toLowerCase().includes('icon');
+    // Media Field Classification
+    const isVideo = label.toLowerCase().includes('video');
+    const isImageSpecific = label.toLowerCase().includes('image') || label.toLowerCase().includes('src') || label.toLowerCase().includes('logo') || label.toLowerCase().includes('avatar') || label.toLowerCase().includes('icon');
+    const isGenericUrl = label.toLowerCase().includes('url');
+    const isMedia = isVideo || isImageSpecific || isGenericUrl;
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
+
+      // Strict Validation
+      if (isVideo && !file.type.startsWith('video/')) {
+        alert('Invalid file format. Please upload a valid video file.');
+        e.target.value = ''; // clear input
+        return;
+      }
+      if (isImageSpecific && !file.type.startsWith('image/')) {
+        alert('Invalid file format. Please upload a valid image file.');
+        e.target.value = '';
+        return;
+      }
 
       setIsUploading(true);
       const formData = new FormData();
@@ -109,7 +126,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
         }
       } catch (err) {
         console.error(err);
-        alert('Upload failed. Ensure the image is not too large.');
+        alert('Upload failed. Ensure the file is not too large.');
       } finally {
         setIsUploading(false);
       }
@@ -119,7 +136,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
       <div className="flex flex-col gap-1.5 mb-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-bold text-gray-700">{formattedLabel}</label>
-          {!isColor && !isImage && (
+          {!isColor && !isMedia && (
             <button 
               onClick={() => setForceRichText(!forceRichText)}
               className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded transition-colors ${showRichText ? 'bg-[#00A3A0] text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
@@ -161,12 +178,18 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
               className="flex-1 p-2.5 rounded-lg border border-gray-200 focus:border-[#00A3A0] focus:ring-1 focus:ring-[#00A3A0] text-sm text-gray-800 font-mono"
             />
           </div>
-        ) : isImage ? (
+        ) : isMedia ? (
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <label className={`cursor-pointer ${isUploading ? 'bg-gray-200 text-gray-500 border-gray-300' : 'bg-[#00A3A0]/10 hover:bg-[#00A3A0]/20 text-[#00A3A0] border-[#00A3A0]/30'} font-semibold py-2 px-4 rounded-lg border transition-colors text-sm text-center flex-none`}>
                 {isUploading ? 'Uploading...' : 'Choose File'}
-                <input type="file" accept="image/*" onChange={handleUpload} className="hidden" disabled={isUploading} />
+                <input 
+                  type="file" 
+                  accept={isVideo ? "video/*" : isImageSpecific ? "image/*" : "image/*,video/*"} 
+                  onChange={handleUpload} 
+                  className="hidden" 
+                  disabled={isUploading} 
+                />
               </label>
               <input 
                 type="text" 

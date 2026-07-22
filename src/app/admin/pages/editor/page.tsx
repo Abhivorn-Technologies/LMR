@@ -261,6 +261,16 @@ function ContentEditorContent() {
     return () => window.removeEventListener('message', handleMessage);
   }, [key]);
 
+  // Live Preview Broadcaster: Send data to iframe whenever it changes!
+  useEffect(() => {
+    if (iframeRef.current?.contentWindow && data) {
+      iframeRef.current.contentWindow.postMessage({
+        type: 'PREVIEW_UPDATE',
+        data: data
+      }, '*');
+    }
+  }, [data]);
+
   const handleSave = async () => {
     if (!key || !data) return;
     

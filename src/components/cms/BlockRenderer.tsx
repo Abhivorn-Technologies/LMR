@@ -21,6 +21,8 @@ import { CallToActionBlock } from './blocks/CallToActionBlock';
 
 // New Functional Blocks
 import { HeadingBlock } from './blocks/HeadingBlock';
+import { ButtonBlock } from './blocks/ButtonBlock';
+import { GalleryBlock } from './blocks/GalleryBlock';
 import { DividerBlock } from './blocks/DividerBlock';
 import { SpacerBlock } from './blocks/SpacerBlock';
 import { FAQAccordionBlock } from './blocks/FAQAccordionBlock';
@@ -68,6 +70,10 @@ const ComponentRegistry: Record<string, React.ComponentType<any>> = {
   // New Functional Blocks
   HeadingBlock,
   headingBlock: HeadingBlock,
+  ButtonBlock,
+  buttonBlock: ButtonBlock,
+  GalleryBlock,
+  galleryBlock: GalleryBlock,
   DividerBlock,
   dividerBlock: DividerBlock,
   SpacerBlock,
@@ -86,8 +92,8 @@ const ComponentRegistry: Record<string, React.ComponentType<any>> = {
 
 // Types that are in the ComponentPicker but not yet built
 const PLANNED_BLOCKS = [
-  'ParagraphBlock', 'ButtonBlock', 'IconBlock', 'ImageGalleryBlock', 
-  'VideoBlock', 'LogoSliderBlock', 'ContainerBlock', 'SectionBlock', 
+  'ParagraphBlock', 'IconBlock', 'ImageGalleryBlock', 
+  'VideoBlock', 'LogoSliderBlock', 'LogoMarquee', 'ContainerBlock', 'SectionBlock', 
   'ColumnsBlock', 'PricingBlock', 'TestimonialsBlock', 'ContactFormBlock', 
   'NewsletterBlock', 'HeaderBlock', 'FooterBlock', 'BlogListBlock', 
   'TeamBlock', 'MapBlock', 'TableBlock', 'CustomHtmlBlock'
@@ -154,9 +160,11 @@ export function BlockRenderer({ blocks: initialBlocks }: { blocks: any[] }) {
           );
         }
 
+        const isFreeform = typeName === 'FreeformCanvasBlock' || typeName === 'freeformCanvasBlock';
+
         // Wrap every component in the Draggable Canvas layer
         return (
-          <DraggableBlockWrapper key={`${typeName}-${index}`} blockIndex={index} layout={layout}>
+          <DraggableBlockWrapper key={`${typeName}-${index}`} blockIndex={index} layout={isFreeform ? layout : undefined}>
             <Component content={blockContent} blockIndex={index} />
           </DraggableBlockWrapper>
         );
