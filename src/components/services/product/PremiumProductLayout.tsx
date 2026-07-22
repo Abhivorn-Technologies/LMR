@@ -49,7 +49,7 @@ export function PremiumProductLayout({ data, images }: PremiumProductLayoutProps
     <div className="flex flex-col font-sans selection:bg-yellow-500 selection:text-white bg-white text-[#1f2937] overflow-hidden">
       
       {/* 1. What is X Insurance? */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12 md:pt-32 md:pb-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-12 md:pt-16 md:pb-20">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={slideInLeft}

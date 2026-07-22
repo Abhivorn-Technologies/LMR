@@ -116,7 +116,7 @@ export const ProductHero: React.FC<ProductHeroProps> = ({
 
   return (
     <>
-      <section className="relative w-full pt-28 pb-12 lg:pt-32 lg:pb-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+      <section className="relative w-full pt-28 pb-12 lg:pt-32 lg:pb-12 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
         {/* Subtle, highly professional background accents */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-50/50 rounded-full blur-[100px] opacity-60 -z-10"></div>
         
