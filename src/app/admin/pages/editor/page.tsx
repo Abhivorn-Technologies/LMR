@@ -255,6 +255,17 @@ function ContentEditorContent() {
         });
       }
 
+      if (event.data?.type === 'REORDER_BLOCKS') {
+        const { oldIndex, newIndex } = event.data;
+        setData((prev: any) => {
+          if (!prev || !prev.blocks) return prev;
+          const newBlocks = [...prev.blocks];
+          const [movedBlock] = newBlocks.splice(oldIndex, 1);
+          newBlocks.splice(newIndex, 0, movedBlock);
+          return { ...prev, blocks: newBlocks };
+        });
+      }
+
       if (event.data?.type === 'FOCUS_BLOCK') {
         const index = event.data.blockIndex;
         // Briefly reset to null to force a state change even if clicking the same block
@@ -311,6 +322,9 @@ function ContentEditorContent() {
   // 1. Instantly update live iframe preview whenever data changes (including block deletion)
   useEffect(() => {
     if (data && iframeRef.current?.contentWindow) {
+  // Live Preview Broadcaster: Send data to iframe whenever it changes!
+  useEffect(() => {
+    if (iframeRef.current?.contentWindow && data) {
       iframeRef.current.contentWindow.postMessage({
         type: 'PREVIEW_UPDATE',
         data: data

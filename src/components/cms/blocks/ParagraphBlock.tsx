@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export function HeadingBlock({ 
+export function ParagraphBlock({ 
   content, 
   isEditMode, 
   isActive, 
@@ -13,39 +13,33 @@ export function HeadingBlock({
   isActive?: boolean,
   onContentChange?: (content: any) => void
 }) {
-  const { text = '', level = 'h2', alignment = 'left', color = '#111827' } = content || {};
+  const { text = 'Enter your paragraph text here...', alignment = 'left', color = '#4B5563', size = 'text-base' } = content || {};
   
-  const validLevel = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(level) ? level : 'h2';
-  const Tag = validLevel as any;
-  
-  const baseClasses = "font-bold mb-6";
-  const sizeMap: Record<string, string> = {
-    h1: "text-4xl md:text-5xl lg:text-6xl",
-    h2: "text-3xl md:text-4xl lg:text-5xl",
-    h3: "text-2xl md:text-3xl lg:text-4xl",
-    h4: "text-xl md:text-2xl",
-    h5: "text-lg md:text-xl",
-    h6: "text-base font-bold uppercase tracking-wider"
-  };
-  const sizeClasses = sizeMap[level as string] || sizeMap.h2;
-
   const alignClasses = {
     left: "text-left",
     center: "text-center mx-auto",
-    right: "text-right"
+    right: "text-right",
+    justify: "text-justify"
   }[alignment as string] || "text-left";
+
+  const sizeClasses = {
+    small: "text-sm",
+    normal: "text-base",
+    large: "text-lg",
+    xlarge: "text-xl md:text-2xl"
+  }[size as string] || "text-base";
 
   const [isEditing, setIsEditing] = React.useState(false);
 
   return (
     <div 
-      className="w-full max-w-7xl mx-auto px-6 py-4"
+      className="w-full max-w-7xl mx-auto px-6 py-2"
       onDoubleClick={() => {
         if (isEditMode) setIsEditing(true);
       }}
     >
-      <Tag 
-        className={`${baseClasses} ${sizeClasses} ${alignClasses} ${isEditMode ? 'outline-none transition-colors' : ''} ${isEditing ? 'cursor-text ring-2 ring-[#00A3A0]/50 rounded' : isEditMode ? 'cursor-pointer' : ''} ${isActive && !isEditing ? 'border-b-2 border-dashed border-[#00A3A0]/50 hover:border-[#00A3A0]' : ''}`} 
+      <p 
+        className={`leading-relaxed ${sizeClasses} ${alignClasses} ${isEditMode ? 'outline-none transition-colors' : ''} ${isEditing ? 'cursor-text ring-2 ring-[#00A3A0]/50 rounded p-2' : isEditMode ? 'cursor-pointer hover:bg-gray-50 p-2 -m-2 rounded' : ''} ${isActive && !isEditing ? 'border-b-2 border-dashed border-[#00A3A0]/50 hover:border-[#00A3A0]' : ''}`} 
         style={{ color }}
         contentEditable={isEditMode && isEditing}
         suppressContentEditableWarning={true}
@@ -62,7 +56,7 @@ export function HeadingBlock({
         }}
       >
         {text}
-      </Tag>
+      </p>
     </div>
   );
 }

@@ -45,7 +45,12 @@ export default function JsonEditor({ data, onChange, focusedBlockIndex }: JsonEd
 }
 
 function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: string, value: any, onChange: (v: any) => void, focusedBlockIndex?: number | null }) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const type = Array.isArray(value) ? 'array' : typeof value;
+  const is2DStringArray = Array.isArray(value) && value.length > 0 && value.every((row: any) => Array.isArray(row) && row.every((cell: any) => typeof cell === 'string'));
+
+  const [isExpanded, setIsExpanded] = useState(
+    label.toLowerCase().endsWith('blocks') || is2DStringArray || (type !== 'array' && type !== 'object')
+  );
   const [pickerOpen, setPickerOpen] = useState(false);
   const [activeBlockIndex, setActiveBlockIndex] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -71,15 +76,17 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
   }, [focusedBlockIndex, isMainBlocksArray]);
 
   if (type === 'string') {
+    const isSystemField = label.toLowerCase() === 'type' || label.toLowerCase() === 'id';
+    
     // If we are inside an array item, text inputs are often too narrow, so prefer textarea
     const isInsideArray = label.includes('Item');
-    const isLongText = isInsideArray || value.length > 60 || value.includes('\n') || value.includes('<p>');
+    const isLongText = !isSystemField && (isInsideArray || value.length > 60 || value.includes('\n') || value.includes('<p>'));
     
     // Check if it looks like Rich Text
-    const isRichText = value.includes('<') && value.includes('>');
+    const isRichText = !isSystemField && value.includes('<') && value.includes('>');
     const [forceRichText, setForceRichText] = useState(false);
     
-    const showRichText = isRichText || forceRichText;
+    const showRichText = !isSystemField && (isRichText || forceRichText);
 
     const modules = {
       toolbar: [
@@ -94,12 +101,34 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
     // Check if it's a color field
     const isColor = label.toLowerCase().includes('color');
     
-    // Check if it's an image field
-    const isImage = label.toLowerCase().includes('image') || label.toLowerCase().includes('src') || label.toLowerCase().includes('logo') || label.toLowerCase().includes('avatar') || label.toLowerCase().includes('icon');
+    // Media Field Classification
+    const isVideo = label.toLowerCase().includes('video');
+    const isImageSpecific = label.toLowerCase().includes('image') || label.toLowerCase().includes('src') || label.toLowerCase().includes('logo') || label.toLowerCase().includes('avatar') || label.toLowerCase().includes('icon');
+    const isGenericUrl = label.toLowerCase().includes('url');
+    const isMedia = isVideo || isImageSpecific || isGenericUrl;
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
+
+      // Strict Validation with Extension Fallback for OS inconsistencies
+      const ext = file.name.split('.').pop()?.toLowerCase() || '';
+      const videoExts = ['mp4', 'webm', 'ogg', 'mov', 'mkv', 'avi', 'wmv', 'm4v'];
+      const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'avif'];
+      
+      const isActualVideo = file.type.startsWith('video/') || videoExts.includes(ext);
+      const isActualImage = file.type.startsWith('image/') || imageExts.includes(ext);
+
+      if (isVideo && !isActualVideo) {
+        alert('Invalid file format. Please upload a valid video file (mp4, webm, mov, etc).');
+        e.target.value = ''; // clear input
+        return;
+      }
+      if (isImageSpecific && !isActualImage) {
+        alert('Invalid file format. Please upload a valid image file (jpg, png, webp, etc).');
+        e.target.value = '';
+        return;
+      }
 
       setIsUploading(true);
       setUploadError(null);
@@ -117,6 +146,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
       } catch (err) {
         console.error(err);
         setUploadError('Upload failed. Ensure the image is not too large.');
+        alert('Upload failed. Ensure the file is not too large.');
       } finally {
         setIsUploading(false);
       }
@@ -126,7 +156,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
       <div className="flex flex-col gap-1.5 mb-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-bold text-gray-700">{formattedLabel}</label>
-          {!isColor && !isImage && (
+          {!isColor && !isMedia && (
             <button 
               onClick={() => setForceRichText(!forceRichText)}
               className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded transition-colors ${showRichText ? 'bg-[#00A3A0] text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
@@ -178,12 +208,18 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
               className="flex-1 p-2.5 rounded-lg border border-gray-200 focus:border-[#00A3A0] focus:ring-1 focus:ring-[#00A3A0] text-sm text-gray-800 font-mono"
             />
           </div>
-        ) : isImage ? (
+        ) : isMedia ? (
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <label className={`cursor-pointer ${isUploading ? 'bg-gray-200 text-gray-500 border-gray-300' : 'bg-[#00A3A0]/10 hover:bg-[#00A3A0]/20 text-[#00A3A0] border-[#00A3A0]/30'} font-semibold py-2 px-4 rounded-lg border transition-colors text-sm text-center flex-none`}>
                 {isUploading ? 'Uploading...' : 'Choose File'}
-                <input type="file" accept="image/*" onChange={handleUpload} className="hidden" disabled={isUploading} />
+                <input 
+                  type="file" 
+                  accept={isVideo ? "video/*" : isImageSpecific ? "image/*" : "image/*,video/*"} 
+                  onChange={handleUpload} 
+                  className="hidden" 
+                  disabled={isUploading} 
+                />
               </label>
               <input 
                 type="text" 
@@ -193,16 +229,24 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                 placeholder="Or type URL manually..."
               />
             </div>
-            {value && value.startsWith('/') && (
-              <img 
-                src={value} 
-                alt="Preview" 
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                  (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<div class="w-full p-4 border border-dashed border-red-300 bg-red-50 text-red-500 rounded text-sm text-center">Image not found on server.</div>');
-                }}
-                className="w-full max-h-32 object-contain rounded border border-gray-200 mt-2 bg-gray-50" 
-              />
+            {value && (value.startsWith('/') || value.startsWith('http')) && (
+              isVideo || value.match(/\.(mp4|webm|ogg)$/i) ? (
+                <video 
+                  src={value} 
+                  controls 
+                  className="w-full max-h-32 object-contain rounded border border-gray-200 mt-2 bg-gray-900" 
+                />
+              ) : (
+                <img 
+                  src={value} 
+                  alt="Preview" 
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).insertAdjacentHTML('afterend', '<div class="w-full p-4 border border-dashed border-red-300 bg-red-50 text-red-500 rounded text-sm text-center">Media preview failed to load.</div>');
+                  }}
+                  className="w-full max-h-32 object-contain rounded border border-gray-200 mt-2 bg-gray-50" 
+                />
+              )
             )}
           </div>
         ) : (
@@ -329,7 +373,15 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
         
         {isExpanded && (
           <div className="p-4 space-y-3 bg-gray-50/50">
-            {value.map((item: any, index: number) => (
+            {value.map((item: any, index: number) => {
+              const is2DStringArray = Array.isArray(value) && value.every(row => Array.isArray(row) && row.every(cell => typeof cell === 'string'));
+              
+              if (is2DStringArray) {
+                // If it's a 2D array, don't map here, render the grid below
+                return null;
+              }
+
+              return (
               <div 
                 id={isMainBlocksArray ? `block-editor-${index}` : undefined}
                 key={index} 
@@ -436,17 +488,111 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                   </div>
                 )}
               </div>
-            ))}
+            )})}
             
-            <button 
+            {/* 2D Array Table Editor UI */}
+            {Array.isArray(value) && value.every(row => Array.isArray(row) && row.every(cell => typeof cell === 'string')) && (
+              <div className="overflow-x-auto w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+                <table className="w-full text-sm divide-y divide-gray-300">
+                  <tbody className="divide-y divide-gray-200">
+                    {value.map((row: string[], rIndex: number) => (
+                      <tr key={rIndex} className="divide-x divide-gray-200">
+                        {row.map((cell: string, cIndex: number) => (
+                          <td key={cIndex} className="p-0">
+                            <input
+                              type="text"
+                              value={cell}
+                              onChange={(e) => {
+                                const newArr = [...value];
+                                const newRow = [...newArr[rIndex]];
+                                newRow[cIndex] = e.target.value;
+                                newArr[rIndex] = newRow;
+                                onChange(newArr);
+                              }}
+                              className={`w-full border-0 p-2.5 focus:ring-2 focus:ring-inset focus:ring-[#00A3A0] focus:outline-none transition-shadow ${rIndex === 0 ? 'bg-gray-50 font-semibold' : 'bg-white'}`}
+                              placeholder={`Cell`}
+                            />
+                          </td>
+                        ))}
+                        <td className="w-10 p-0 text-center bg-gray-50">
+                          <button
+                            onClick={() => {
+                              if(value.length <= 1) return; // don't delete last row
+                              const newArr = [...value];
+                              newArr.splice(rIndex, 1);
+                              onChange(newArr);
+                            }}
+                            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors"
+                            title="Delete Row"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="flex gap-2 p-3 bg-gray-50 border-t border-gray-300">
+                  <button
+                    onClick={() => {
+                      const newArr = [...value];
+                      // copy cols count of first row
+                      const cols = newArr[0].length;
+                      newArr.push(new Array(cols).fill(''));
+                      onChange(newArr);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#00A3A0] bg-[#00A3A0]/10 rounded-md hover:bg-[#00A3A0]/20 transition-colors"
+                  >
+                    <Plus size={14} /> Add Row
+                  </button>
+                  <button
+                    onClick={() => {
+                      const newArr = value.map(row => [...row, '']);
+                      onChange(newArr);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors"
+                  >
+                    <Plus size={14} /> Add Column
+                  </button>
+                  <button
+                    onClick={() => {
+                      if(value[0].length <= 1) return; // don't delete last col
+                      const newArr = value.map(row => {
+                        const newRow = [...row];
+                        newRow.pop();
+                        return newRow;
+                      });
+                      onChange(newArr);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 rounded-md hover:bg-red-100 transition-colors ml-auto"
+                  >
+                    <Trash2 size={14} /> Delete Last Col
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {!(Array.isArray(value) && value.every(row => Array.isArray(row) && row.every(cell => typeof cell === 'string'))) && (
+              <button 
               onClick={() => {
                 if (isMainBlocksArray) {
                   setPickerOpen(true);
                 } else {
                   // Determine template for new item based on first item
-                  const template = value.length > 0 
-                    ? (typeof value[0] === 'object' ? Object.keys(value[0]).reduce((acc:any, k) => ({...acc, [k]: ''}), {}) : '')
-                    : '';
+                  const createTemplate = (base: any): any => {
+                    if (Array.isArray(base)) return base.map(item => createTemplate(item));
+                    if (typeof base === 'object' && base !== null) {
+                      return Object.keys(base).reduce((acc: any, k) => {
+                        const val = base[k];
+                        return {
+                          ...acc,
+                          [k]: createTemplate(val)
+                        };
+                      }, {});
+                    }
+                    return typeof base === 'boolean' ? false : typeof base === 'number' ? 0 : '';
+                  };
+                  const template = value.length > 0 ? createTemplate(value[0]) : '';
                   onChange([...value, template]);
                 }
               }}
@@ -454,6 +600,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
             >
               <Plus size={18} /> {isMainBlocksArray ? 'Add New Block' : `Add New ${formattedLabel.replace(/s$/, '')}`}
             </button>
+            )}
             
             {isMainBlocksArray && (
               <ComponentPicker 
@@ -502,6 +649,112 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
   }
 
   if (type === 'object' && value !== null) {
+    // Custom Table Block Editor
+    if ('rowsCount' in value && 'colsCount' in value && 'rows' in value) {
+      return (
+        <div className="mb-6 border border-gray-200 rounded-xl overflow-hidden bg-white p-4">
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">Rows</label>
+              <input 
+                type="number" 
+                min="1"
+                value={value.rowsCount} 
+                onChange={(e) => {
+                  const newCount = Math.max(1, parseInt(e.target.value) || 1);
+                  const safeRows = Array.isArray(value.rows) ? value.rows : [];
+                  const newRows = [...safeRows];
+                  
+                  // Resize rows
+                  if (newCount > newRows.length) {
+                    for(let i = newRows.length; i < newCount; i++) {
+                      newRows.push(new Array(value.colsCount || 1).fill(''));
+                    }
+                  } else {
+                    newRows.length = newCount;
+                  }
+                  onChange({ ...value, rowsCount: newCount, rows: newRows });
+                }} 
+                className="w-full p-2.5 rounded-lg border border-gray-200 focus:border-[#00A3A0] focus:ring-1 focus:ring-[#00A3A0] text-sm text-gray-800"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">Cols</label>
+              <input 
+                type="number" 
+                min="1"
+                value={value.colsCount} 
+                onChange={(e) => {
+                  const newCount = Math.max(1, parseInt(e.target.value) || 1);
+                  const safeRows = Array.isArray(value.rows) ? value.rows : [];
+                  const newRows = safeRows.map((row: any) => {
+                    const safeRow = Array.isArray(row) ? row : [];
+                    const newRow = [...safeRow];
+                    if (newCount > newRow.length) {
+                      for(let i = newRow.length; i < newCount; i++) {
+                        newRow.push('');
+                      }
+                    } else {
+                      newRow.length = newCount;
+                    }
+                    return newRow;
+                  });
+                  
+                  // If rows is empty, generate at least one row to hold columns
+                  if (newRows.length === 0 && value.rowsCount > 0) {
+                     for(let i = 0; i < value.rowsCount; i++) {
+                       newRows.push(new Array(newCount).fill(''));
+                     }
+                  }
+                  
+                  onChange({ ...value, colsCount: newCount, rows: newRows });
+                }} 
+                className="w-full p-2.5 rounded-lg border border-gray-200 focus:border-[#00A3A0] focus:ring-1 focus:ring-[#00A3A0] text-sm text-gray-800"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 mb-6">
+            <input 
+              type="checkbox" 
+              checked={value.striped || false} 
+              onChange={(e) => onChange({ ...value, striped: e.target.checked })} 
+              className="w-5 h-5 rounded border-gray-300 text-[#00A3A0] focus:ring-[#00A3A0]"
+            />
+            <label className="text-sm font-bold text-gray-700">Striped</label>
+          </div>
+
+          <div className="overflow-x-auto w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+            <table className="w-full text-sm divide-y divide-gray-300">
+              <tbody className="divide-y divide-gray-200">
+                {Array.isArray(value.rows) ? value.rows.map((row: any[], rIndex: number) => (
+                  <tr key={rIndex} className="divide-x divide-gray-200">
+                    {Array.isArray(row) ? row.map((cell: string, cIndex: number) => (
+                      <td key={cIndex} className="p-0">
+                        <input
+                          type="text"
+                          value={cell}
+                          onChange={(e) => {
+                            const newRows = [...value.rows];
+                            const newRow = [...newRows[rIndex]];
+                            newRow[cIndex] = e.target.value;
+                            newRows[rIndex] = newRow;
+                            onChange({ ...value, rows: newRows });
+                          }}
+                          className={`w-full border-0 p-2.5 focus:ring-2 focus:ring-inset focus:ring-[#00A3A0] focus:outline-none transition-shadow ${rIndex === 0 ? 'bg-gray-50 font-semibold' : 'bg-white'}`}
+                          placeholder={`Cell`}
+                        />
+                      </td>
+                    )) : null}
+                  </tr>
+                )) : null}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="mb-6 border border-gray-200 rounded-xl overflow-hidden bg-white">
         <button 

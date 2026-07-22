@@ -7,7 +7,8 @@ import {
   AlignLeft, PlaySquare, FileVideo, Layout, Columns, AppWindow, 
   CreditCard, MessageSquare, ListTodo, Search, MapPin, 
   BarChart, Users, Star, Quote, SplitSquareHorizontal, Minus, 
-  MenuSquare, Code, Settings, Link2, ListOrdered, Table, ImagePlus, Shield
+  MenuSquare, Code, Settings, Link2, ListOrdered, Table, ImagePlus, Shield,
+  Mail, Newspaper
 } from 'lucide-react';
 
 export type BlockTemplate = {
@@ -122,6 +123,18 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
     type: 'IconBlock', category: 'Basic', label: 'Icon', description: 'Standalone SVG icon.', icon: <Star size={28} className="text-gray-500" />,
     template: { type: 'IconBlock', content: { iconName: 'Star', size: '24px', color: '#00A3A0' } }
   },
+  {
+    type: 'TableBlock', category: 'Basic', label: 'Table', description: 'Data table.', icon: <Table size={28} className="text-gray-500" />,
+    template: { type: 'TableBlock', content: { rowsCount: 2, colsCount: 2, rows: [['Header 1', 'Header 2'], ['Cell 1', 'Cell 2']] } }
+  },
+  {
+    type: 'CustomHtmlBlock', category: 'Basic', label: 'Custom HTML', description: 'Embed custom HTML or scripts.', icon: <Code size={28} className="text-gray-500" />,
+    template: { type: 'CustomHtmlBlock', content: { html: '<div class="p-4 text-center">Custom HTML Snippet</div>' } }
+  },
+  {
+    type: 'MapBlock', category: 'Basic', label: 'Map', description: 'Google Maps embed.', icon: <MapPin size={28} className="text-gray-500" />,
+    template: { type: 'MapBlock', content: { mapUrl: 'https://www.google.com/maps/embed?pb=...' } }
+  },
 
   // === MEDIA ===
   {
@@ -130,11 +143,11 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'ImageGalleryBlock', category: 'Media', label: 'Gallery', description: 'Grid or masonry image gallery.', icon: <ImagePlus size={28} className="text-emerald-500" />,
-    template: { type: 'GalleryBlock', content: { style: 'grid', images: [{ url: '/assets/image1.jpeg', caption: 'Image 1' }] } }
+    template: { type: 'GalleryBlock', content: { style: 'grid', columns: 3, images: [{ src: '/assets/image1.jpeg', alt: 'Image 1' }] } }
   },
   {
     type: 'VideoBlock', category: 'Media', label: 'Video', description: 'Embed YouTube, Vimeo or MP4.', icon: <FileVideo size={28} className="text-emerald-500" />,
-    template: { type: 'VideoBlock', content: { url: '', autoplay: false, loop: false } }
+    template: { type: 'VideoBlock', content: { videoUrl: '', autoplay: false, loop: false } }
   },
   {
     type: 'LogoSliderBlock', category: 'Media', label: 'Logo Slider', description: 'Infinite scrolling client logos.', icon: <PlaySquare size={28} className="text-emerald-500" />,
@@ -159,6 +172,25 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
     template: { type: 'ColumnsBlock', content: { layout: '50/50', gap: '24px', leftBlocks: [], rightBlocks: [] } }
   },
 
+  // === NAVIGATION ===
+  {
+    type: 'HeaderBlock', category: 'Navigation', label: 'Header', description: 'Main site navigation header.', icon: <MenuSquare size={28} className="text-blue-500" />,
+    template: { type: 'HeaderBlock', content: { 
+      logoText: 'LMB Insurance', 
+      links: ['Home', 'About Us', 'Services', 'Contact'], 
+      ctaText: 'Get a Quote' 
+    } }
+  },
+  {
+    type: 'FooterBlock', category: 'Navigation', label: 'Footer', description: 'Site footer with links.', icon: <Layout size={28} className="text-blue-500" />,
+    template: { type: 'FooterBlock', content: { 
+      title: 'LMB Insurance', 
+      description: 'Providing comprehensive insurance solutions.', 
+      quickLinks: ['Home', 'About Us', 'Services', 'Contact'],
+      contactInfo: ['123 Insurance Ave, NY 10001', 'info@lmb-insurance.com', '+1 (555) 123-4567']
+    } }
+  },
+
   // === MARKETING ===
   {
     type: 'Hero', category: 'Marketing', label: 'Hero Banner', description: 'Large header with title & background.', icon: <LayoutTemplate size={28} className="text-purple-500" />,
@@ -176,7 +208,14 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'PricingBlock', category: 'Marketing', label: 'Pricing', description: 'Pricing tiers and plans.', icon: <CreditCard size={28} className="text-purple-500" />,
-    template: { type: 'PricingBlock', content: { plans: [{ name: 'Basic', price: '$9', features: ['Feature 1'], buttonText: 'Buy' }] } }
+    template: { type: 'PricingBlock', content: { 
+      title: 'Pricing Plans',
+      plans: [
+        { name: 'Basic', price: '$9', features: ['Feature 1', 'Feature 2'], isPopular: false, buttonText: 'Choose Plan' },
+        { name: 'Pro', price: '$29', features: ['Feature 1', 'Feature 2', 'Feature 3'], isPopular: true, buttonText: 'Choose Plan' },
+        { name: 'Enterprise', price: '$99', features: ['All Features', 'Priority Support'], isPopular: false, buttonText: 'Choose Plan' }
+      ] 
+    } }
   },
   {
     type: 'TestimonialsBlock', category: 'Marketing', label: 'Testimonials', description: 'Customer reviews and ratings.', icon: <Quote size={28} className="text-purple-500" />,
@@ -198,6 +237,8 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
       titleHighlight: 'Excellence.', 
       description: 'Registered with IRDAI since 2003, LMB Insurance Brokers has built an unbreakable legacy of trust.',
       imageSrc: '/assets/minimal_corporate_architecture_1783160853048.png',
+      experienceYears: '20+',
+      experienceText: 'Years of Experience',
       badges: [
         { title: "CoR No: 116", subtitle: "IRDAI Certified", icon: "Shield" },
         { title: "Since 2003", subtitle: "First License", icon: "Clock" }
@@ -309,8 +350,26 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
     } }
   },
   {
+    type: 'TeamBlock', category: 'Marketing', label: 'Team', description: 'Meet the team members.', icon: <Users size={28} className="text-purple-500" />,
+    template: { type: 'TeamBlock', content: { title: 'Meet Our Team', members: [{ name: 'Alice Johnson', role: 'Founder', image: '' }] } }
+  },
+  {
+    type: 'BlogListBlock', category: 'Marketing', label: 'Blog List', description: 'Recent blog posts.', icon: <Newspaper size={28} className="text-purple-500" />,
+    template: { type: 'BlogListBlock', content: { title: 'Latest Articles', posts: [{ title: 'Article 1', excerpt: 'Summary...', date: 'Oct 2024' }] } }
+  },
+  {
     type: 'FAQAccordionBlock', category: 'Marketing', label: 'FAQ Accordion', description: 'Expandable Q&A list.', icon: <MessageSquare size={28} className="text-purple-500" />,
     template: { type: 'FAQAccordionBlock', content: { title: 'Frequently Asked Questions', faqs: [{ question: 'Q?', answer: 'A.' }] } }
+  },
+
+  // === FORMS ===
+  {
+    type: 'ContactFormBlock', category: 'Forms', label: 'Contact Form', description: 'Standard contact form.', icon: <MessageSquare size={28} className="text-blue-500" />,
+    template: { type: 'ContactFormBlock', content: { title: 'Get In Touch', subtitle: 'Send us a message.' } }
+  },
+  {
+    type: 'NewsletterBlock', category: 'Forms', label: 'Newsletter', description: 'Email subscription form.', icon: <Mail size={28} className="text-blue-500" />,
+    template: { type: 'NewsletterBlock', content: { title: 'Subscribe', subtitle: 'Get the latest updates directly to your inbox.' } }
   },
 
   // === FORMS ===
@@ -358,7 +417,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'TableBlock', category: 'Advanced', label: 'Data Table', description: 'Rows and columns of data.', icon: <Table size={28} className="text-red-500" />,
-    template: { type: 'TableBlock', content: { rows: 3, cols: 3, striped: true } }
+    template: { type: 'TableBlock', content: { rowsCount: 3, colsCount: 3, rows: [['Header 1', 'Header 2', 'Header 3'], ['Cell 1', 'Cell 2', 'Cell 3'], ['Cell 4', 'Cell 5', 'Cell 6']], striped: true } }
   },
   {
     type: 'CustomHtmlBlock', category: 'Advanced', label: 'Custom HTML', description: 'Raw HTML/CSS/JS code.', icon: <Code size={28} className="text-red-500" />,

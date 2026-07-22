@@ -56,7 +56,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${inter.variable} ${dmSans.variable} overflow-x-hidden`}>
-      <body className="min-h-screen bg-background antialiased overflow-x-hidden">
+      <body className="min-h-screen bg-background antialiased overflow-x-hidden" suppressHydrationWarning>
         <LenisProvider>
           <ScrollTriggerProvider>
             <Header footerNav={footerNavData} mainNav={mainNavData} />
