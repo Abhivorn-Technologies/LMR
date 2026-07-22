@@ -98,6 +98,35 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
       } 
     }
   },
+  {
+    type: 'ClaimsLayoutBlock', category: 'Products', label: 'Claims Support', description: 'Claims layout block with specialized services.', icon: <LayoutTemplate size={28} className="text-purple-500" />,
+    template: { 
+      type: 'ClaimsLayoutBlock', 
+      content: { 
+        tagline: 'LMB Claim Services',
+        heroTitle: 'Claims Support That Works for You',
+        heroSubtitle: 'When It Matters Most',
+        heroDescription: 'When a claim occurs, every decision matters. Our specialists guide you from incident reporting to settlement support.',
+        buttonText: 'Contact Claims Team',
+        buttonLink: '/contact'
+      } 
+    }
+  },
+  {
+    type: 'ConsultingLayoutBlock', category: 'Products', label: 'Insurance Consulting', description: 'Consulting services layout block.', icon: <LayoutTemplate size={28} className="text-pink-500" />,
+    template: { 
+      type: 'ConsultingLayoutBlock', 
+      content: {
+        tagline: 'LMB Insurance Brokers',
+        heroTitle: 'Insurance Consulting',
+        heroSubtitle: 'That Protects Every',
+        heroSubtitle2: 'Business Decision',
+        heroDescription: 'We evaluate your operations, identify coverage gaps, and build insurance strategies tailored perfectly to your organization\'s goals.',
+        buttonText: 'Book a Consultation',
+        buttonLink: '/contact'
+      } 
+    }
+  },
   // === BASIC ===
   {
     type: 'HeadingBlock', category: 'Basic', label: 'Heading', description: 'H1-H6 heading with custom styling.', icon: <Type size={28} className="text-gray-500" />,

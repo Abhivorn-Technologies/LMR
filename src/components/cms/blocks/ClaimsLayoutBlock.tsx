@@ -26,7 +26,7 @@ const staggerContainer = {
   }
 };
 
-export default function ClaimServicesPage() {
+export default function ClaimsLayoutBlock({ content }: { content: any }) {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -55,15 +55,10 @@ export default function ClaimServicesPage() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-[100vw] bg-[#FFFFFF] font-sans selection:bg-[#19C8D6] selection:text-white text-[#17233A] overflow-hidden overflow-x-hidden">
+    <div className="w-full bg-[#FFFFFF] font-sans selection:bg-[#19C8D6] selection:text-white text-[#17233A] overflow-hidden overflow-x-hidden">
       
-      {/* 
-        ==================================================
-        HERO SECTION
-        ==================================================
-      */}
-      <section className="relative min-h-[calc(100vh-140px)] flex items-center overflow-hidden bg-[#F8FBFC] py-16 lg:py-24">
-        {/* Abstract Background Elements */}
+      {/* HERO SECTION */}
+      <section className="relative flex items-center overflow-hidden bg-[#F8FBFC] py-16 lg:py-24" style={{ minHeight: 'calc(100vh - 140px)' }}>
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] -right-[10%] w-[70%] h-[70%] rounded-full bg-gradient-to-br from-[#19C8D6]/10 to-transparent blur-[120px]" />
           <div className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-gradient-to-tr from-[#0E6D73]/5 to-transparent blur-[120px]" />
@@ -73,31 +68,32 @@ export default function ClaimServicesPage() {
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
             
-            {/* Left: Text Content */}
             <div className="max-w-2xl">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E7EEF2] shadow-sm mb-8"
               >
                 <div className="w-2 h-2 rounded-full bg-[#19C8D6] animate-pulse" />
-                <span className="text-xs font-bold tracking-wider text-[#17233A] uppercase">LMB Claim Services</span>
+                <span className="text-xs font-bold tracking-wider text-[#17233A] uppercase">
+                  {content?.tagline || "LMB Claim Services"}
+                </span>
               </motion.div>
               
               <motion.h1 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#17233A] leading-[1.15] tracking-tight mb-6">
-                <TextReveal delay={0.2}>Claims Support That Works for You</TextReveal> <br className="hidden lg:block" />
-                <span className="text-[#19C8D6]"><TextReveal delay={0.3}>When It Matters Most</TextReveal></span>
+                <TextReveal delay={0.2}>{content?.heroTitle || "Claims Support That Works for You"}</TextReveal> <br className="hidden lg:block" />
+                <span className="text-[#19C8D6]"><TextReveal delay={0.3}>{content?.heroSubtitle || "When It Matters Most"}</TextReveal></span>
               </motion.h1>
               
               <motion.p variants={fadeUp} initial="hidden" animate="visible" transition={{ delay: 0.1 }} className="text-lg text-[#58667E] leading-relaxed mb-10 max-w-xl">
-                When a claim occurs, every decision matters. Our specialists guide you from incident reporting to settlement support—reducing delays and achieving fair outcomes with confidence.
+                {content?.heroDescription || "When a claim occurs, every decision matters. Our specialists guide you from incident reporting to settlement support—reducing delays and achieving fair outcomes with confidence."}
               </motion.p>
               
               <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="flex flex-wrap gap-4">
                 <Link 
-                  href="/contact" 
+                  href={content?.buttonLink || "/contact"} 
                   className="px-10 py-5 bg-[#17233A] text-white rounded-full font-bold text-lg hover:bg-[#0E6D73] transition-all duration-300 shadow-[0_10px_30px_rgba(23,35,58,0.2)] hover:shadow-[0_10px_40px_rgba(14,109,115,0.4)] flex items-center gap-3 group"
                 >
-                  Contact Claims Team
+                  {content?.buttonText || "Contact Claims Team"}
                   <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
                     <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
                   </div>
@@ -105,12 +101,10 @@ export default function ClaimServicesPage() {
               </motion.div>
             </div>
 
-            {/* Right: Premium 3D Visual */}
             <motion.div 
               initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeOut" }}
               className="relative w-full max-w-[85%] mx-auto aspect-square flex items-center justify-center group cursor-pointer perspective-[1000px]"
             >
-              {/* Decorative floating elements behind image */}
               <motion.div animate={{ y: [-15, 15, -15], rotate: [0, 5, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[10%] right-[-5%] w-20 h-20 bg-white/40 backdrop-blur-xl rounded-2xl border border-white/60 shadow-xl flex items-center justify-center z-20 group-hover:scale-110 transition-transform duration-500">
                 <Shield className="w-8 h-8 text-[#0E6D73]" />
               </motion.div>
@@ -132,11 +126,7 @@ export default function ClaimServicesPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        TRUST BAR - PREMIUM MARQUEE
-        ==================================================
-      */}
+      {/* TRUST BAR */}
       <div className="w-full bg-[#17233A] border-y border-[#17233A] py-5 relative z-20 overflow-hidden shadow-xl">
         <div className="flex w-[200%]">
           <motion.div 
@@ -165,16 +155,11 @@ export default function ClaimServicesPage() {
         </div>
       </div>
 
-      {/* 
-        ==================================================
-        SECTION 1: Why Professional Claims Support Matters
-        ==================================================
-      */}
+      {/* SECTION 1 */}
       <section className="py-24 md:py-32 bg-[#FFFFFF] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
-            {/* Left: Illustration */}
             <motion.div 
               initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
               className="relative w-full aspect-[4/3] rounded-[2.5rem] p-4 flex items-center justify-center overflow-hidden"
@@ -187,7 +172,6 @@ export default function ClaimServicesPage() {
               />
             </motion.div>
 
-            {/* Right: Content */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer}>
               <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-extrabold text-[#17233A] mb-6 tracking-tight">
                 Why Professional Claims Support Matters
@@ -220,11 +204,7 @@ export default function ClaimServicesPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 2: Our Claim Services
-        ==================================================
-      */}
+      {/* SECTION 2 */}
       <section className="py-24 md:py-32 bg-[#F8FBFC] border-y border-[#E7EEF2] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
@@ -266,13 +246,8 @@ export default function ClaimServicesPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 3: Claims We Support (Carousel)
-        ==================================================
-      */}
+      {/* SECTION 3 */}
       <section className="py-24 md:py-32 bg-[#FFFFFF] relative overflow-hidden">
-        {/* Header */}
         <div className="max-w-7xl mx-auto px-6 relative mb-12">
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
@@ -283,7 +258,6 @@ export default function ClaimServicesPage() {
           </motion.div>
         </div>
 
-        {/* Carousel */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-20">
           <div className="flex items-center gap-4 lg:gap-8">
             <button 
@@ -352,7 +326,6 @@ export default function ClaimServicesPage() {
             </button>
           </div>
           
-          {/* Mobile Arrows */}
           <div className="flex items-center justify-center gap-6 mt-4 md:hidden">
             <button disabled={!canScrollLeft} onClick={() => scrollCarousel('left')} className="w-14 h-14 rounded-full border border-[#E7EEF2] flex items-center justify-center text-[#17233A] shadow-sm disabled:opacity-50 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200"><ChevronLeft size={24} /></button>
             <button disabled={!canScrollRight} onClick={() => scrollCarousel('right')} className="w-14 h-14 rounded-full border border-[#E7EEF2] flex items-center justify-center text-[#17233A] shadow-sm disabled:opacity-50 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200"><ChevronRight size={24} /></button>
@@ -360,11 +333,7 @@ export default function ClaimServicesPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 4: Our Claims Process
-        ==================================================
-      */}
+      {/* SECTION 4 */}
       <section className="py-24 md:py-32 bg-[#F8FBFC] border-y border-[#E7EEF2] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
@@ -378,7 +347,6 @@ export default function ClaimServicesPage() {
           </motion.div>
 
           <div className="max-w-4xl mx-auto relative">
-            {/* Vertical Line */}
             <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#19C8D6]/20 via-[#0E6D73]/20 to-transparent -translate-x-1/2 rounded-full" />
             
             <div className="space-y-12 md:space-y-24">
@@ -415,16 +383,11 @@ export default function ClaimServicesPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 5: Why Choose LMB for Claims Support
-        ==================================================
-      */}
+      {/* SECTION 5 */}
       <section className="py-24 md:py-32 bg-[#FFFFFF] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
-            {/* Left: Corporate Illustration */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, rotateY: 15 }} whileInView={{ opacity: 1, scale: 1, rotateY: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: "easeOut" }}
               className="relative w-full aspect-[4/3] rounded-[2.5rem] p-3 flex items-center justify-center overflow-hidden group perspective-[1000px]"
@@ -440,7 +403,6 @@ export default function ClaimServicesPage() {
               </div>
             </motion.div>
 
-            {/* Right: Premium Checklist */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer}>
               <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-extrabold text-[#17233A] mb-10 tracking-tight">
                 Why Choose LMB for Claims Support
@@ -474,11 +436,7 @@ export default function ClaimServicesPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 6: Frequently Asked Questions
-        ==================================================
-      */}
+      {/* SECTION 6 */}
       <section className="py-24 md:py-32 bg-[#F8FBFC] border-y border-[#E7EEF2]">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div 
@@ -530,11 +488,7 @@ export default function ClaimServicesPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        FINAL CTA - 100% EDGE-TO-EDGE
-        ==================================================
-      */}
+      {/* FINAL CTA */}
       <section className="relative py-24 overflow-hidden bg-[#F8FBFC]">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#19C8D6]/5 via-[#19C8D6]/0 to-transparent translate-x-1/3 -translate-y-1/3" />
@@ -545,7 +499,6 @@ export default function ClaimServicesPage() {
             initial={{ opacity: 0, y: 40, scale: 0.98 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
             className="relative bg-white rounded-[3rem] p-10 md:p-16 overflow-hidden flex flex-col items-center border border-[#E7EEF2] shadow-[0_20px_60px_rgba(23,35,58,0.05)]"
           >
-            {/* Background patterns */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBFC] to-white pointer-events-none" />
             <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#19C8D6]/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-[#0E6D73]/5 rounded-full blur-3xl pointer-events-none" />
@@ -566,22 +519,17 @@ export default function ClaimServicesPage() {
             </p>
             
             <Link 
-              href="/contact" 
+              href={content?.buttonLink || "/contact"} 
               className="relative z-10 inline-flex px-12 py-5 bg-[#17233A] hover:bg-[#0E6D73] text-white rounded-full font-bold text-xl transition-all duration-300 shadow-[0_15px_30px_rgba(23,35,58,0.2)] hover:shadow-[0_20px_40px_rgba(14,109,115,0.3)] items-center gap-4 hover:-translate-y-1 overflow-hidden group"
             >
-              <span className="relative z-10">Contact Claims Team</span>
-              <motion.div 
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center relative z-10 group-hover:bg-white/20 transition-colors"
-              >
+              <span className="relative z-10">{content?.buttonText || "Contact Claims Team"}</span>
+              <motion.div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center relative z-10 group-hover:bg-white/20 transition-colors">
                 <ArrowRight className="text-white group-hover:translate-x-1 transition-transform" size={20} strokeWidth={3} />
               </motion.div>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:animate-[shimmer_1.5s_infinite]" />
             </Link>
           </motion.div>
         </div>
       </section>
-
-
     </div>
   );
 }

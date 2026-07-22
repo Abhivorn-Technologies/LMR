@@ -11,16 +11,7 @@ import {
   BarChart, ArrowRight, ChevronDown, Check
 } from "lucide-react";
 
-// --- Custom Colors based on guidelines ---
-// Teal: #0E6D73
-// Cyan: #19C8D6
-// Navy Text: #17233A
-// Secondary Text: #58667E
-// Bg: #F8FBFC
-// Border: #E7EEF2
-// Soft Glow: rgba(25,200,214,.18)
-
-// --- Shared Animations ---
+// --- Animations ---
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } }
@@ -34,7 +25,7 @@ const staggerContainer = {
   }
 };
 
-export default function ConsultingPage() {
+export default function ConsultingLayoutBlock({ content }: { content: any }) {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [activeIndustry, setActiveIndustry] = useState(0);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
@@ -64,14 +55,10 @@ export default function ConsultingPage() {
   }, [isCarouselHovered]);
 
   return (
-    <div className="min-h-screen w-full max-w-[100vw] bg-[#FFFFFF] font-sans selection:bg-[#19C8D6] selection:text-white text-[#17233A] overflow-hidden overflow-x-hidden">
+    <div className="w-full bg-[#FFFFFF] font-sans selection:bg-[#19C8D6] selection:text-white text-[#17233A] overflow-hidden overflow-x-hidden">
       
-      {/* 
-        ==================================================
-        HERO SECTION
-        ==================================================
-      */}
-      <section className="relative min-h-[calc(100vh-160px)] flex items-center overflow-hidden bg-[#F8FBFC] py-12">
+      {/* HERO SECTION */}
+      <section className="relative flex items-center overflow-hidden bg-[#F8FBFC] py-12" style={{ minHeight: 'calc(100vh - 160px)' }}>
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] -right-[10%] w-[70%] h-[70%] rounded-full bg-gradient-to-br from-[#19C8D6]/10 to-transparent blur-[120px]" />
           <div className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-gradient-to-tr from-[#0E6D73]/5 to-transparent blur-[120px]" />
@@ -80,34 +67,34 @@ export default function ConsultingPage() {
         <div className="max-w-7xl mx-auto px-6 py-20 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             
-            {/* Left Content */}
             <motion.div 
               initial="hidden" animate="visible" variants={staggerContainer}
               className="max-w-2xl"
             >
               <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E7EEF2] shadow-sm mb-8">
                 <span className="flex h-2 w-2 rounded-full bg-[#19C8D6] animate-pulse"></span>
-                <span className="text-xs font-bold tracking-wider text-[#17233A] uppercase">LMB Insurance Brokers</span>
+                <span className="text-xs font-bold tracking-wider text-[#17233A] uppercase">
+                  {content?.tagline || "LMB Insurance Brokers"}
+                </span>
               </motion.div>
               
               <motion.h1 className="text-4xl lg:text-6xl font-extrabold text-[#17233A] leading-[1.15] tracking-tight mb-6">
-                <TextReveal delay={0.2}>Insurance Consulting</TextReveal><br className="hidden lg:block" />
-                <TextReveal delay={0.3}>That Protects Every</TextReveal><br className="hidden lg:block" />
-                <span className="text-[#19C8D6]"><TextReveal delay={0.4}>Business Decision</TextReveal></span>
+                <TextReveal delay={0.2}>{content?.heroTitle || "Insurance Consulting"}</TextReveal><br className="hidden lg:block" />
+                <TextReveal delay={0.3}>{content?.heroSubtitle || "That Protects Every"}</TextReveal><br className="hidden lg:block" />
+                <span className="text-[#19C8D6]"><TextReveal delay={0.4}>{content?.heroSubtitle2 || "Business Decision"}</TextReveal></span>
               </motion.h1>
               
               <motion.p variants={fadeUp} className="text-lg text-[#58667E] leading-relaxed mb-10 max-w-xl">
-                We evaluate your operations, identify coverage gaps, and build insurance strategies tailored perfectly to your organization's goals.
+                {content?.heroDescription || "We evaluate your operations, identify coverage gaps, and build insurance strategies tailored perfectly to your organization's goals."}
               </motion.p>
               
               <motion.div variants={fadeUp}>
-                <Link href="/contact" className="inline-flex items-center justify-center bg-[#0E6D73] text-white px-8 py-4 rounded-xl font-bold text-sm hover:bg-[#115E59] hover:shadow-lg transition-all duration-300">
-                  Book a Consultation
+                <Link href={content?.buttonLink || "/contact"} className="inline-flex items-center justify-center bg-[#0E6D73] text-white px-8 py-4 rounded-xl font-bold text-sm hover:bg-[#115E59] hover:shadow-lg transition-all duration-300">
+                  {content?.buttonText || "Book a Consultation"}
                 </Link>
               </motion.div>
             </motion.div>
 
-            {/* Right Data Visualization */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -127,11 +114,7 @@ export default function ConsultingPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        TRUST BAR - PREMIUM MARQUEE
-        ==================================================
-      */}
+      {/* TRUST BAR */}
       <div className="w-full bg-[#17233A] border-y border-[#17233A] py-6 relative z-20 overflow-hidden shadow-xl">
         <div className="flex w-[200%]">
           <motion.div 
@@ -161,16 +144,11 @@ export default function ConsultingPage() {
       </div>
 
 
-      {/* 
-        ==================================================
-        SECTION 1: Why Consulting Matters
-        ==================================================
-      */}
+      {/* SECTION 1 */}
       <section className="py-24 md:py-32 bg-[#FFFFFF]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
-            {/* Left: Illustration */}
             <motion.div 
               initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
               className="relative w-full aspect-square md:aspect-[4/3] rounded-[2.5rem] bg-[#F8FBFC] border border-[#E7EEF2] overflow-hidden flex items-center justify-center group"
@@ -191,7 +169,6 @@ export default function ConsultingPage() {
               </div>
             </motion.div>
 
-            {/* Right: Content */}
             <motion.div 
               initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
             >
@@ -210,11 +187,7 @@ export default function ConsultingPage() {
       </section>
 
 
-      {/* 
-        ==================================================
-        SECTION 2: Our Consulting Services
-        ==================================================
-      */}
+      {/* SECTION 2 */}
       <section className="py-24 md:py-32 bg-[#F8FBFC] border-y border-[#E7EEF2]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
@@ -244,7 +217,7 @@ export default function ConsultingPage() {
               {
                 title: "Coverage Gap Analysis",
                 desc: "Discover hidden exposures before they become costly claims by comparing current protection against actual business risks.",
-                icon: Search // Replacing broken shield with search to maintain premium lucide feel
+                icon: Search
               },
               {
                 title: "Policy Advisory",
@@ -268,7 +241,6 @@ export default function ConsultingPage() {
                 variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.1 } } }}
                 className="group bg-white rounded-3xl p-8 border border-[#E7EEF2] hover:border-[#19C8D6]/30 shadow-sm hover:shadow-[0_20px_40px_rgba(25,200,214,0.08)] transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
               >
-                {/* Hover ambient glow */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#19C8D6]/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="w-14 h-14 rounded-2xl bg-[#F8FBFC] border border-[#E7EEF2] flex items-center justify-center mb-6 group-hover:bg-[#0E6D73] transition-colors duration-500">
@@ -283,11 +255,7 @@ export default function ConsultingPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 3: Industries We Serve
-        ==================================================
-      */}
+      {/* SECTION 3 */}
       <section className="py-24 md:py-32 bg-[#FFFFFF]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
@@ -390,11 +358,7 @@ export default function ConsultingPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 4: Our Consulting Process
-        ==================================================
-      */}
+      {/* SECTION 4 */}
       <section className="py-24 md:py-32 bg-[#F8FBFC] border-y border-[#E7EEF2] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
@@ -409,9 +373,7 @@ export default function ConsultingPage() {
             </p>
           </motion.div>
 
-          {/* Vertical Alternating Timeline */}
           <div className="relative max-w-4xl mx-auto mt-12 md:mt-20">
-            {/* Center Vertical Line */}
             <motion.div 
               initial={{ height: 0 }} whileInView={{ height: "100%" }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 1.5, ease: "easeOut" }}
               className="absolute left-10 md:left-1/2 top-0 w-1 bg-gradient-to-b from-[#0E6D73] to-[#19C8D6] -translate-x-1/2 rounded-full z-0 hidden md:block" 
@@ -433,16 +395,13 @@ export default function ConsultingPage() {
                   transition={{ duration: 0.7, delay: 0.1 }}
                   className={`flex flex-col md:flex-row items-center gap-6 md:gap-12 w-full group ${i % 2 === 0 ? "md:flex-row-reverse" : ""}`}
                 >
-                  {/* Empty space for alternating layout on desktop */}
                   <div className="hidden md:block flex-1" />
 
-                  {/* Center Node */}
                   <div className="flex-shrink-0 w-20 h-20 rounded-full bg-white border-[6px] border-[#F8FBFC] shadow-[0_0_20px_rgba(25,200,214,0.15)] flex items-center justify-center relative z-20 group-hover:scale-110 group-hover:border-[#E7EEF2] transition-all duration-300">
                     <div className="absolute inset-0 rounded-full border border-[#19C8D6]/30" />
                     <span className="font-extrabold text-[#0E6D73] text-2xl">{phase.step}</span>
                   </div>
 
-                  {/* Content Card */}
                   <div className={`flex-1 w-full bg-white p-6 md:p-8 rounded-3xl border border-[#E7EEF2] shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:border-[#19C8D6]/50 text-center ${i % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
                     <h4 className="font-bold text-[#17233A] text-xl mb-3">{phase.title}</h4>
                     <p className="text-[#58667E] text-sm leading-relaxed">{phase.desc}</p>
@@ -454,16 +413,11 @@ export default function ConsultingPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 5: Why Choose LMB
-        ==================================================
-      */}
+      {/* SECTION 5 */}
       <section className="py-24 md:py-32 bg-[#FFFFFF]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
-            {/* Left: Illustration */}
             <motion.div 
               initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
               className="relative w-full aspect-[4/3] rounded-[2.5rem] p-4 flex items-center justify-center overflow-hidden"
@@ -476,7 +430,6 @@ export default function ConsultingPage() {
               />
             </motion.div>
 
-            {/* Right: Premium Checklist */}
             <motion.div 
               initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
             >
@@ -512,11 +465,7 @@ export default function ConsultingPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        SECTION 6: FAQ
-        ==================================================
-      */}
+      {/* SECTION 6 */}
       <section className="py-24 md:py-32 bg-[#F8FBFC] border-t border-[#E7EEF2]">
         <div className="max-w-3xl mx-auto px-6">
           <motion.div 
@@ -566,13 +515,8 @@ export default function ConsultingPage() {
         </div>
       </section>
 
-      {/* 
-        ==================================================
-        FINAL CTA
-        ==================================================
-      */}
+      {/* FINAL CTA */}
       <section className="relative py-32 bg-[#FFFFFF] overflow-hidden border-t border-[#E7EEF2]">
-        {/* Abstract Background Elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-[#19C8D6]/10 to-[#0E6D73]/5 rounded-full blur-[100px]" />
           <motion.div 
@@ -602,8 +546,8 @@ export default function ConsultingPage() {
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col sm:flex-row justify-center gap-4"
           >
-            <Link href="/contact" className="px-10 py-5 rounded-2xl bg-[#0E6D73] text-white font-bold text-lg hover:bg-[#17233A] hover:scale-105 transition-all duration-300 shadow-[0_15px_30px_rgba(14,109,115,0.2)]">
-              Schedule Consultation
+            <Link href={content?.buttonLink || "/contact"} className="px-10 py-5 rounded-2xl bg-[#0E6D73] text-white font-bold text-lg hover:bg-[#17233A] hover:scale-105 transition-all duration-300 shadow-[0_15px_30px_rgba(14,109,115,0.2)]">
+              {content?.buttonText || "Schedule Consultation"}
             </Link>
           </motion.div>
         </div>
