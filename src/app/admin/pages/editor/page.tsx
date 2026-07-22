@@ -11,6 +11,7 @@ import { homeHeroContent } from '@/lib/content/home';
 import { footerNavigation, mainNavigation } from '@/lib/content/navigation';
 import { processSteps, whyLmbPoints, faqItems, reinsuranceContent } from '@/lib/content/pages';
 import { aboutPageContent } from '@/lib/content/about';
+import { riskManagementContent } from '@/lib/content/risk-management';
 import { AVAILABLE_BLOCKS } from '@/components/admin/ComponentPicker';
 
 const DEFAULTS: Record<string, any> = {
@@ -53,17 +54,15 @@ const DEFAULTS: Record<string, any> = {
     blocks: [
       {
         type: 'RiskManagementBlock',
-        content: {
-          tagline: "Strategic Advisory",
-          title: "Risk Management",
-          highlightTitle: "Solutions",
-          description: "Helping businesses identify, assess, reduce, and manage risks before they become costly problems. Protect your enterprise with intelligent, data-driven foresight.",
-          buttonText: "Contact Experts",
-          servicesTitle: "Our Risk Management Services",
-          processTitle: "Our Risk Management Process",
-          industriesTitle: "Industries We Serve",
-          whyTitle: "Why Businesses Trust LMB"
-        }
+        content: riskManagementContent
+      }
+    ]
+  },
+  'page:services:risk-management': {
+    blocks: [
+      {
+        type: 'RiskManagementBlock',
+        content: riskManagementContent
       }
     ]
   },
@@ -100,6 +99,8 @@ const PREVIEW_URLS: Record<string, string> = {
   'nav:main': '/',
   '/reinsurance': '/reinsurance',
   '/about': '/about',
+  '/services/risk-management': '/services/risk-management',
+  'page:services:risk-management': '/services/risk-management',
   'list:process': '/',
   'list:why': '/',
   'list:faq': '/'
@@ -378,7 +379,7 @@ function ContentEditorContent() {
     <div className="flex flex-col h-screen overflow-hidden bg-gray-50">
       <div className="flex-none flex items-center justify-between bg-white px-6 h-[72px] border-b border-gray-200 z-10">
         <div className="flex items-center gap-4">
-          <Link href="/admin/pages" className="flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors" title="Back to Pages">
+          <Link href="/admin" className="flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors" title="Back to Dashboard">
             <ArrowLeft size={20} />
           </Link>
           <div className="h-8 w-px bg-gray-200 hidden md:block"></div>
