@@ -47,11 +47,15 @@ export default function JsonEditor({ data, onChange, focusedBlockIndex }: JsonEd
 }
 
 function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: string, value: any, onChange: (v: any) => void, focusedBlockIndex?: number | null }) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const type = Array.isArray(value) ? 'array' : typeof value;
+  const is2DStringArray = Array.isArray(value) && value.length > 0 && value.every((row: any) => Array.isArray(row) && row.every((cell: any) => typeof cell === 'string'));
+
+  const [isExpanded, setIsExpanded] = useState(
+    label.toLowerCase().endsWith('blocks') || is2DStringArray || (type !== 'array' && type !== 'object')
+  );
   const [pickerOpen, setPickerOpen] = useState(false);
   const [activeBlockIndex, setActiveBlockIndex] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const type = Array.isArray(value) ? 'array' : typeof value;
 
   // Format label: camelCase to Title Case
   const formattedLabel = label.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
@@ -537,7 +541,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
               </div>
             )}
 
-            {!isMainBlocksArray && !(Array.isArray(value) && value.every(row => Array.isArray(row) && row.every(cell => typeof cell === 'string'))) && (
+            {!(Array.isArray(value) && value.every(row => Array.isArray(row) && row.every(cell => typeof cell === 'string'))) && (
               <button 
               onClick={() => {
                 if (isMainBlocksArray) {
@@ -584,6 +588,112 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
   }
 
   if (type === 'object' && value !== null) {
+    // Custom Table Block Editor
+    if ('rowsCount' in value && 'colsCount' in value && 'rows' in value) {
+      return (
+        <div className="mb-6 border border-gray-200 rounded-xl overflow-hidden bg-white p-4">
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">Rows</label>
+              <input 
+                type="number" 
+                min="1"
+                value={value.rowsCount} 
+                onChange={(e) => {
+                  const newCount = Math.max(1, parseInt(e.target.value) || 1);
+                  const safeRows = Array.isArray(value.rows) ? value.rows : [];
+                  const newRows = [...safeRows];
+                  
+                  // Resize rows
+                  if (newCount > newRows.length) {
+                    for(let i = newRows.length; i < newCount; i++) {
+                      newRows.push(new Array(value.colsCount || 1).fill(''));
+                    }
+                  } else {
+                    newRows.length = newCount;
+                  }
+                  onChange({ ...value, rowsCount: newCount, rows: newRows });
+                }} 
+                className="w-full p-2.5 rounded-lg border border-gray-200 focus:border-[#00A3A0] focus:ring-1 focus:ring-[#00A3A0] text-sm text-gray-800"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">Cols</label>
+              <input 
+                type="number" 
+                min="1"
+                value={value.colsCount} 
+                onChange={(e) => {
+                  const newCount = Math.max(1, parseInt(e.target.value) || 1);
+                  const safeRows = Array.isArray(value.rows) ? value.rows : [];
+                  const newRows = safeRows.map((row: any) => {
+                    const safeRow = Array.isArray(row) ? row : [];
+                    const newRow = [...safeRow];
+                    if (newCount > newRow.length) {
+                      for(let i = newRow.length; i < newCount; i++) {
+                        newRow.push('');
+                      }
+                    } else {
+                      newRow.length = newCount;
+                    }
+                    return newRow;
+                  });
+                  
+                  // If rows is empty, generate at least one row to hold columns
+                  if (newRows.length === 0 && value.rowsCount > 0) {
+                     for(let i = 0; i < value.rowsCount; i++) {
+                       newRows.push(new Array(newCount).fill(''));
+                     }
+                  }
+                  
+                  onChange({ ...value, colsCount: newCount, rows: newRows });
+                }} 
+                className="w-full p-2.5 rounded-lg border border-gray-200 focus:border-[#00A3A0] focus:ring-1 focus:ring-[#00A3A0] text-sm text-gray-800"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 mb-6">
+            <input 
+              type="checkbox" 
+              checked={value.striped || false} 
+              onChange={(e) => onChange({ ...value, striped: e.target.checked })} 
+              className="w-5 h-5 rounded border-gray-300 text-[#00A3A0] focus:ring-[#00A3A0]"
+            />
+            <label className="text-sm font-bold text-gray-700">Striped</label>
+          </div>
+
+          <div className="overflow-x-auto w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+            <table className="w-full text-sm divide-y divide-gray-300">
+              <tbody className="divide-y divide-gray-200">
+                {Array.isArray(value.rows) ? value.rows.map((row: any[], rIndex: number) => (
+                  <tr key={rIndex} className="divide-x divide-gray-200">
+                    {Array.isArray(row) ? row.map((cell: string, cIndex: number) => (
+                      <td key={cIndex} className="p-0">
+                        <input
+                          type="text"
+                          value={cell}
+                          onChange={(e) => {
+                            const newRows = [...value.rows];
+                            const newRow = [...newRows[rIndex]];
+                            newRow[cIndex] = e.target.value;
+                            newRows[rIndex] = newRow;
+                            onChange({ ...value, rows: newRows });
+                          }}
+                          className={`w-full border-0 p-2.5 focus:ring-2 focus:ring-inset focus:ring-[#00A3A0] focus:outline-none transition-shadow ${rIndex === 0 ? 'bg-gray-50 font-semibold' : 'bg-white'}`}
+                          placeholder={`Cell`}
+                        />
+                      </td>
+                    )) : null}
+                  </tr>
+                )) : null}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="mb-6 border border-gray-200 rounded-xl overflow-hidden bg-white">
         <button 

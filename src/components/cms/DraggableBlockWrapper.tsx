@@ -105,7 +105,7 @@ export function DraggableBlockWrapper({
     
     // Check if it's an Image or Video block that should be resizable in native flow
     const childElement = children as React.ReactElement<any>;
-    const childType = childElement?.type?.name;
+    const childType = (childElement?.type as any)?.name;
     const isResizableMedia = childType === 'ImageBlock' || childType === 'VideoBlock';
 
     return (

@@ -125,7 +125,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'TableBlock', category: 'Basic', label: 'Table', description: 'Data table.', icon: <Table size={28} className="text-gray-500" />,
-    template: { type: 'TableBlock', content: { rows: [['Header 1', 'Header 2'], ['Cell 1', 'Cell 2']] } }
+    template: { type: 'TableBlock', content: { rowsCount: 2, colsCount: 2, rows: [['Header 1', 'Header 2'], ['Cell 1', 'Cell 2']] } }
   },
   {
     type: 'CustomHtmlBlock', category: 'Basic', label: 'Custom HTML', description: 'Embed custom HTML or scripts.', icon: <Code size={28} className="text-gray-500" />,
@@ -417,7 +417,7 @@ export const AVAILABLE_BLOCKS: BlockTemplate[] = [
   },
   {
     type: 'TableBlock', category: 'Advanced', label: 'Data Table', description: 'Rows and columns of data.', icon: <Table size={28} className="text-red-500" />,
-    template: { type: 'TableBlock', content: { rows: 3, cols: 3, striped: true } }
+    template: { type: 'TableBlock', content: { rowsCount: 3, colsCount: 3, rows: [['Header 1', 'Header 2', 'Header 3'], ['Cell 1', 'Cell 2', 'Cell 3'], ['Cell 4', 'Cell 5', 'Cell 6']], striped: true } }
   },
   {
     type: 'CustomHtmlBlock', category: 'Advanced', label: 'Custom HTML', description: 'Raw HTML/CSS/JS code.', icon: <Code size={28} className="text-red-500" />,

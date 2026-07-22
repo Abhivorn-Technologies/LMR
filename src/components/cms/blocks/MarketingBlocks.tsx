@@ -24,7 +24,7 @@ export function PricingBlock({ content }: { content: any }) {
               <h3 className="text-xl font-bold mb-2 text-gray-900">{plan.name}</h3>
               <div className="text-4xl font-extrabold mb-4 text-gray-900">{plan.price}</div>
               <ul className="space-y-2 mb-6">
-                {(Array.isArray(plan.features) ? plan.features : typeof plan.features === 'string' ? plan.features.split(',').map(s => s.trim()) : []).map((f: string, j: number) => (
+                {(Array.isArray(plan.features) ? plan.features : typeof plan.features === 'string' ? plan.features.split(',').map((s: string) => s.trim()) : []).map((f: string, j: number) => (
                   <li key={j} className="flex items-center gap-2 text-sm text-gray-600">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00A3A0" strokeWidth="2"><path d="M5 12l5 5L20 7"/></svg>
                     {f}
