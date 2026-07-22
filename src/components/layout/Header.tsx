@@ -314,7 +314,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
       { name: "Risk Management", path: "/services/risk-management" },
       { name: "Claims Consultancy", path: "/services/claims" },
       { name: "Reinsurance", path: "/reinsurance" },
-      { name: "Clients", path: "/#clients" },
+      { name: "Clients", path: "/clients" },
       { name: "Contact Us", path: "/contact" },
     ];
   }, [mainNav]);
@@ -327,7 +327,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
         onClick={handleCloseMobile}
       />
 
-      <div className="mx-auto max-w-[1600px] relative z-[40] flex justify-between items-center py-2 lg:py-3 px-4 xl:px-8 2xl:px-10">
+      <div className="mx-auto max-w-[1920px] w-full relative z-[40] flex justify-between items-center py-2 lg:py-3 px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-16">
         <div className="flex-shrink-0 flex items-center">
           <Link href="/" className="flex items-center h-10 md:h-12 w-[180px] md:w-[260px] lg:w-[160px] xl:w-[220px] 2xl:w-[260px] relative shrink-0 ml-0">
             <Image 
@@ -342,7 +342,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
           </Link>
         </div>
 
-        <div data-lenis-prevent="true" className={`relative z-10 flex justify-end lg:justify-center gap-1.5 lg:gap-1 xl:gap-2 2xl:gap-6 items-center max-lg:fixed max-lg:top-0 max-lg:z-[50] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:pt-6 max-lg:h-[100dvh] max-lg:pb-28 max-lg:w-[85%] max-lg:sm:w-[360px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto max-lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
+        <div data-lenis-prevent="true" className={`relative z-10 flex justify-end lg:justify-end flex-1 gap-1.5 lg:gap-2 xl:gap-3 2xl:gap-5 items-center max-lg:fixed max-lg:top-0 max-lg:z-[50] max-lg:bg-white max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:p-8 max-lg:pt-6 max-lg:h-[100dvh] max-lg:pb-28 max-lg:w-[85%] max-lg:sm:w-[360px] max-lg:shadow-[-20px_0_60px_rgba(0,0,0,0.2)] max-lg:transition-transform max-lg:duration-500 max-lg:ease-in-out max-lg:overflow-y-auto max-lg:overflow-x-hidden [&::-webkit-scrollbar]:hidden ${mobileOpen ? 'max-lg:right-0 max-lg:translate-x-0' : 'max-lg:-right-full max-lg:translate-x-full'}`}>
           
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-4 pb-4 border-b border-slate-100">

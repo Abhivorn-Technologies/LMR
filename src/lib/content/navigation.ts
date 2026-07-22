@@ -11,7 +11,7 @@ export const mainNavigation: NavItem[] = [
   { label: "Risk Management", href: "/services/risk-management" },
   { label: "Claims Consultancy", href: "/services/claims" },
   { label: "Reinsurance", href: "/reinsurance" },
-  { label: "Clients", href: "/#clients" },
+  { label: "Clients", href: "/clients" },
   { label: "Contact Us", href: "/contact" },
 ];
 
