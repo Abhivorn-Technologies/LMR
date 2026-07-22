@@ -26,9 +26,8 @@ const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Site Sections', href: '/admin/pages', icon: FileText },
   { name: 'Collections', href: '/admin/collections', icon: Users },
-  { name: 'Media', href: '/admin/media', icon: ImageIcon },
-  { name: 'Analytics', href: '#', icon: BarChart },
-  { name: 'Reports', href: '#', icon: PieChart },
+  { name: 'Analytics', href: '/admin/analytics', icon: BarChart },
+  { name: 'Reports', href: '/admin/reports', icon: PieChart },
   { name: 'Global Settings', href: '/admin/globals', icon: Settings },
   { name: 'Admins', href: '/admin/users', icon: Users },
 ];
@@ -40,6 +39,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Automatically close mobile sidebar on navigation route change
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
 
   // Prevent browser back-button caching (bfcache) from showing admin pages after logout
   useEffect(() => {
@@ -91,7 +95,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Menu className="w-6 h-6" />
           </button>
           <Link href="/admin" className="relative h-16 w-[200px] hidden md:block">
-            <Image src={siteConfig.logo} alt={siteConfig.name} fill sizes="200px" className="object-contain object-center pointer-events-none scale-[1.5] origin-center" priority />
+            <Image src={siteConfig.logo} alt={siteConfig.name} fill unoptimized sizes="200px" className="object-contain object-center pointer-events-none scale-[1.5] origin-center" priority />
           </Link>
         </div>
 
@@ -118,8 +122,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         `}>
           {/* Mobile Logo inside Sidebar */}
           <div className="flex md:hidden items-center h-[76px] px-6 border-b border-gray-100 shrink-0">
-            <Link href="/admin" className="relative h-12 w-[160px]">
-              <Image src={siteConfig.logo} alt={siteConfig.name} fill className="object-contain object-left pointer-events-none scale-[1.3] origin-left" priority />
+            <Link href="/" className="block w-full">
+              <div className="relative h-10 w-[160px]">
+                <Image src={siteConfig.logo} alt={siteConfig.name} fill unoptimized className="object-contain object-left pointer-events-none scale-[1.3] origin-left" priority />
+              </div>
             </Link>
             <button className="ml-auto text-gray-400 hover:text-gray-600" onClick={() => setSidebarOpen(false)}>
               <X className="w-5 h-5" />
@@ -134,6 +140,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Link
                   key={item.name}
                   href={item.href}
+                  onClick={() => setSidebarOpen(false)}
                   className={`
                     flex items-center px-3 py-3 rounded-xl transition-all duration-200 group font-medium text-[13px] mb-2
                     ${isActive
@@ -168,7 +175,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Main content - Removed max-w constraint to fix horizontal dead space */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-[#f8fafc]">
+        <main className={`flex-1 overflow-y-auto ${isEditor ? '' : 'p-6 md:p-8'} bg-[#f8fafc]`}>
           {children}
         </main>
       </div>

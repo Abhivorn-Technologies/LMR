@@ -1,0 +1,258 @@
+Created At: 2026-07-22T11:15:26Z
+Completed At: 2026-07-22T11:15:26Z
+File Path: `file:///d:/LMB/LMB/src/app/admin/analytics/page.tsx`
+Total Lines: 250
+Total Bytes: 12674
+Showing lines 1 to 250
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: 'use client';
+2: 
+3: import { useState } from 'react';
+4: import { 
+5:   BarChart3, 
+6:   TrendingUp, 
+7:   Users, 
+8:   PieChart, 
+9:   Smartphone, 
+10:   Monitor, 
+11:   Tablet, 
+12:   ArrowUpRight, 
+13:   CheckCircle2, 
+14:   Eye, 
+15:   Clock, 
+16:   Target, 
+17:   Sparkles,
+18:   ArrowDownRight
+19: } from 'lucide-react';
+20: 
+21: export default function AdminAnalyticsPage() {
+22:   const [filterPeriod, setFilterPeriod] = useState<'month' | 'quarter' | 'year'>('month');
+23: 
+24:   return (
+25:     <div className="max-w-6xl mx-auto space-y-8">
+26:       {/* Executive Page Header */}
+27:       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-200">
+28:         <div>
+29:           <div className="flex items-center gap-2 mb-1">
+30:             <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Analytics & Insights</h1>
+31:             <span className="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200/80 rounded-md text-xs font-semibold flex items-center gap-1.5">
+32:               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+33:               24 Active Visitors
+34:             </span>
+35:           </div>
+36:           <p className="text-sm text-gray-500 font-normal">
+37:             Real-time traffic metrics, user engagement rates, device breakdown, and lead conversions.
+38:           </p>
+39:         </div>
+40: 
+41:         <div className="flex items-center gap-3 shrink-0">
+42:           <div className="inline-flex bg-gray-100 p-1 rounded-lg border border-gray-200/80 text-xs font-medium text-gray-600">
+43:             <button 
+44:               onClick={() => setFilterPeriod('month')}
+45:               className={`px-3.5 py-1.5 rounded-md transition-all ${filterPeriod === 'month' ? 'bg-white text-gray-900 shadow-2xs font-semibold' : 'hover:text-gray-900'}`}
+46:             >
+47:               Month
+48:             </button>
+49:             <button 
+50:               onClick={() => setFilterPeriod('quarter')}
+51:               className={`px-3.5 py-1.5 rounded-md transition-all ${filterPeriod === 'quarter' ? 'bg-white text-gray-900 shadow-2xs font-semibold' : 'hover:text-gray-900'}`}
+52:             >
+53:               Quarter
+54:             </button>
+55:             <button 
+56:               onClick={() => setFilterPeriod('year')}
+57:               className={`px-3.5 py-1.5 rounded-md transition-all ${filterPeriod === 'year' ? 'bg-white text-gray-900 shadow-2xs font-semibold' : 'hover:text-gray-900'}`}
+58:             >
+59:               Year
+60:             </button>
+61:           </div>
+62:         </div>
+63:       </div>
+64: 
+65:       {/* Metric Overview Grid */}
+66:       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+67:         <div className="bg-white rounded-xl border border-gray-200/80 p-5 shadow-2xs">
+68:           <div className="flex items-center justify-between text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+69:             <span>Total Pageviews</span>
+70:             <Eye size={16} className="text-[#00A3A0]" />
+71:           </div>
+72:           <div className="text-2xl font-bold text-gray-900">48,290</div>
+73:           <div className="flex items-center gap-1 text-emerald-600 text-xs font-medium mt-2">
+74:             <ArrowUpRight size={14} /> +18.4% monthly growth
+75:           </div>
+76:         </div>
+77: 
+78:         <div className="bg-white rounded-xl border border-gray-200/80 p-5 shadow-2xs">
+79:           <div className="flex items-center justify-between text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+80:             <span>Engagement Rate</span>
+81:             <TrendingUp size={16} className="text-[#00A3A0]" />
+82:           </div>
+83:           <div className="text-2xl font-bold text-gray-900">64.2%</div>
+84:           <div className="flex items-center gap-1 text-emerald-600 text-xs font-medium mt-2">
+85:             <ArrowUpRight size={14} /> High content interaction
+86:           </div>
+87:         </div>
+88: 
+89:         <div className="bg-white rounded-xl border border-gray-200/80 p-5 shadow-2xs">
+90:           <div className="flex items-center justify-between text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+91:             <span>Avg Time on Page</span>
+92:             <Clock size={16} className="text-[#00A3A0]" />
+93:           </div>
+94:           <div className="text-2xl font-bold text-gray-900">3m 45s</div>
+95:           <div className="flex items-center gap-1 text-emerald-600 text-xs font-medium mt-2">
+96:             <CheckCircle2 size={14} /> +12s vs benchmark
+97:           </div>
+98:         </div>
+99: 
+100:         <div className="bg-white rounded-xl border border-gray-200/80 p-5 shadow-2xs">
+101:           <div className="flex items-center justify-between text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+102:             <span>Inquiries Generated</span>
+103:             <Target size={16} className="text-[#00A3A0]" />
+104:           </div>
+105:           <div className="text-2xl font-bold text-gray-900">142 Leads</div>
+106:           <div className="flex items-center gap-1 text-emerald-600 text-xs font-medium mt-2">
+107:             <ArrowUpRight size={14} /> +22 new this week
+108:           </div>
+109:         </div>
+110:       </div>
+111: 
+112:       {/* Main Grid: Traffic Channels & Audience Devices */}
+113:       <div className="grid lg:grid-cols-3 gap-6">
+114:         {/* Left Column (2 Cols): Traffic Channels Cards */}
+115:         <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200/80 shadow-2xs overflow-hidden flex flex-col">
+116:           <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+117:             <div>
+118:               <h3 className="font-bold text-gray-900 text-base">Traffic Channels Breakdown</h3>
+119:               <p className="text-xs text-gray-500 font-normal">Real-time source analytics and view distribution.</p>
+120:             </div>
+121:             <span className="text-xs font-semibold text-[#00A3A0]">Active Channel Feed</span>
+122:           </div>
+123: 
+124:           <div className="p-6">
+125:             <div className="grid sm:grid-cols-2 gap-4">
+126:               {[
+127:                 { source: 'Organic Search', count: '16,901 views', pct: 35, color: 'bg-[#00A3A0]' },
+128:                 { source: 'Direct Visits', count: '20,281 views', pct: 42, color: 'bg-[#087371]' },
+129:                 { source: 'Social Media', count: '7,243 views', pct: 15, color: 'bg-teal-400' },
+130:                 { source: 'Partner Referrals', count: '3,865 views', pct: 8, color: 'bg-gray-300' },
+131:               ].map((item) => (
+132:                 <div key={item.source} className="p-4 rounded-xl bg-gray-50/80 border border-gray-100 space-y-2">
+133:                   <div className="flex justify-between items-center text-xs font-bold text-gray-900">
+134:                     <span>{item.source}</span>
+135:                     <span className="text-[#00A3A0]">{item.pct}%</span>
+136:                   </div>
+137:                   <div className="w-full h-1.5 bg-gray-200/60 rounded-full overflow-hidden">
+138:                     <div className={`h-full ${item.color} rounded-full`} style={{ width: `${item.pct}%` }} />
+139:                   </div>
+140:                   <p className="text-[11px] font-medium text-gray-500">{item.count}</p>
+141:                 </div>
+142:               ))}
+143:             </div>
+144:           </div>
+145:         </div>
+146: 
+147:         {/* Right Column (1 Col): Device Breakdown */}
+148:         <div className="bg-white rounded-xl border border-gray-200/80 p-6 shadow-2xs flex flex-col justify-between">
+149:           <div>
+150:             <h3 className="font-bold text-gray-900 text-base mb-1">Audience Devices</h3>
+151:             <p className="text-xs text-gray-500 font-normal mb-5">Visitor hardware & browser split.</p>
+152: 
+153:             <div className="space-y-4">
+154:               <div className="space-y-1.5">
+155:                 <div className="flex justify-between items-center text-xs font-semibold text-gray-700">
+156:                   <span className="flex items-center gap-2">
+157:                     <Smartphone size={14} className="text-[#00A3A0]" /> Mobile Browsers
+158:                   </span>
+159:                   <span className="font-bold text-gray-900">58%</span>
+160:                 </div>
+161:                 <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+162:                   <div className="h-full bg-[#00A3A0] rounded-full" style={{ width: '58%' }} />
+163:                 </div>
+164:               </div>
+165: 
+166:               <div className="space-y-1.5">
+167:                 <div className="flex justify-between items-center text-xs font-semibold text-gray-700">
+168:                   <span className="flex items-center gap-2">
+169:                     <Monitor size={14} className="text-[#087371]" /> Desktop Systems
+170:                   </span>
+171:                   <span className="font-bold text-gray-900">38%</span>
+172:                 </div>
+173:                 <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+174:                   <div className="h-full bg-[#087371] rounded-full" style={{ width: '38%' }} />
+175:                 </div>
+176:               </div>
+177: 
+178:               <div className="space-y-1.5">
+179:                 <div className="flex justify-between items-center text-xs font-semibold text-gray-700">
+180:                   <span className="flex items-center gap-2">
+181:                     <Tablet size={14} className="text-teal-400" /> Tablets & Other
+182:                   </span>
+183:                   <span className="font-bold text-gray-900">4%</span>
+184:                 </div>
+185:                 <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+186:                   <div className="h-full bg-teal-400 rounded-full" style={{ width: '4%' }} />
+187:                 </div>
+188:               </div>
+189:             </div>
+190:           </div>
+191: 
+192:           <div className="pt-4 border-t border-gray-100 mt-6 text-xs text-gray-500 font-medium">
+193:             Optimal mobile responsiveness rating: <span className="font-bold text-emerald-600">100%</span>
+194:           </div>
+195:         </div>
+196:       </div>
+197: 
+198:       {/* Top Content Leaderboard Table */}
+199:       <div className="bg-white rounded-xl border border-gray-200/80 shadow-2xs overflow-hidden">
+200:         <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+201:           <div>
+202:             <h3 className="font-bold text-gray-900 text-base">Top Performing Content</h3>
+203:             <p className="text-xs text-gray-500 font-normal">Page rankings by views, engagement time, and lead conversions.</p>
+204:           </div>
+205:           <span className="text-xs font-semibold text-[#00A3A0]">Monthly Conversion Rank</span>
+206:         </div>
+207: 
+208:         <div className="overflow-x-auto">
+209:           <table className="w-full text-sm text-left">
+210:             <thead className="text-xs uppercase tracking-wider text-gray-500 font-semibold bg-gray-50 border-b border-gray-100">
+211:               <tr>
+212:                 <th className="px-6 py-3 font-medium">Page Title</th>
+213:                 <th className="px-6 py-3 font-medium">Category</th>
+214:                 <th className="px-6 py-3 font-medium">Total Views</th>
+215:                 <th className="px-6 py-3 font-medium">Avg Duration</th>
+216:                 <th className="px-6 py-3 font-medium">Conversions</th>
+217:               </tr>
+218:             </thead>
+219:             <tbody className="divide-y divide-gray-100 text-gray-700">
+220:               {[
+221:                 { title: 'General Insurance Solutions', cat: 'Services', views: '18,420', time: '4m 12s', leads: '54 Leads' },
+222:                 { title: 'Risk Management Services', cat: 'Solutions', views: '12,310', time: '3m 50s', leads: '38 Leads' },
+223:                 { title: 'Reinsurance Advisory', cat: 'Reinsurance', views: '9,840', time: '4m 05s', leads: '26 Leads' },
+224:                 { title: 'Claims Handling & Support', cat: 'Claims', views: '5,120', time: '3m 15s', leads: '16 Leads' },
+225:                 { title: 'About LMB Insurance Brokers', cat: 'Corporate', views: '2,600', time: '2m 30s', leads: '8 Leads' }
+226:               ].map((row, idx) => (
+227:                 <tr key={idx} className="hover:bg-gray-50/60 transition-colors">
+228:                   <td className="px-6 py-3.5 font-semibold text-gray-900">{row.title}</td>
+229:                   <td className="px-6 py-3.5">
+230:                     <span className="px-2.5 py-0.5 bg-gray-100 text-gray-700 rounded-md text-xs font-medium">
+231:                       {row.cat}
+232:                     </span>
+233:                   </td>
+234:                   <td className="px-6 py-3.5 font-bold text-gray-900">{row.views}</td>
+235:                   <td className="px-6 py-3.5 font-medium text-gray-600">{row.time}</td>
+236:                   <td className="px-6 py-3.5">
+237:                     <span className="inline-flex items-center px-2.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200/60 rounded-md text-xs font-semibold">
+238:                       {row.leads}
+239:                     </span>
+240:                   </td>
+241:                 </tr>
+242:               ))}
+243:             </tbody>
+244:           </table>
+245:         </div>
+246:       </div>
+247:     </div>
+248:   );
+249: }
+250: 
+The above content shows the entire, complete file contents of the requested file.

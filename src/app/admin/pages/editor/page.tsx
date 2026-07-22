@@ -277,6 +277,37 @@ function ContentEditorContent() {
     return () => window.removeEventListener('message', handleMessage);
   }, [key]);
 
+  // Record recently visited/edited pages in localStorage
+  useEffect(() => {
+    if (!key) return;
+    try {
+      const recentRaw = localStorage.getItem('lmb_recent_pages') || '[]';
+      let recent = JSON.parse(recentRaw);
+      recent = recent.filter((r: any) => r.key !== key);
+      
+      let title = key;
+      if (key === '/') title = 'Home Page';
+      else if (key === '/about') title = 'About Us';
+      else if (key === '/services/risk-management') title = 'Risk Management Solutions';
+      else if (key === '/reinsurance') title = 'Reinsurance Advisory';
+      else if (key.startsWith('/services/')) {
+        const parts = key.split('/');
+        const lastPart = parts[parts.length - 1];
+        title = lastPart.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      }
+
+      recent.unshift({
+        key,
+        title,
+        timestamp: new Date().toISOString()
+      });
+
+      localStorage.setItem('lmb_recent_pages', JSON.stringify(recent.slice(0, 10)));
+    } catch (e) {
+      console.error('Error saving recent page', e);
+    }
+  }, [key]);
+
   // 1. Instantly update live iframe preview whenever data changes (including block deletion)
   useEffect(() => {
     if (data && iframeRef.current?.contentWindow) {
@@ -363,6 +394,8 @@ function ContentEditorContent() {
     return '/';
   };
 
+  const [mobileTab, setMobileTab] = useState<'editor' | 'preview'>('editor');
+
   const previewUrl = getPreviewUrl(key || '');
 
   if (!key) {
@@ -377,61 +410,81 @@ function ContentEditorContent() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-gray-50">
-      <div className="flex-none flex items-center justify-between bg-white px-6 h-[72px] border-b border-gray-200 z-10">
-        <div className="flex items-center gap-4">
-          <Link href="/admin" className="flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors" title="Back to Dashboard">
-            <ArrowLeft size={20} />
+      {/* Top Navbar */}
+      <div className="flex-none flex items-center justify-between bg-white px-3 md:px-6 h-[60px] md:h-[72px] border-b border-gray-200 z-10 gap-2">
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          <Link href="/admin" className="flex-shrink-0 flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors" title="Back to Dashboard">
+            <ArrowLeft size={18} />
           </Link>
-          <div className="h-8 w-px bg-gray-200 hidden md:block"></div>
-          <div>
-            <h1 className="text-lg font-bold text-gray-900 tracking-tight">Visual Editor</h1>
-            <p className="text-sm text-gray-500">{key}</p>
+          <div className="h-6 w-px bg-gray-200 hidden md:block"></div>
+          <div className="min-w-0">
+            <h1 className="text-sm md:text-base font-bold text-gray-900 tracking-tight leading-tight truncate">Visual Editor</h1>
+            <p className="text-[10px] md:text-xs text-gray-500 truncate w-full">{key}</p>
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
-          <div className="flex items-center bg-gray-100/80 rounded-lg p-1 border border-gray-200/50">
-            <button onClick={() => setPreviewWidth('mobile')} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${previewWidth === 'mobile' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>Mobile</button>
-            <button onClick={() => setPreviewWidth('tablet')} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${previewWidth === 'tablet' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>Tablet</button>
-            <button onClick={() => setPreviewWidth('desktop')} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${previewWidth === 'desktop' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>Desktop</button>
+        <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+          {/* Mobile Tab Switcher */}
+          <div className="flex md:hidden bg-gray-100 p-0.5 rounded-lg border border-gray-200 text-[11px] font-semibold">
+            <button 
+              onClick={() => setMobileTab('editor')}
+              className={`px-2 py-1 rounded-md transition-all ${mobileTab === 'editor' ? 'bg-white text-[#00A3A0] shadow-2xs font-bold' : 'text-gray-600'}`}
+            >
+              Form
+            </button>
+            <button 
+              onClick={() => setMobileTab('preview')}
+              className={`px-2 py-1 rounded-md transition-all ${mobileTab === 'preview' ? 'bg-white text-[#00A3A0] shadow-2xs font-bold' : 'text-gray-600'}`}
+            >
+              Preview
+            </button>
+          </div>
+
+          <div className="hidden md:flex items-center bg-gray-100/80 rounded-lg p-1 border border-gray-200/50">
+            <button onClick={() => setPreviewWidth('mobile')} className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${previewWidth === 'mobile' ? 'bg-white shadow-2xs text-gray-900 font-bold' : 'text-gray-500'}`}>Mobile</button>
+            <button onClick={() => setPreviewWidth('tablet')} className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${previewWidth === 'tablet' ? 'bg-white shadow-2xs text-gray-900 font-bold' : 'text-gray-500'}`}>Tablet</button>
+            <button onClick={() => setPreviewWidth('desktop')} className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${previewWidth === 'desktop' ? 'bg-white shadow-2xs text-gray-900 font-bold' : 'text-gray-500'}`}>Desktop</button>
           </div>
 
           {status && (
-            <div className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg ${status.type === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
-              {status.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
+            <div className={`hidden sm:flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg ${status.type === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
+              {status.type === 'success' ? <CheckCircle2 size={15} /> : <AlertCircle size={15} />}
               {status.msg}
             </div>
           )}
+
           <button 
             onClick={handleSave}
             disabled={loading || saving}
-            className="flex items-center gap-2 px-6 py-2.5 bg-[#0d9488] hover:bg-[#0f766e] text-white font-semibold rounded-lg shadow-sm transition-all disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 bg-[#00A3A0] hover:bg-[#008f8c] text-white text-[11px] md:text-xs font-bold rounded-lg shadow-2xs transition-all disabled:opacity-50"
           >
-            {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-            {saving ? 'Saving...' : 'Save Changes'}
+            {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+            <span className="hidden sm:inline">{saving ? 'Saving...' : 'Save'}</span>
+            <span className="sm:hidden">{saving ? 'Saving...' : 'Save'}</span>
           </button>
         </div>
       </div>
 
-      <div className="flex-1 flex overflow-hidden min-h-0">
-        <div className="w-[450px] flex-none bg-white border-r border-gray-200 overflow-y-auto relative">
-          <div className="p-4 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center sticky top-0 z-10 backdrop-blur-md">
-            <h3 className="font-bold text-gray-700 text-sm uppercase tracking-wider">Content Settings</h3>
+      <div className="flex-1 flex overflow-hidden min-h-0 relative">
+        {/* Left Form Settings Panel */}
+        <div className={`w-full md:w-[420px] flex-none bg-white border-r border-gray-200 overflow-y-auto relative ${mobileTab === 'preview' ? 'hidden md:block' : 'block'}`}>
+          <div className="p-3.5 border-b border-gray-100 bg-gray-50/70 flex justify-between items-center sticky top-0 z-10 backdrop-blur-md">
+            <h3 className="font-extrabold text-gray-900 text-xs uppercase tracking-wider">Content Settings</h3>
           </div>
           
-          <div className="p-5 pb-32">
+          <div className="p-4 pb-28">
             {loading ? (
               <div className="flex flex-col items-center justify-center h-40">
-                <Loader2 size={32} className="animate-spin text-[#0d9488] mb-3" />
-                <p className="text-gray-500 text-sm font-medium">Loading schema...</p>
+                <Loader2 size={28} className="animate-spin text-[#00A3A0] mb-2" />
+                <p className="text-gray-500 text-xs font-medium">Loading schema...</p>
               </div>
             ) : data?._error === 'not_found' ? (
               <div className="flex flex-col items-center justify-center h-64 text-center px-4">
-                <AlertCircle size={48} className="text-red-400 mb-4" />
-                <h3 className="text-lg font-bold text-gray-800 mb-2">Page Not Found</h3>
-                <p className="text-gray-500 text-sm">This page has not been created yet in the database. Please use the "New Page" creator first.</p>
-                <Link href="/admin/pages/new" className="mt-6 px-4 py-2 bg-[#0d9488] text-white rounded-lg text-sm font-semibold hover:bg-[#0f766e]">
-                  Go to New Page Creator
+                <AlertCircle size={40} className="text-red-400 mb-3" />
+                <h3 className="text-base font-bold text-gray-800 mb-1">Page Not Found</h3>
+                <p className="text-gray-500 text-xs">This page has not been created yet in the database.</p>
+                <Link href="/admin/pages" className="mt-4 px-4 py-2 bg-[#00A3A0] text-white rounded-lg text-xs font-bold hover:bg-[#008f8c]">
+                  Go to Site Sections Directory
                 </Link>
               </div>
             ) : (
@@ -440,11 +493,12 @@ function ContentEditorContent() {
           </div>
         </div>
 
-        <div className="flex-1 bg-gray-100 overflow-hidden flex flex-col items-center p-4 sm:p-6 lg:p-8">
+        {/* Right Iframe Preview Panel */}
+        <div className={`flex-1 bg-gray-100 overflow-hidden flex flex-col items-center p-2 sm:p-4 lg:p-6 ${mobileTab === 'editor' ? 'hidden md:flex' : 'flex'}`}>
           <div 
-            className="bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-300 ease-in-out border border-gray-200 flex flex-col"
+            className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 ease-in-out border border-gray-200 flex flex-col w-full"
             style={{ 
-              width: previewWidth === 'mobile' ? '375px' : previewWidth === 'tablet' ? '768px' : '100%',
+              maxWidth: previewWidth === 'mobile' ? '375px' : previewWidth === 'tablet' ? '768px' : '100%',
               height: '100%'
             }}
           >

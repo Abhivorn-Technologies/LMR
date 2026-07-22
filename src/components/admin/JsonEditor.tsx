@@ -349,11 +349,11 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                 }}
               >
                 {isMainBlocksArray ? (
-                  <div className="flex items-center p-3 gap-3">
-                    <div className="text-gray-300 cursor-move hover:text-gray-500 transition-colors p-1" title="Drag to reorder">
+                  <div className="flex items-center p-2 sm:p-3 gap-1.5 sm:gap-3">
+                    <div className="text-gray-300 cursor-move hover:text-gray-500 transition-colors p-1 flex-shrink-0" title="Drag to reorder">
                       <GripVertical size={18} />
                     </div>
-                    <div className="flex-1 font-semibold text-gray-800">
+                    <div className="flex-1 font-semibold text-gray-800 text-sm sm:text-base min-w-0 truncate">
                       {item?.type ? item.type : `Block ${index + 1}`}
                     </div>
                     <button 
@@ -362,7 +362,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                         setActiveBlockIndex(index);
                         window.postMessage({ type: 'FOCUS_BLOCK', blockIndex: index }, '*');
                       }}
-                      className="p-1.5 text-[#00A3A0] bg-[#00A3A0]/5 hover:bg-[#00A3A0]/10 rounded-md transition-colors"
+                      className="p-1.5 text-[#00A3A0] bg-[#00A3A0]/5 hover:bg-[#00A3A0]/10 rounded-md transition-colors flex-shrink-0"
                       title="Edit Settings"
                     >
                       <Settings2 size={16} />
@@ -381,7 +381,7 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
                           }
                         });
                       }}
-                      className="p-1.5 text-red-500 bg-red-50 hover:bg-red-100 rounded-md transition-colors"
+                      className="p-1.5 text-red-500 bg-red-50 hover:bg-red-100 rounded-md transition-colors flex-shrink-0"
                       title="Remove section"
                     >
                       <Trash2 size={16} />

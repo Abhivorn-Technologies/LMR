@@ -20,24 +20,6 @@ export function FAQAccordionBlock({
 
   if (!faqs || faqs.length === 0) return null;
 
-  // Function to render the title with the yellow underline for specific keywords like "important info"
-  const renderTitle = (text: string) => {
-    if (text.toLowerCase().includes('important info')) {
-      const parts = text.split(/important info/i);
-      return (
-        <>
-          {parts[0]}
-          <span className="relative inline-block">
-            important info
-            <div className="absolute -bottom-2 left-0 w-full h-3 bg-[#ffb800] rounded-full -z-10 opacity-80" />
-          </span>
-          {parts[1]}
-        </>
-      );
-    }
-    return text;
-  };
-
   return (
     <section className="bg-[#f4f9f9] py-20 px-6">
       <div className="w-full max-w-5xl mx-auto">
@@ -48,7 +30,7 @@ export function FAQAccordionBlock({
             suppressContentEditableWarning
             onBlur={(e) => onContentChange?.({ ...content, title: e.currentTarget.textContent })}
           >
-            {isEditMode ? title : renderTitle(title)}
+            {title}
           </h2>
         </FadeIn>
         
@@ -85,7 +67,7 @@ export function FAQAccordionBlock({
                 
                 {openIndex === index && (
                   <div 
-                    className={`px-8 pb-8 text-slate-500 font-medium leading-[1.8] pt-2 ${isEditMode ? 'outline-none border border-dashed border-transparent hover:border-slate-500 p-2 cursor-text' : ''}`}
+                    className={`px-6 md:px-8 pb-8 text-slate-500 font-medium leading-[1.8] pt-2 break-words whitespace-pre-wrap ${isEditMode ? 'outline-none border border-dashed border-transparent hover:border-slate-500 p-2 cursor-text' : ''}`}
                     contentEditable={isEditMode}
                     suppressContentEditableWarning
                     onBlur={(e) => {

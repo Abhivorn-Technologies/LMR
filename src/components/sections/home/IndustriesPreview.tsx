@@ -51,19 +51,19 @@ export function IndustriesPreview({
         </div>
           
         {/* Industry Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5 mb-12 items-stretch">
           {industries.slice(0, 5).map((industry, i) => {
             const Icon = industry.icon;
             return (
               <FadeIn key={industry.id} delay={i * 0.1} className="h-full">
-                <div className="h-full bg-white rounded-3xl p-6 lg:p-8 flex flex-col items-center text-center border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-1 hover:border-[#115E59]/30 transition-all duration-300">
-                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 border border-slate-100 shrink-0">
-                    <Icon className="h-7 w-7 text-[#0c494f]" strokeWidth={1.5} />
+                <div className="h-full bg-white rounded-2xl p-5 md:p-6 flex flex-col items-center text-center border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-1 hover:border-[#115E59]/30 transition-all duration-300">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-50 border border-slate-100 shrink-0">
+                    <Icon className="h-5 w-5 text-[#0c494f]" strokeWidth={1.75} />
                   </div>
-                  <h3 className="text-[16px] lg:text-[17px] font-bold text-[#0c494f] mb-3 leading-tight min-h-[40px] flex items-center justify-center">
+                  <h3 className="text-[15px] lg:text-[16px] font-bold text-[#0c494f] mb-2.5 leading-tight">
                     {industry.title}
                   </h3>
-                  <p className="text-[13px] lg:text-sm text-slate-500 font-medium leading-relaxed flex-grow">
+                  <p className="text-[13px] text-slate-500 font-medium leading-relaxed">
                     {industry.description}
                   </p>
                 </div>

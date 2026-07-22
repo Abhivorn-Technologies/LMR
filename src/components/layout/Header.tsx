@@ -334,6 +334,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
               src={siteConfig.logo} 
               alt={siteConfig.name} 
               fill
+              unoptimized
               sizes="(max-width: 768px) 180px, 260px"
               className="object-contain object-left scale-[2] md:scale-[2.8] origin-left drop-shadow-sm pointer-events-none" 
               priority 
@@ -346,7 +347,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
           {/* Mobile Sidebar Header */}
           <div className="lg:hidden flex items-center justify-between w-full mb-4 pb-4 border-b border-slate-100">
             <div className="relative h-10 w-[180px] -ml-2">
-              <Image src={siteConfig.logo} alt={siteConfig.name} fill priority sizes="150px" className="object-contain object-left scale-[2] origin-left pointer-events-none" />
+              <Image src={siteConfig.logo} alt={siteConfig.name} fill priority unoptimized sizes="150px" className="object-contain object-left scale-[2] origin-left pointer-events-none" />
             </div>
             <button className="text-slate-400 hover:text-slate-700 p-2.5 bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors" onClick={handleCloseMobile}>
               <Icons.X size={20} />
@@ -408,13 +409,7 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
         </div>
 
         <div className="flex items-center justify-end gap-2 xl:gap-4 shrink-0">
-          <a 
-            href="/login" 
-            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 text-[#64748b] text-xs font-semibold hover:bg-[#ffb800] hover:text-white transition-all duration-300 border border-slate-200 shadow-sm"
-          >
-            <Icons.User size={14} />
-            Admin
-          </a>
+
           <button className="lg:hidden text-slate-600 p-2 hover:bg-slate-100 rounded-lg transition-colors" onClick={() => setMobileOpen(true)}>
             <Icons.Menu size={28} />
           </button>

@@ -39,31 +39,42 @@ export function ContactBlock({ content }: { content: any }) {
                     <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#115E59] to-transparent z-20 pointer-events-none lg:hidden" />
                     
                     <div className="h-full overflow-y-auto pr-4 pb-12 custom-scrollbar space-y-8 relative z-10">
-                    {contacts.map((contact: any, idx: number) => (
+                    {contacts.map((contact: any, idx: number) => {
+                      if (!contact.name && !contact.phone && !contact.email) return null;
+                      
+                      return (
                       <div key={idx} className="group/contact border-b border-white/10 pb-6 last:border-0 last:pb-0">
-                        <p className="text-lg font-bold text-white group-hover/contact:text-slate-200 transition-colors">
-                          {contact.name}
-                        </p>
-                        <p className="text-sm font-medium text-white/70 mb-4">
-                          {contact.title}
-                        </p>
+                        {contact.name && (
+                          <p className="text-lg font-bold text-white group-hover/contact:text-slate-200 transition-colors">
+                            {contact.name}
+                          </p>
+                        )}
+                        {contact.title && (
+                          <p className="text-sm font-medium text-white/70 mb-4 mt-1">
+                            {contact.title}
+                          </p>
+                        )}
                         
                         <div className="space-y-3">
-                          <a href={`tel:${(contact.phone || '').replace(/\s+/g, '')}`} className="flex items-center gap-3 text-sm text-white/80 hover:text-white transition-colors">
-                            <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 border border-white/20 group-hover/contact:bg-white/20 transition-colors">
-                              <Phone className="h-4 w-4 text-white" />
-                            </div>
-                            <span className="break-all">{contact.phone}</span>
-                          </a>
-                          <a href={`mailto:${contact.email}`} className="flex items-center gap-3 text-sm text-white/80 hover:text-white transition-colors">
-                            <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 border border-white/20 group-hover/contact:bg-white/20 transition-colors">
-                              <Mail className="h-4 w-4 text-white" />
-                            </div>
-                            <span className="break-all">{contact.email}</span>
-                          </a>
+                          {contact.phone && (
+                            <a href={`tel:${contact.phone.replace(/\s+/g, '')}`} className="flex items-center gap-3 text-sm text-white/80 hover:text-white transition-colors">
+                              <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 border border-white/20 group-hover/contact:bg-white/20 transition-colors">
+                                <Phone className="h-4 w-4 text-white" />
+                              </div>
+                              <span className="break-all">{contact.phone}</span>
+                            </a>
+                          )}
+                          {contact.email && (
+                            <a href={`mailto:${contact.email}`} className="flex items-center gap-3 text-sm text-white/80 hover:text-white transition-colors">
+                              <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 border border-white/20 group-hover/contact:bg-white/20 transition-colors">
+                                <Mail className="h-4 w-4 text-white" />
+                              </div>
+                              <span className="break-all">{contact.email}</span>
+                            </a>
+                          )}
                         </div>
                       </div>
-                    ))}
+                    )})}
                     </div>
                   </div>
                 </div>

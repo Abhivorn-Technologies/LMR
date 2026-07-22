@@ -26,14 +26,14 @@ export default function LoginPage() {
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       toast.error('Please enter a valid email address.');
       return;
     }
 
-    if (password.length < 8 || password.length > 32) {
-      toast.error('Password must be between 8 and 32 characters.');
+    if (password.length < 8 || password.length > 16) {
+      toast.error('Password must be between 8 and 16 characters.');
       return;
     }
 
@@ -85,24 +85,28 @@ export default function LoginPage() {
         </Link>
 
         {/* Left Side - Clean Illustration */}
-        <div className="hidden md:flex w-1/2 bg-teal-50/40 p-8 flex-col items-center justify-center relative border-r border-slate-100">
+        <div className="hidden md:flex w-1/2 bg-teal-50/40 p-8 pt-24 pb-12 flex-col items-center justify-start relative border-r border-slate-100">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-teal-100/40 via-transparent to-transparent"></div>
           
-          <div className="relative z-10 text-center mb-6">
+          <div className="relative z-10 text-center mb-8">
             <h1 className="text-2xl font-bold text-slate-800 mb-2">LMB Insurance Platform</h1>
-            <p className="text-slate-500 text-[13px] max-w-sm mx-auto">
+            <p className="text-slate-500 text-[13px] max-w-sm mx-auto leading-relaxed">
               The secure portal for managing your enterprise content and operations.
             </p>
           </div>
           
-          <div className="relative w-full max-w-[280px] aspect-square mix-blend-multiply">
-            <Image 
-              src="/images/illustrations/insurance_login_hero.png" 
-              alt="Insurance Dashboard" 
-              fill
-              className="object-contain mix-blend-multiply"
-              priority
-            />
+          <div className="relative w-full max-w-[380px] aspect-[4/3] rounded-2xl overflow-hidden shadow-[inset_0_4px_20px_rgba(0,0,0,0.1),_0_10px_30px_rgba(0,0,0,0.08)] bg-white/50 backdrop-blur-sm border border-slate-200/60 p-3 transition-all duration-500 hover:shadow-[inset_0_4px_20px_rgba(0,0,0,0.15),_0_15px_40px_rgba(0,180,216,0.15)] group mt-auto">
+            <div className="relative w-full h-full rounded-xl overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.05)] border border-slate-100/80">
+              <Image 
+                src="/assets/lmr image.png" 
+                alt="LMB Premium Dashboard" 
+                fill
+                quality={100}
+                sizes="(max-width: 768px) 100vw, 380px"
+                className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                priority
+              />
+            </div>
           </div>
         </div>
 
@@ -133,14 +137,15 @@ export default function LoginPage() {
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                     <Mail size={16} />
                   </div>
-                  <Input
+                  <input
                     type="email"
                     name="email"
                     autoComplete="off"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter the email"
-                    className="w-full pl-10 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 text-[14px] transition-all placeholder:text-black placeholder:font-medium text-black"
+                    style={{ outline: 'none' }}
+                    className="w-full pl-10 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:border-teal-600 focus:ring-0 text-[14px] transition-all placeholder:text-black placeholder:font-medium text-black"
                   />
                 </div>
               </div>
@@ -153,14 +158,16 @@ export default function LoginPage() {
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                     <Lock size={16} />
                   </div>
-                  <Input
+                  <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     autoComplete="new-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter password"
-                    className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 text-[14px] transition-all placeholder:text-black placeholder:font-medium text-black"
+                    maxLength={16}
+                    style={{ outline: 'none' }}
+                    className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:border-teal-600 focus:ring-0 text-[14px] transition-all placeholder:text-black placeholder:font-medium text-black"
                   />
                   <button
                     type="button"
