@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Shield } from "lucide-react";
+import { getContent } from "@/services/contentService";
+import { BlockRenderer, BlockData } from "@/components/cms/BlockRenderer";
 
 // Helper to get the right 3D render for the sub-service
 const getSubServiceImage = (id: string) => {
@@ -43,13 +45,28 @@ export async function generateStaticParams() {
 export default async function ServiceDetail({ params }: { params: Promise<{ serviceId: string }> }) {
   const resolvedParams = await params;
   
-  if (DEDICATED_ROUTES.includes(resolvedParams.serviceId)) {
-    notFound();
-  }
-
+  const isDedicated = DEDICATED_ROUTES.includes(resolvedParams.serviceId);
   const service = services.find((s) => s.id === resolvedParams.serviceId);
 
-  if (!service) {
+  if (isDedicated || !service) {
+    const keyPath = `/services/${resolvedParams.serviceId}`;
+    let pageData = await getContent(keyPath, null);
+    
+    if (!pageData) {
+      pageData = await getContent(`page:services:${resolvedParams.serviceId}`, null);
+    }
+    
+    if (pageData) {
+      const blocks: BlockData[] = Array.isArray(pageData) ? pageData : pageData.blocks || [];
+      return (
+        <div className="min-h-screen bg-white relative z-0 selection:bg-[#115E59] selection:text-white">
+          <div className="pt-24 lg:pt-32">
+            <BlockRenderer blocks={blocks} />
+          </div>
+        </div>
+      );
+    }
+    
     notFound();
   }
 
