@@ -105,22 +105,6 @@ export function DraggableBlockWrapper({
   // EDIT MODE: Return interactive Canvas Element ONLY if layout exists (Freeform)
   // Otherwise return standard block layout wrapper
   if (!layout) {
-    return (
-      <div 
-        ref={divRef}
-        onClick={handleSelect}
-        className={`w-full relative border-2 my-2 transition-colors cursor-pointer group hover:shadow-xl rounded-lg overflow-hidden bg-white/30 backdrop-blur-[2px] ${isActive ? 'border-[#00A3A0] shadow-2xl ring-4 ring-[#00A3A0]/20' : 'border-transparent hover:border-[#00A3A0]/50'}`}
-      >
-        {/* Visual Selected Badge */}
-        {isActive && (
-          <div className="absolute top-0 left-0 bg-[#00A3A0] text-white px-4 py-1.5 text-xs font-bold rounded-br-lg flex gap-3 z-50 shadow-md">
-            <span>EDITING IN SIDEBAR</span>
-          </div>
-        )}
-        
-        {/* The actual block component */}
-        <div className={`w-full h-full ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}>
-  if (!layout) {
     // Standard Document Flow Block
     
     // Check if it's an Image or Video block that should be resizable in native flow
@@ -156,32 +140,29 @@ export function DraggableBlockWrapper({
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M21 15l-6 6M21 8l-13 13"/></svg>
             </div>
           )}
-        <div className={`w-full ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}>
-          {React.isValidElement(children) 
-            ? React.cloneElement(children as React.ReactElement<any>, {
-                isEditMode,
-                isActive,
-                onContentChange: (newContent: any) => {
-                  if (isEditMode) {
-                    window.parent.postMessage({
-                      type: 'UPDATE_BLOCK_CONTENT',
-                      blockIndex,
-                      content: newContent
-                    }, '*');
+          <div className={`w-full ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+            {React.isValidElement(children) 
+              ? React.cloneElement(children as React.ReactElement<any>, {
+                  isEditMode,
+                  isActive,
+                  onContentChange: (newContent: any) => {
+                    if (isEditMode) {
+                      window.parent.postMessage({
+                        type: 'UPDATE_BLOCK_CONTENT',
+                        blockIndex,
+                        content: newContent
+                      }, '*');
+                    }
                   }
-                }
-              }) 
-            : children}
+                }) 
+              : children}
+          </div>
         </div>
       </div>
     );
   }
 
   // Freeform layout (RND)
-    </div>
-  );
-  }
-
   // EDIT MODE: Return interactive RND Canvas Element for absolutely positioned blocks
   return (
     <Rnd

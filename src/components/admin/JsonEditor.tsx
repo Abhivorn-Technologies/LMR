@@ -61,9 +61,6 @@ function FieldEditor({ label, value, onChange, focusedBlockIndex }: { label: str
     message: string;
     onConfirm: () => void;
   } | null>(null);
-
-  const type = Array.isArray(value) ? 'array' : typeof value;
-
   // Format label: camelCase to Title Case
   const formattedLabel = label.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
   

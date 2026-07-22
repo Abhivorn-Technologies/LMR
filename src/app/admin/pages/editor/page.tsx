@@ -319,9 +319,6 @@ function ContentEditorContent() {
     }
   }, [key]);
 
-  // 1. Instantly update live iframe preview whenever data changes (including block deletion)
-  useEffect(() => {
-    if (data && iframeRef.current?.contentWindow) {
   // Live Preview Broadcaster: Send data to iframe whenever it changes!
   useEffect(() => {
     if (iframeRef.current?.contentWindow && data) {
