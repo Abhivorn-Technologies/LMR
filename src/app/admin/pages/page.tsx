@@ -258,22 +258,9 @@ export default function SiteSectionsPage() {
             {paginationGroup.map((item, i) => {
               if (item === '...') {
                 return (
-                  <button 
-                    key={`dots-${i}`} 
-                    onClick={() => {
-                      const input = window.prompt(`Jump to page (1 to ${totalPages}):`);
-                      if (input) {
-                        const page = parseInt(input, 10);
-                        if (!isNaN(page) && page >= 1 && page <= totalPages) {
-                          setCurrentPage(page);
-                        }
-                      }
-                    }}
-                    className="px-1.5 text-xs font-bold text-gray-400 hover:text-[#00A3A0] transition-colors cursor-pointer"
-                    title="Jump to page"
-                  >
+                  <span key={`dots-${i}`} className="px-1.5 text-xs font-bold text-gray-400 select-none">
                     ...
-                  </button>
+                  </span>
                 );
               }
               return (
