@@ -258,9 +258,20 @@ export default function SiteSectionsPage() {
             {paginationGroup.map((item, i) => {
               if (item === '...') {
                 return (
-                  <span key={`dots-${i}`} className="px-1.5 text-xs font-bold text-gray-400 select-none">
+                  <button 
+                    key={`dots-${i}`} 
+                    onClick={() => {
+                      if (i === 1) {
+                        setCurrentPage(prev => Math.max(prev - 3, 1));
+                      } else {
+                        setCurrentPage(prev => Math.min(prev + 3, totalPages));
+                      }
+                    }}
+                    className="px-1.5 text-xs font-bold text-gray-400 hover:text-[#00A3A0] transition-colors cursor-pointer"
+                    title={i === 1 ? "Previous 3 Pages" : "Next 3 Pages"}
+                  >
                     ...
-                  </span>
+                  </button>
                 );
               }
               return (
