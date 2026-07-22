@@ -49,6 +49,24 @@ const DEFAULTS: Record<string, any> = {
       }
     ]
   },
+  '/services/risk-management': {
+    blocks: [
+      {
+        type: 'RiskManagementBlock',
+        content: {
+          tagline: "Strategic Advisory",
+          title: "Risk Management",
+          highlightTitle: "Solutions",
+          description: "Helping businesses identify, assess, reduce, and manage risks before they become costly problems. Protect your enterprise with intelligent, data-driven foresight.",
+          buttonText: "Contact Experts",
+          servicesTitle: "Our Risk Management Services",
+          processTitle: "Our Risk Management Process",
+          industriesTitle: "Industries We Serve",
+          whyTitle: "Why Businesses Trust LMB"
+        }
+      }
+    ]
+  },
   '/contact': {
     blocks: [
       {

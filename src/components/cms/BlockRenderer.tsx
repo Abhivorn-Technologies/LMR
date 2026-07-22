@@ -34,6 +34,7 @@ import { ContactBlock } from './blocks/ContactBlock';
 import { AboutBlock } from './blocks/AboutBlock';
 import { ReinsuranceBlock } from './blocks/ReinsuranceBlock';
 import { HomeBlock } from './blocks/HomeBlock';
+import { RiskManagementBlock } from './blocks/RiskManagementBlock';
 
 // A registry mapping string types from JSON to actual React components
 const ComponentRegistry: Record<string, React.ComponentType<any>> = {
@@ -57,6 +58,8 @@ const ComponentRegistry: Record<string, React.ComponentType<any>> = {
   premiumProductLayoutBlock: PremiumProductLayoutBlock,
   HomeBlock,
   homeBlock: HomeBlock,
+  RiskManagementBlock,
+  riskManagementBlock: RiskManagementBlock,
   
   // Generic Blocks
   RichTextBlock,
