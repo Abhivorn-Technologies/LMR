@@ -58,10 +58,16 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      setLogoutDialogOpen(false);
+      const res = await fetch('/api/auth/logout', { method: 'POST' });
+
+      if (!res.ok) {
+        throw new Error('Failed to logout');
+      }
+
       toast.success('Logged out successfully');
-      // Force a hard redirect to clear all router caches and prevent back-button caching
-      window.location.href = '/login';
+      router.push('/login');
+      router.refresh();
     } catch (error) {
       toast.error('Logout failed');
       console.error('Logout failed', error);
@@ -176,30 +182,23 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
 
       {/* Logout Confirmation Dialog */}
       {logoutDialogOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] border border-slate-100 p-6 w-[90%] max-w-[420px] transform transition-all animate-in zoom-in-95 duration-200">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0">
-                <LogOut className="w-5 h-5 text-red-500 ml-0.5" />
-              </div>
-              <div className="pt-1">
-                <h3 className="text-[17px] font-bold text-slate-900">Sign out of Admin?</h3>
-                <p className="text-[13px] text-slate-500 mt-1.5 leading-relaxed pr-2">
-                  You are about to sign out. You will need to enter your credentials to access the dashboard again.
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex gap-2 justify-end w-full pt-4 border-t border-slate-100">
-              <button 
-                onClick={() => setLogoutDialogOpen(false)} 
-                className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-600 hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all duration-200"
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/20 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-5 w-[90%] max-w-[320px] transform transition-all animate-in zoom-in-95 duration-150">
+            <h3 className="text-[16px] font-bold text-slate-900 mb-1.5 text-center">Confirm Logout</h3>
+            <p className="text-[13px] text-slate-500 mb-5 text-center px-2">
+              Are you sure you want to log out of the Admin Dashboard?
+            </p>
+
+            <div className="flex gap-2 w-full">
+              <button
+                onClick={() => setLogoutDialogOpen(false)}
+                className="flex-1 py-2 rounded-lg text-[13px] font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors"
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleLogout} 
-                className="px-5 py-2 rounded-lg text-[13px] font-semibold text-white bg-red-500 hover:bg-red-600 transition-all duration-200 shadow-sm shadow-red-500/20"
+              <button
+                onClick={handleLogout}
+                className="flex-1 py-2 rounded-lg text-[13px] font-semibold text-white bg-red-500 hover:bg-red-600 transition-colors shadow-sm"
               >
                 Sign out
               </button>
