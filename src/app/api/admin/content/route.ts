@@ -10,6 +10,18 @@ export async function GET(request: Request) {
     const key = searchParams.get('key');
 
     if (key) {
+      if (key === 'CLEANUP_EMPTY') {
+        const contents = await Content.find({ key: { $regex: '^/services/' } });
+        let deletedCount = 0;
+        for (const c of contents) {
+          if (c.data && Array.isArray(c.data.blocks) && c.data.blocks.length === 0) {
+            await Content.deleteOne({ _id: c._id });
+            deletedCount++;
+          }
+        }
+        return NextResponse.json({ success: true, deletedCount });
+      }
+
       // Using .lean() to massively speed up JSON object fetching
       const content = await Content.findOne({ key }).lean();
       

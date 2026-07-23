@@ -149,7 +149,7 @@ function ContentEditorContent() {
       // Remove leading slash for productDatabase lookup
       const slug = pageKey.startsWith('/') ? pageKey.slice(1) : pageKey;
       
-      if (slug.startsWith('services/general-insurance/') || slug.startsWith('services/life-insurance/')) {
+      if (slug.startsWith('services/')) {
         // Find matching product in database
         const dbSlug = slug.replace('services/', '');
         const productData = (productDatabase as any)[dbSlug];
@@ -165,12 +165,17 @@ function ContentEditorContent() {
           };
         }
         
-        // Generic fallback for unknown product pages
+        // Generic fallback for unknown product or service pages
+        let defaultTitle = slug.split('/').pop()?.replace(/-/g, ' ').toUpperCase() || 'SERVICE';
+        if (!defaultTitle.includes('INSURANCE') && !defaultTitle.includes('CONSULTING') && !defaultTitle.includes('CLAIM')) {
+           defaultTitle += ' INSURANCE';
+        }
+        
         return {
           blocks: [
             {
               type: 'PremiumProductLayoutBlock',
-              content: { title: slug.split('/').pop()?.replace(/-/g, ' ').toUpperCase() + ' Insurance' }
+              content: { title: defaultTitle }
             }
           ]
         };
@@ -181,6 +186,16 @@ function ContentEditorContent() {
     fetch(`/api/admin/content?key=${key}`)
       .then(res => res.json())
       .then(res => {
+        // If the DB returned an empty page (0 blocks) for a dynamic route, 
+        // inject the dynamic default so the user isn't stuck with a blank page!
+        if (res.data && Array.isArray(res.data.blocks) && res.data.blocks.length === 0) {
+          const dynamicDefault = getDynamicDefault(key);
+          if (dynamicDefault) {
+             setData(mergeDefaults(dynamicDefault));
+             return;
+          }
+        }
+
         if (res.data) {
           setData(mergeDefaults(res.data));
         } else if (DEFAULTS[key]) {
