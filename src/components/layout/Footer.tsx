@@ -301,9 +301,9 @@ export function Footer() {
           
           <div className="flex items-center gap-2">
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-            <Link href="/login" className="ml-2 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
+            <a href="/login" className="ml-2 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
               Admin
-            </Link>
+            </a>
           </div>
 
           <div className="flex items-center gap-1.5 flex-wrap">
