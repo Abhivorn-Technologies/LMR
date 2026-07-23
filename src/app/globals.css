@@ -70,7 +70,7 @@ body {
 
 ::selection {
   background: rgba(0, 212, 255, 0.25);
-  color: var(--color-foreground);
+  color: inherit;
 }
 
 :focus-visible {

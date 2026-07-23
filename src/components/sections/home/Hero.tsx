@@ -12,10 +12,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Full name is required").max(50, "Name is too long"),
-  company: z.string().max(100, "Company name is too long").optional(),
-  phone: z.string().regex(/^[0-9]{10}$/, "Valid 10-digit number required"),
-  subject: z.string().min(2, "Subject is required"),
+  name: z.string()
+    .min(2, "Full name is required")
+    .max(50, "Name is too long")
+    .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, "Only letters, spaces, hyphens, and apostrophes allowed (no numbers)"),
+  company: z.string()
+    .max(100, "Company name is too long")
+    .regex(/^[a-zA-ZÀ-ÿ\s&\-_]*$/, "Only letters, spaces, &, -, _ allowed (no numbers)")
+    .optional(),
+  phone: z.string()
+    .regex(/^[6-9][0-9]{9}$/, "Must be a valid 10-digit number starting with 6, 7, 8, or 9"),
+  subject: z.string()
+    .min(2, "Subject is required"),
 });
 
 const inquiryOptions = [
@@ -372,6 +380,7 @@ export function Hero({
                           placeholder="e.g., John Doe"
                           maxLength={50}
                           {...register("name")}
+                          onInput={(e) => { e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-ZÀ-ÿ\s'-]/g, ''); }}
                           className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-[13px] text-[#334155] placeholder:text-[#94a3b8] focus:outline-none focus:ring-1 transition-all ${errors.name ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 focus:border-[#0ea5e9] focus:ring-[#0ea5e9]'}`} 
                         />
                         {errors.name && <p className="text-[10px] font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.name.message}</p>}
@@ -384,6 +393,7 @@ export function Hero({
                           placeholder="e.g., Acme Corp (Optional)" 
                           maxLength={100}
                           {...register("company")}
+                          onInput={(e) => { e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-ZÀ-ÿ\s&\-_]/g, ''); }}
                           className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-[13px] text-[#334155] placeholder:text-[#94a3b8] focus:outline-none focus:ring-1 transition-all ${errors.company ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 focus:border-[#0ea5e9] focus:ring-[#0ea5e9]'}`} 
                         />
                         {errors.company && <p className="text-[10px] font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.company.message}</p>}
@@ -416,9 +426,11 @@ export function Hero({
                           </div>
                           <input 
                             id="phone" 
+                            type="tel"
                             placeholder="10-digit mobile number" 
                             maxLength={10}
                             {...register("phone")}
+                            onInput={(e) => { e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '').replace(/^[0-5]+/, ''); }}
                             className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-[13px] text-[#334155] placeholder:text-[#94a3b8] focus:outline-none focus:ring-1 transition-all ${errors.phone ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 focus:border-[#0ea5e9] focus:ring-[#0ea5e9]'}`} 
                           />
                         </div>

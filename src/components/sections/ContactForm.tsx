@@ -8,12 +8,19 @@ import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Full name is required").max(50, "Name is too long"),
+  name: z.string()
+    .min(2, "Full name is required")
+    .max(50, "Name is too long")
+    .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, "Only letters, spaces, hyphens, and apostrophes allowed"),
   email: z.string()
     .email("A valid email address is required")
     .max(100, "Email is too long"),
-  phone: z.string().min(10, "A valid phone number is required").max(15, "Phone number is too long"),
-  company: z.string().max(100, "Company name is too long").optional(),
+  phone: z.string()
+    .regex(/^[6-9][0-9]{9}$/, "Must be a valid 10-digit number starting with 6, 7, 8, or 9"),
+  company: z.string()
+    .max(100, "Company name is too long")
+    .regex(/^[a-zA-ZÀ-ÿ\s&\-_]*$/, "Only letters, spaces, &, -, _ allowed")
+    .optional(),
   inquiry: z.string().min(1, "Please select an inquiry subject"),
   message: z.string().max(1000, "Message cannot exceed 1000 characters").optional(),
 });
@@ -138,6 +145,7 @@ export function ContactForm() {
                     placeholder="Your name" 
                     maxLength={50}
                     {...register("name")} 
+                    onInput={(e) => { e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-ZÀ-ÿ\s'-]/g, ''); }}
                     className={`flex h-12 w-full rounded-xl border bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors ${errors.name ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
                   />
                   {errors.name && (
@@ -169,9 +177,11 @@ export function ContactForm() {
                   </label>
                   <input 
                     id="phone" 
-                    placeholder="+91 ..." 
-                    maxLength={15}
+                    type="tel"
+                    placeholder="10-digit mobile number" 
+                    maxLength={10}
                     {...register("phone")} 
+                    onInput={(e) => { e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '').replace(/^[0-5]+/, ''); }}
                     className={`flex h-12 w-full rounded-xl border bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors ${errors.phone ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
                   />
                   {errors.phone && (
@@ -187,6 +197,7 @@ export function ContactForm() {
                     placeholder="Company name" 
                     maxLength={100}
                     {...register("company")} 
+                    onInput={(e) => { e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-ZÀ-ÿ\s&\-_]/g, ''); }}
                     className="flex h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#115E59] focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors"
                   />
                 </div>
