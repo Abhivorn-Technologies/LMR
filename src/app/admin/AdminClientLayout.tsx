@@ -176,25 +176,32 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
 
       {/* Logout Confirmation Dialog */}
       {logoutDialogOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/30 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)] border border-slate-100 p-8 w-[90%] max-w-[360px] transform transition-all animate-in zoom-in-95 duration-300">
-            <h3 className="text-[22px] font-bold text-slate-900 mb-2.5 tracking-tight text-center">Sign out</h3>
-            <p className="text-[14px] text-slate-500 mb-8 leading-relaxed text-center">
-              Are you sure you want to sign out of the admin dashboard?
-            </p>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] border border-slate-100 p-6 w-[90%] max-w-[420px] transform transition-all animate-in zoom-in-95 duration-200">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                <LogOut className="w-5 h-5 text-red-500 ml-0.5" />
+              </div>
+              <div className="pt-1">
+                <h3 className="text-[17px] font-bold text-slate-900">Sign out of Admin?</h3>
+                <p className="text-[13px] text-slate-500 mt-1.5 leading-relaxed pr-2">
+                  You are about to sign out. You will need to enter your credentials to access the dashboard again.
+                </p>
+              </div>
+            </div>
             
-            <div className="flex flex-col gap-3 w-full">
-              <button 
-                onClick={handleLogout} 
-                className="w-full py-3 rounded-xl text-[14px] font-semibold text-white bg-red-500 hover:bg-red-600 transition-all duration-200 shadow-md shadow-red-500/20"
-              >
-                Sign out
-              </button>
+            <div className="flex gap-2 justify-end w-full pt-4 border-t border-slate-100">
               <button 
                 onClick={() => setLogoutDialogOpen(false)} 
-                className="w-full py-3 rounded-xl text-[14px] font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 transition-colors duration-200"
+                className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-600 hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all duration-200"
               >
                 Cancel
+              </button>
+              <button 
+                onClick={handleLogout} 
+                className="px-5 py-2 rounded-lg text-[13px] font-semibold text-white bg-red-500 hover:bg-red-600 transition-all duration-200 shadow-sm shadow-red-500/20"
+              >
+                Sign out
               </button>
             </div>
           </div>
