@@ -295,10 +295,6 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
     };
   }, [mobileOpen]);
 
-  if (pathname.startsWith('/admin') || pathname.startsWith('/login') || pathname.startsWith('/register')) {
-    return null;
-  }
-
   // Memoize handlers to prevent re-rendering
   const handleCloseMobile = React.useCallback(() => {
     setMobileOpen(false);
@@ -318,6 +314,10 @@ export function Header({ footerNav, mainNav }: { footerNav?: any, mainNav?: any 
       { name: "Contact Us", path: "/contact" },
     ];
   }, [mainNav]);
+
+  if (pathname.startsWith('/admin') || pathname.startsWith('/login') || pathname.startsWith('/register')) {
+    return null;
+  }
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-[40] transition-all duration-300 ${scrolled ? 'shadow-[0_4px_25px_rgba(0,0,0,0.06)] bg-white/95 backdrop-blur-md' : 'shadow-sm bg-white'}`}>
