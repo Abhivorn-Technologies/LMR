@@ -38,6 +38,7 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
   // Automatically close mobile sidebar on navigation route change
   useEffect(() => {
@@ -56,9 +57,6 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
   }, []);
 
   const handleLogout = async () => {
-    if (!window.confirm('Are you sure you want to logout?')) {
-      return;
-    }
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
       toast.success('Logged out successfully');
@@ -163,7 +161,7 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
                   <p className="text-[11px] text-gray-500">LMB Insurance</p>
                 </div>
               </div>
-              <button onClick={handleLogout} className="p-1 text-gray-400 hover:text-gray-700 transition-colors" title="Logout">
+              <button onClick={() => setLogoutDialogOpen(true)} className="p-1 text-gray-400 hover:text-gray-700 transition-colors" title="Logout">
                 <LogOut className="w-[18px] h-[18px]" />
               </button>
             </div>
@@ -175,6 +173,36 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
           {children}
         </main>
       </div>
+
+      {/* Logout Confirmation Dialog */}
+      {logoutDialogOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 w-[90%] max-w-[380px] transform transition-all animate-in zoom-in-95 duration-200">
+            <div className="flex flex-col items-center mb-5">
+              <div className="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-3">
+                <LogOut className="w-6 h-6" />
+              </div>
+              <h3 className="text-[17px] font-bold text-gray-900 text-center">Log out of Admin</h3>
+              <p className="text-[13px] text-gray-500 mt-1.5 text-center">Are you sure you want to log out? You will need to sign in again to access the dashboard.</p>
+            </div>
+            
+            <div className="flex gap-3 justify-center w-full">
+              <button 
+                onClick={() => setLogoutDialogOpen(false)} 
+                className="flex-1 py-2.5 rounded-xl text-[13px] font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleLogout} 
+                className="flex-1 py-2.5 rounded-xl text-[13px] font-bold text-white bg-[#00A3A0] hover:bg-[#008f8c] transition-colors shadow-sm"
+              >
+                Yes, Log out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
