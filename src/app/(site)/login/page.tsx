@@ -60,8 +60,7 @@ export default function LoginPage() {
       }
 
       toast.success('Login successful! Redirecting...', { id: loginToast });
-      router.push('/admin');
-      router.refresh();
+      window.location.href = '/admin';
     } catch (err: any) {
       toast.error(err.message, { id: loginToast });
       setLoading(false);
