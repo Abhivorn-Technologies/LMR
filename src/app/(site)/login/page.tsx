@@ -37,7 +37,7 @@ export default function LoginPage() {
       return;
     }
 
-    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/;;
     if (!specialCharRegex.test(password)) {
       toast.error('Password must contain at least one special character.');
       return;
@@ -145,7 +145,7 @@ export default function LoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter the email"
                     style={{ outline: 'none' }}
-                    className="w-full pl-10 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:border-teal-600 focus:ring-0 text-[14px] transition-all placeholder:text-black placeholder:font-medium text-black"
+                    className="w-full pl-10 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:border-teal-600 focus:ring-0 text-[14px] transition-all placeholder:text-slate-400 placeholder:font-normal text-black"
                   />
                 </div>
               </div>
@@ -167,7 +167,7 @@ export default function LoginPage() {
                     placeholder="Enter password"
                     maxLength={16}
                     style={{ outline: 'none' }}
-                    className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:border-teal-600 focus:ring-0 text-[14px] transition-all placeholder:text-black placeholder:font-medium text-black"
+                    className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:border-teal-600 focus:ring-0 text-[14px] transition-all placeholder:text-slate-400 placeholder:font-normal text-black"
                   />
                   <button
                     type="button"
