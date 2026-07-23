@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
-import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, CheckCircle2, AlertCircle, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 const contactSchema = z.object({
@@ -40,6 +40,7 @@ export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
   );
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
 
   const {
     register,
@@ -207,21 +208,31 @@ export function ContactForm() {
                 <label htmlFor="inquiry" className="mb-2 block text-xs font-bold uppercase tracking-widest text-slate-700">
                   Subject <span className="text-[#115E59]">*</span>
                 </label>
-                <select 
-                  id="inquiry" 
-                  defaultValue="" 
-                  {...register("inquiry")}
-                  className={`flex h-12 w-full rounded-xl border bg-slate-50 px-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors ${errors.inquiry ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
-                >
-                  <option value="" disabled>
-                    How can we help you today?
-                  </option>
-                  {inquiryOptions.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
+                <div className="relative">
+                  <select 
+                    id="inquiry" 
+                    defaultValue="" 
+                    onClick={() => setIsSelectOpen((prev) => !prev)}
+                    onBlur={() => setIsSelectOpen(false)}
+                    {...register("inquiry", {
+                      onChange: (e) => {
+                        setIsSelectOpen(false);
+                        e.target.blur();
+                      }
+                    })}
+                    className={`appearance-none flex h-12 w-full rounded-xl border bg-slate-50 px-4 pr-10 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#115E59]/30 transition-colors cursor-pointer ${errors.inquiry ? 'border-red-300 bg-red-50/50' : 'border-slate-200 focus:border-[#115E59]'}`}
+                  >
+                    <option value="" disabled>
+                      How can we help you today?
                     </option>
-                  ))}
-                </select>
+                    {inquiryOptions.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className={`absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none transition-transform duration-200 ${isSelectOpen ? "rotate-180" : ""}`} />
+                </div>
                 {errors.inquiry && (
                   <p className="text-xs font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={12}/> {errors.inquiry.message}</p>
                 )}

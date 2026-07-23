@@ -50,6 +50,7 @@ export function Hero({
 }) {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [wordIndex, setWordIndex] = useState(0);
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
   
   // Use CMS data or fallback to defaults if content is missing
   const words = content?.subtitleWords || ["tomorrow.", "today.", "future.", "business.", "legacy."];
@@ -405,15 +406,22 @@ export function Hero({
                           <select 
                             id="subject"
                             defaultValue=""
-                            {...register("subject")}
-                            className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-[13px] text-[#334155] placeholder:text-[#94a3b8] focus:outline-none focus:ring-1 transition-all appearance-none cursor-pointer pr-10 ${errors.subject ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 focus:border-[#0ea5e9] focus:ring-[#0ea5e9]'}`}
+                            onClick={() => setIsSelectOpen((prev) => !prev)}
+                            onBlur={() => setIsSelectOpen(false)}
+                            {...register("subject", {
+                              onChange: (e) => {
+                                setIsSelectOpen(false);
+                                e.target.blur();
+                              }
+                            })}
+                            className={`appearance-none w-full px-3.5 py-2.5 rounded-xl border bg-white text-[13px] text-[#334155] placeholder:text-[#94a3b8] focus:outline-none focus:ring-1 transition-all cursor-pointer pr-10 ${errors.subject ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 focus:border-[#0ea5e9] focus:ring-[#0ea5e9]'}`}
                           >
                             <option value="" disabled>Select inquiry type</option>
                             {inquiryOptions.map((opt) => (
                               <option key={opt} value={opt}>{opt}</option>
                             ))}
                           </select>
-                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8] pointer-events-none" />
+                          <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8] pointer-events-none transition-transform duration-200 ${isSelectOpen ? "rotate-180" : ""}`} />
                         </div>
                         {errors.subject && <p className="text-[10px] font-medium text-red-500 mt-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.subject.message}</p>}
                       </div>
