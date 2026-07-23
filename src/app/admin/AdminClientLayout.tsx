@@ -56,6 +56,9 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
   }, []);
 
   const handleLogout = async () => {
+    if (!window.confirm('Are you sure you want to logout?')) {
+      return;
+    }
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
       toast.success('Logged out successfully');
@@ -79,7 +82,7 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
 
   return (
     <div className="h-screen overflow-hidden flex flex-col font-sans bg-[#f8fafc]">
-      <Toaster position="top-center" />
+      <Toaster position="top-right" />
       {/* Top Navbar Full Width (BharatJobs exact layout structure) */}
       <header className="h-[76px] bg-white border-b border-gray-100 flex items-center justify-between px-6 shrink-0 z-50">
         {/* Left Side: Logo Area */}

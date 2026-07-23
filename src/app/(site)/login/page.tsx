@@ -70,7 +70,7 @@ export default function LoginPage() {
 
   return (
     <div className="h-screen w-full bg-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
-      <Toaster position="top-center" />
+      <Toaster position="top-right" />
       
       {/* Subtle Background Elements */}
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-teal-400/10 blur-[120px] pointer-events-none"></div>
