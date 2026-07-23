@@ -176,28 +176,25 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
 
       {/* Logout Confirmation Dialog */}
       {logoutDialogOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/40 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 w-[90%] max-w-[380px] transform transition-all animate-in zoom-in-95 duration-200">
-            <div className="flex flex-col items-center mb-5">
-              <div className="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-3">
-                <LogOut className="w-6 h-6" />
-              </div>
-              <h3 className="text-[17px] font-bold text-gray-900 text-center">Log out of Admin</h3>
-              <p className="text-[13px] text-gray-500 mt-1.5 text-center">Are you sure you want to log out? You will need to sign in again to access the dashboard.</p>
-            </div>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/30 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)] border border-slate-100 p-8 w-[90%] max-w-[360px] transform transition-all animate-in zoom-in-95 duration-300">
+            <h3 className="text-[22px] font-bold text-slate-900 mb-2.5 tracking-tight text-center">Sign out</h3>
+            <p className="text-[14px] text-slate-500 mb-8 leading-relaxed text-center">
+              Are you sure you want to sign out of the admin dashboard?
+            </p>
             
-            <div className="flex gap-3 justify-center w-full">
-              <button 
-                onClick={() => setLogoutDialogOpen(false)} 
-                className="flex-1 py-2.5 rounded-xl text-[13px] font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
-              >
-                Cancel
-              </button>
+            <div className="flex flex-col gap-3 w-full">
               <button 
                 onClick={handleLogout} 
-                className="flex-1 py-2.5 rounded-xl text-[13px] font-bold text-white bg-[#00A3A0] hover:bg-[#008f8c] transition-colors shadow-sm"
+                className="w-full py-3 rounded-xl text-[14px] font-semibold text-white bg-red-500 hover:bg-red-600 transition-all duration-200 shadow-md shadow-red-500/20"
               >
-                Yes, Log out
+                Sign out
+              </button>
+              <button 
+                onClick={() => setLogoutDialogOpen(false)} 
+                className="w-full py-3 rounded-xl text-[14px] font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 transition-colors duration-200"
+              >
+                Cancel
               </button>
             </div>
           </div>
